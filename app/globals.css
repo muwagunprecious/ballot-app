@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@source "../app/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../components/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../lib/**/*.{js,ts,jsx,tsx,mdx}";
+@source "./**/*.{js,ts,jsx,tsx,mdx}";
+
+@layer base {
+  :root {
+    --bg-primary: #0B0F0D;
+    --bg-secondary: #101713;
+    --bg-elevated: #151D18;
+    --bg-hover: #1C2820;
+    
+    --emerald-primary: #20C878;
+    --emerald-deep: #087443;
+    --emerald-soft: #DDF8E8;
+    
+    --text-primary: #F5F7F5;
+    --text-secondary: #A0ADA4;
+    --text-muted: #6D7B71;
+    
+    --border-subtle: #27332B;
+    --border-hover: #384A3E;
+
+    --card-bg: #FFFFFF;
+    --card-text: #15241B;
+    --card-accent: #087443;
+  }
+
+  body {
+    background-color: #0B0F0D;
+    color: #F5F7F5;
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.025em;
+  }
+}
+
+.font-serif-editorial {
+  font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.font-mono-tight {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: -0.02em;
+}
+
+/* Micro Obsidian borders & surfaces */
+.obsidian-panel {
+  background-color: #101713;
+  border: 1px solid #1F2B23;
+  border-radius: 10px;
+}
+
+.obsidian-panel-elevated {
+  background-color: #151D18;
+  border: 1px solid #27372D;
+  border-radius: 10px;
+}
+
+.obsidian-row {
+  background-color: #101713;
+  border: 1px solid #1F2B23;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.obsidian-row:hover {
+  background-color: #16201A;
+  border-color: #2F4034;
+}
+
+.obsidian-row-selected {
+  background-color: #152219;
+  border-color: #20C878;
+}
+
+/* Clean Button Styles */
+.btn-emerald-solid {
+  background-color: #20C878;
+  color: #07130C;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.btn-emerald-solid:hover {
+  background-color: #28dc86;
+  box-shadow: 0 0 20px rgba(32, 200, 120, 0.25);
+}
+
+.btn-obsidian-outline {
+  background-color: #101713;
+  color: #E2E8E4;
+  border: 1px solid #243228;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+.btn-obsidian-outline:hover {
+  background-color: #16211A;
+  border-color: #384C3E;
+  color: #FFFFFF;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0F0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #243228;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #20C878;
+}
