@@ -1,6 +1,6 @@
 import { StateInfo } from '@/types/ballot';
 
-export const NIGERIAN_STATES: StateInfo[] = [
+const RAW_NIGERIAN_STATES: StateInfo[] = [
   {
     code: 'AB',
     name: 'Abia',
@@ -1122,6 +1122,10 @@ export const NIGERIAN_STATES: StateInfo[] = [
     ],
   },
 ];
+
+export const NIGERIAN_STATES: StateInfo[] = [...RAW_NIGERIAN_STATES].sort((a, b) =>
+  a.name.localeCompare(b.name)
+);
 
 export function getStateByCode(code: string): StateInfo | undefined {
   return NIGERIAN_STATES.find(s => s.code.toUpperCase() === code.toUpperCase());
