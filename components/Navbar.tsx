@@ -1,37 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Vote,
-  Users,
-  MapPin,
-  Sparkles,
-  ShieldAlert,
   Menu,
   X,
   ChevronRight,
-  Sliders,
+  Clock,
+  Sparkles,
 } from 'lucide-react';
-import { DEMO_USER_PROFILE } from '@/lib/ballot/store';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [daysRemaining, setDaysRemaining] = useState<number>(858);
+
+  useEffect(() => {
+    // 2027 Nigerian Presidential & National Assembly Election target date (approx Feb 20, 2027)
+    const targetDate = new Date('2027-02-20T08:00:00Z').getTime();
+    const now = new Date().getTime();
+    const diffDays = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
+    setDaysRemaining(diffDays);
+  }, []);
 
   const navLinks = [
-    { name: 'Studio', href: '/wizard' },
-    { name: 'Directory', href: '/candidates' },
-    { name: 'States', href: '/states' },
-    { name: 'Admin Demo', href: '/admin' },
+    { name: 'Generate', href: '/wizard' },
   ];
 
   const isActive = (href: string) => {
-    if (href === '/wizard' && pathname.startsWith('/wizard')) return true;
-    if (href === '/candidates' && pathname.startsWith('/candidates')) return true;
-    if (href === '/states' && pathname.startsWith('/states')) return true;
-    if (href === '/admin' && pathname.startsWith('/admin')) return true;
+    if (href === '/wizard' && (pathname.startsWith('/wizard') || pathname === '/')) return true;
     return pathname === href;
   };
 
@@ -46,10 +44,10 @@ export const Navbar: React.FC = () => {
                 <span className="text-[#20C878] font-mono font-bold text-xs">27</span>
               </div>
               <div className="flex items-baseline space-x-1.5">
-                <span className="text-white font-semibold tracking-tight text-sm group-hover:text-[#20C878] transition-colors font-sans">
-                  My 2027 Lineup
+                <span className="text-white font-bold tracking-tight text-sm group-hover:text-[#20C878] transition-colors font-sans">
+                  My 2027 candidates lineup
                 </span>
-                <span className="text-[10px] text-[#55675B] font-mono uppercase">
+                <span className="text-[10px] text-[#55675B] font-mono uppercase hidden sm:inline">
                   Nigeria
                 </span>
               </div>
@@ -76,47 +74,43 @@ export const Navbar: React.FC = () => {
             </nav>
           </div>
 
-          {/* Right Action & Profile Button */}
-          <div className="hidden md:flex items-center space-x-3">
-            <Link
-              href="/profile"
-              className="flex items-center space-x-2 px-2.5 py-1 rounded-md bg-[#101713] border border-[#1F2C23] hover:border-[#2C3E32] text-xs text-[#8E9F94] hover:text-white transition-colors"
-            >
-              <div className="w-5 h-5 rounded bg-[#16271D] border border-[#20C878]/30 flex items-center justify-center text-[10px] font-bold text-[#20C878]">
-                AA
-              </div>
-              <span className="font-mono text-[11px]">@ademola_demo</span>
-            </Link>
+          {/* Center / Right: Election Countdown Timer */}
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#121B15] border border-[#23382A] text-xs font-mono">
+              <Clock className="w-3.5 h-3.5 text-[#20C878] animate-pulse" />
+              <span className="text-[#8E9F94] hidden sm:inline">2027 Election:</span>
+              <span className="font-bold text-[#20C878]">{daysRemaining} Days to Go</span>
+            </div>
 
             <Link
               href="/wizard"
-              className="px-3.5 py-1.5 rounded-md bg-[#20C878] hover:bg-[#2ae08a] text-[#07130C] font-semibold text-xs tracking-tight transition-all shadow-[0_0_12px_rgba(32,200,120,0.2)]"
+              className="hidden sm:inline-flex px-3.5 py-1.5 rounded-md bg-[#20C878] hover:bg-[#2ae08a] text-[#07130C] font-semibold text-xs tracking-tight transition-all shadow-[0_0_12px_rgba(32,200,120,0.2)]"
             >
-              Build Lineup
+              Generate
             </Link>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <Link
-              href="/wizard"
-              className="px-3 py-1 rounded-md bg-[#20C878] text-[#07130C] font-semibold text-xs"
-            >
-              Build
-            </Link>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 rounded-md bg-[#101713] border border-[#1F2C23] text-[#8E9F94] hover:text-white"
-            >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center space-x-2">
+              <Link
+                href="/wizard"
+                className="px-2.5 py-1 rounded-md bg-[#20C878] text-[#07130C] font-bold text-xs"
+              >
+                Generate
+              </Link>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-1.5 rounded-md bg-[#101713] border border-[#1F2C23] text-[#8E9F94] hover:text-white"
+              >
+                {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0B0F0D] border-b border-[#1A251E] px-4 pt-2 pb-5 space-y-1">
+        <div className="md:hidden bg-[#0B0F0D] border-b border-[#1A251E] px-4 pt-2 pb-5 space-y-2">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -132,14 +126,9 @@ export const Navbar: React.FC = () => {
               <ChevronRight className="w-3.5 h-3.5 opacity-60" />
             </Link>
           ))}
-          <div className="pt-2 border-t border-[#1A251E] flex items-center justify-between text-xs">
-            <Link
-              href="/profile"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#8E9F94] hover:text-white flex items-center space-x-2 py-1"
-            >
-              <span>Demo Profile (@ademola_demo)</span>
-            </Link>
+          <div className="pt-2 border-t border-[#1A251E] flex items-center justify-between text-xs text-[#8E9F94]">
+            <span>Countdown:</span>
+            <span className="font-mono font-bold text-[#20C878]">{daysRemaining} Days to Go</span>
           </div>
         </div>
       )}

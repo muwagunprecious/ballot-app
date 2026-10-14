@@ -79,7 +79,8 @@ export type CardAspectRatio =
   | 'twitter_landscape' // 1200x675 (16:9 approx)
   | 'instagram_square'   // 1080x1080 (1:1)
   | 'instagram_portrait' // 1080x1350 (4:5)
-  | 'whatsapp_portrait'; // 1080x1350 (4:5 / 9:16 mobile)
+  | 'whatsapp_portrait' // 1080x1350 (4:5)
+  | 'whatsapp_status';   // 1080x1920 (9:16 mobile story/status)
 
 export interface LineupSelection {
   id: string;

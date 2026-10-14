@@ -24,9 +24,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: 'My 2027 Lineup — Nigerian Election Ballot Generator',
-  description: 'A sophisticated civic platform for formulating, styling, and sharing your personal 2027 Nigerian General Election candidate ballot card.',
-  keywords: ['Nigeria 2027', 'My 2027 Lineup', 'Ballot Generator', 'Nigerian Elections', 'Civic Tech Nigeria'],
+  title: 'My 2027 candidates lineup — Nigerian Election Generator',
+  description: 'A fast, lightweight civic platform for formulating, styling, and sharing your personal 2027 Nigerian General Election candidates lineup card.',
+  keywords: ['Nigeria 2027', 'My 2027 candidates lineup', 'Nigerian Elections', 'Civic Tech Nigeria'],
 };
 
 export default function RootLayout({

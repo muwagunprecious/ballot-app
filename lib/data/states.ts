@@ -2,6 +2,31 @@ import { StateInfo } from '@/types/ballot';
 
 export const NIGERIAN_STATES: StateInfo[] = [
   {
+    code: 'AB',
+    name: 'Abia',
+    capital: 'Umuahia',
+    geoZone: 'South East',
+    landmarkName: 'National War Museum & Aba River',
+    landmarkSvgType: 'generic_monument',
+    registeredVotersDemo: '2,120,808',
+    collegesOrLgasCount: 17,
+    senatorialDistricts: [
+      { id: 'AB-C', code: 'Abia Central', name: 'Abia Central Senatorial District', stateCode: 'AB', lgas: ['Ikwuano', 'Isiala Ngwa North', 'Isiala Ngwa South', 'Osisioma', 'Umuahia North', 'Umuahia South'] },
+      { id: 'AB-N', code: 'Abia North', name: 'Abia North Senatorial District', stateCode: 'AB', lgas: ['Arochukwu', 'Bende', 'Isuikwuato', 'Ohafia', 'Umunneochi'] },
+      { id: 'AB-S', code: 'Abia South', name: 'Abia South Senatorial District', stateCode: 'AB', lgas: ['Aba North', 'Aba South', 'Obingwa', 'Ugwunagbo', 'Ukwa East', 'Ukwa West'] },
+    ],
+    federalConstituencies: [
+      { id: 'AB-IKWUANO-UMUAHIA', code: 'Ikwuano/Umuahia', name: 'Ikwuano/Umuahia North/Umuahia South Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-C', lgas: ['Ikwuano', 'Umuahia North', 'Umuahia South'] },
+      { id: 'AB-ISIALA-NGWA', code: 'Isiala Ngwa North/South', name: 'Isiala Ngwa North/South Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-C', lgas: ['Isiala Ngwa North', 'Isiala Ngwa South'] },
+      { id: 'AB-OSISIOMA-OBINGWA', code: 'Osisioma/Obingwa/Ugwunagbo', name: 'Osisioma/Obingwa/Ugwunagbo Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-C', lgas: ['Osisioma', 'Obingwa', 'Ugwunagbo'] },
+      { id: 'AB-AROCHUKWU-OHAFIA', code: 'Arochukwu/Ohafia', name: 'Arochukwu/Ohafia Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-N', lgas: ['Arochukwu', 'Ohafia'] },
+      { id: 'AB-BENDE', code: 'Bende', name: 'Bende Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-N', lgas: ['Bende'] },
+      { id: 'AB-ISUIKWUATO-UMUNNEOCHI', code: 'Isuikwuato/Umunneochi', name: 'Isuikwuato/Umunneochi Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-N', lgas: ['Isuikwuato', 'Umunneochi'] },
+      { id: 'AB-ABA-N-S', code: 'Aba North/Aba South', name: 'Aba North/Aba South Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-S', lgas: ['Aba North', 'Aba South'] },
+      { id: 'AB-UKWA-E-W', code: 'Ukwa East/Ukwa West', name: 'Ukwa East/Ukwa West Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-S', lgas: ['Ukwa East', 'Ukwa West'] },
+    ],
+  },
+  {
     code: 'LA',
     name: 'Lagos',
     capital: 'Ikeja',
@@ -664,24 +689,6 @@ export const NIGERIAN_STATES: StateInfo[] = [
     ],
   },
   // Additional Nigerian States with full senatorial and constituency metadata
-  {
-    code: 'AB',
-    name: 'Abia',
-    capital: 'Umuahia',
-    geoZone: 'South East',
-    landmarkName: 'National War Museum & Aba River',
-    landmarkSvgType: 'generic_monument',
-    registeredVotersDemo: '2,120,808',
-    collegesOrLgasCount: 17,
-    senatorialDistricts: [
-      { id: 'AB-N', code: 'Abia North', name: 'Abia North Senatorial District', stateCode: 'AB', lgas: ['Arochukwu', 'Bende', 'Isuikwuato', 'Ohafia', 'Umunneochi'] },
-      { id: 'AB-C', code: 'Abia Central', name: 'Abia Central Senatorial District', stateCode: 'AB', lgas: ['Ikwuano', 'Isiala Ngwa North', 'Isiala Ngwa South', 'Osisioma', 'Umuahia North', 'Umuahia South'] },
-      { id: 'AB-S', code: 'Abia South', name: 'Abia South Senatorial District', stateCode: 'AB', lgas: ['Aba North', 'Aba South', 'Obingwa', 'Ugwunagbo', 'Ukwa East', 'Ukwa West'] },
-    ],
-    federalConstituencies: [
-      { id: 'AB-ABA-N-S', code: 'Aba North/Aba South', name: 'Aba North/Aba South Federal Constituency', stateCode: 'AB', senatorialDistrictId: 'AB-S', lgas: ['Aba North', 'Aba South'] },
-    ],
-  },
   {
     code: 'AD',
     name: 'Adamawa',

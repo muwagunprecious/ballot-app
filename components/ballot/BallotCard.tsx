@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { LineupSelection, CardStylePreset, CardAspectRatio } from '@/types/ballot';
 import { getCandidateById } from '@/lib/data/candidates';
 import { getStateByCode, getSenatorialDistrict, getFederalConstituency } from '@/lib/data/states';
 import { LandmarkSvg } from './LandmarkSvg';
-import { User } from 'lucide-react';
 
 interface BallotCardProps {
   lineup: LineupSelection;
@@ -22,33 +21,38 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   interactive = false,
   onOfficeClick,
 }, ref) => {
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
-
   const state = getStateByCode(lineup.stateCode);
   const { district } = getSenatorialDistrict(lineup.stateCode, lineup.senatorialDistrictId);
   const { constituency } = getFederalConstituency(lineup.stateCode, lineup.federalConstituencyId);
 
-  const pres = getCandidateById(lineup.presidentId);
-  const gov = getCandidateById(lineup.governorId);
-  const sen = getCandidateById(lineup.senatorId);
-  const rep = getCandidateById(lineup.representativeId);
+  const isPresUndecided = !lineup.presidentId || lineup.presidentId === 'undecided';
+  const isGovUndecided = !lineup.governorId || lineup.governorId === 'undecided';
+  const isSenUndecided = !lineup.senatorId || lineup.senatorId === 'undecided';
+  const isRepUndecided = !lineup.representativeId || lineup.representativeId === 'undecided';
+
+  const pres = isPresUndecided ? undefined : getCandidateById(lineup.presidentId);
+  const gov = isGovUndecided ? undefined : getCandidateById(lineup.governorId);
+  const sen = isSenUndecided ? undefined : getCandidateById(lineup.senatorId);
+  const rep = isRepUndecided ? undefined : getCandidateById(lineup.representativeId);
 
   const isFCT = lineup.stateCode === 'FC';
   const isDark = stylePreset === 'obsidian_minimal';
   const isHeritage = stylePreset === 'civic_heritage';
 
-  // Dimension classes - Flexible min-height to ensure 100% of header, 4 boxes & footer always display in full
+  // Responsive dimensions for various platforms (Twitter, Instagram, WhatsApp status)
   const getContainerClasses = () => {
     switch (aspectRatio) {
       case 'twitter_landscape':
-        return 'w-full max-w-[760px] min-h-[460px]';
+        return 'w-full max-w-[760px] min-h-[440px]';
       case 'instagram_square':
         return 'w-full max-w-[560px] min-h-[560px]';
       case 'instagram_portrait':
       case 'whatsapp_portrait':
-        return 'w-full max-w-[500px] min-h-[620px]';
+        return 'w-full max-w-[500px] min-h-[600px]';
+      case 'whatsapp_status':
+        return 'w-full max-w-[440px] min-h-[700px]';
       default:
-        return 'w-full max-w-[760px] min-h-[460px]';
+        return 'w-full max-w-[760px] min-h-[440px]';
     }
   };
 
@@ -84,31 +88,26 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const constName = constituency?.name || 'Constituency';
   const locationHeader = isFCT
     ? `FCT ABUJA · ${constName.toUpperCase()}`
-    : `${(state?.name || 'LAGOS').toUpperCase()} · ${districtName.toUpperCase()} / ${constName.toUpperCase()}`;
-
-  const handleImgError = (candidateId: string) => {
-    setImageErrors((prev) => ({ ...prev, [candidateId]: true }));
-  };
+    : `${(state?.name || 'ABIA').toUpperCase()} · ${districtName.toUpperCase()} / ${constName.toUpperCase()}`;
 
   const renderSlot = (
     icon: string,
     title: string,
     candidate?: ReturnType<typeof getCandidateById>,
+    isUndecided: boolean = false,
     subtitle?: string,
     disabled = false,
     officeKey?: 'PRESIDENT' | 'GOVERNOR' | 'SENATOR' | 'REPRESENTATIVE'
   ) => {
-    const hasImgError = candidate ? imageErrors[candidate.id] : false;
-
     return (
       <div
         onClick={() => interactive && officeKey && onOfficeClick && onOfficeClick(officeKey)}
-        className={`relative flex flex-col justify-between p-3 rounded-xl border ${boxBg} transition-all ${
+        className={`relative flex flex-col justify-between p-3.5 sm:p-4 rounded-xl border ${boxBg} transition-all ${
           interactive ? 'cursor-pointer hover:border-[#20C878] hover:shadow-md' : ''
         }`}
       >
         {/* Slot Top Bar */}
-        <div className="flex items-center justify-between gap-1.5 pb-1 border-b border-black/5 dark:border-white/10">
+        <div className="flex items-center justify-between gap-1.5 pb-2 border-b border-black/5 dark:border-white/10">
           <div className="flex items-center space-x-1.5">
             <span className="text-[12px]">{icon}</span>
             <span className="text-[11px] font-mono font-bold tracking-wider uppercase" style={{ color: accentColor }}>
@@ -116,65 +115,46 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
             </span>
           </div>
           {subtitle && (
-            <span className={`text-[9px] font-mono uppercase font-semibold truncate max-w-[130px] sm:max-w-[170px] ${mutedText}`}>
+            <span className={`text-[9px] font-mono uppercase font-semibold truncate max-w-[130px] sm:max-w-[180px] ${mutedText}`}>
               {subtitle}
             </span>
           )}
         </div>
 
-        {/* Slot Body */}
+        {/* Slot Content: Pure text-first candidate name + party, no images */}
         {disabled ? (
-          <div className="py-2.5 text-center my-auto">
-            <span className={`text-[11px] italic font-medium ${mutedText}`}>Office not applicable (FCT Federal Jurisdiction)</span>
+          <div className="py-3 text-center my-auto">
+            <span className={`text-xs italic font-medium ${mutedText}`}>Office not applicable (FCT Federal Jurisdiction)</span>
           </div>
-        ) : candidate ? (
-          <div className="flex items-center space-x-3 my-auto pt-1.5">
-            {/* Candidate Photo / Initials */}
-            <div className="relative w-11 h-11 rounded-lg overflow-hidden shrink-0 border border-black/10 dark:border-white/10 bg-zinc-200 dark:bg-zinc-800 shadow-2xs">
-              {candidate.avatarUrl && !hasImgError ? (
-                <img
-                  src={candidate.avatarUrl}
-                  alt={candidate.name}
-                  className="w-full h-full object-cover"
-                  crossOrigin="anonymous"
-                  onError={() => handleImgError(candidate.id)}
-                />
-              ) : (
-                <div
-                  className="w-full h-full flex items-center justify-center text-white font-black text-sm"
-                  style={{ backgroundColor: candidate.partyColor || '#086338' }}
-                >
-                  {candidate.name.charAt(0)}
-                </div>
-              )}
-            </div>
-
-            {/* Details */}
-            <div className="min-w-0 flex-1">
-              <h4 className="text-xs sm:text-[13px] font-extrabold tracking-tight truncate leading-snug text-black dark:text-white">
-                {candidate.name}
-              </h4>
-              <div className="flex items-center space-x-1.5 mt-0.5">
-                <span
-                  className="px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-black text-white tracking-wider shadow-2xs"
-                  style={{ backgroundColor: candidate.partyColor || '#086338' }}
-                >
-                  {candidate.partyAcronym}
-                </span>
-                <span className={`text-[10px] font-medium truncate ${mutedText}`}>
-                  {candidate.runningMate ? `Mate: ${candidate.runningMate.split(' ')[0]}` : candidate.bio?.slice(0, 32) + '...'}
-                </span>
-              </div>
+        ) : !isUndecided && candidate ? (
+          <div className="my-auto py-2 space-y-1.5">
+            <h4 className="text-sm sm:text-base font-extrabold tracking-tight truncate leading-snug text-black dark:text-white">
+              {candidate.name}
+            </h4>
+            <div className="flex items-center space-x-2">
+              <span
+                className="px-2.5 py-0.5 rounded text-[10px] sm:text-[11px] font-black text-white tracking-wider shadow-2xs"
+                style={{ backgroundColor: candidate.partyColor || '#086338' }}
+              >
+                {candidate.partyAcronym}
+              </span>
+              <span className={`text-[11px] font-medium truncate ${mutedText}`}>
+                {candidate.partyId ? candidate.partyId.toUpperCase() : ''}
+              </span>
             </div>
           </div>
         ) : (
-          <div className="py-2 flex items-center space-x-2.5 opacity-60 my-auto">
-            <div className="w-10 h-10 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 flex items-center justify-center shrink-0">
-              <User className="w-4 h-4 text-gray-400" />
-            </div>
-            <div>
-              <p className="text-xs font-bold">Undecided</p>
-              <p className={`text-[9px] ${mutedText}`}>Tap to select candidate</p>
+          <div className="my-auto py-2 space-y-1.5">
+            <h4 className="text-sm sm:text-base font-bold italic tracking-tight text-gray-400 dark:text-gray-500">
+              Not Decided
+            </h4>
+            <div className="flex items-center space-x-2">
+              <span className="px-2 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-[10px] font-mono font-semibold text-gray-600 dark:text-gray-400">
+                UNDECIDED
+              </span>
+              <span className={`text-[10px] ${mutedText}`}>
+                {interactive ? 'Tap to choose' : 'Voter undecided'}
+              </span>
             </div>
           </div>
         )}
@@ -191,7 +171,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       {/* Background Landmark Watermark */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
         <LandmarkSvg
-          type={state?.landmarkSvgType || 'lekki_bridge'}
+          type={state?.landmarkSvgType || 'generic_monument'}
           className="w-[110%] h-[110%] object-contain"
           opacity={watermarkOpacity}
           color={accentColor}
@@ -205,7 +185,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
             <div className="flex items-center space-x-2">
               <span className="text-base sm:text-lg">🗳</span>
               <h2 className="text-sm sm:text-base font-black tracking-wider uppercase font-mono" style={{ color: accentColor }}>
-                MY 2027 BALLOT LINE-UP
+                MY 2027 CANDIDATES LINEUP
               </h2>
             </div>
             <p className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wide uppercase text-[#086338] dark:text-[#20C878]">
@@ -214,11 +194,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
           </div>
 
           <div className="text-right flex flex-col items-end">
-            <div className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[10px] font-mono font-bold text-emerald-800 dark:text-emerald-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />
-              <span>OFFICIAL BALLOT</span>
-            </div>
-            <p className={`text-[10px] sm:text-[11px] font-medium mt-1 ${mutedText}`}>
+            <p className={`text-[10px] sm:text-[11px] font-medium ${mutedText}`}>
               Generating: <span className="font-bold text-black dark:text-white">{userName}</span>{' '}
               <span className="font-mono font-semibold" style={{ color: accentColor }}>{userHandle}</span>
             </p>
@@ -227,7 +203,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       </div>
 
       {/* 4 CANDIDATE BOXES GRID */}
-      <div className="relative z-10 p-3.5 sm:p-4.5 flex-1 flex flex-col justify-center">
+      <div className="relative z-10 p-3.5 sm:p-5 flex-1 flex flex-col justify-center">
         <div
           className={`grid gap-2.5 sm:gap-3 ${
             aspectRatio === 'twitter_landscape' || aspectRatio === 'instagram_square'
@@ -235,10 +211,10 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
               : 'grid-cols-1'
           }`}
         >
-          {renderSlot('🇳🇬', 'PRESIDENT', pres, 'Federal Republic', false, 'PRESIDENT')}
-          {renderSlot('🏛', 'GOVERNOR', gov, isFCT ? 'N/A (FCT)' : `${state?.name || ''} State`, isFCT, 'GOVERNOR')}
-          {renderSlot('📜', 'SENATOR', sen, district?.code || districtName, false, 'SENATOR')}
-          {renderSlot('🏛', 'HOUSE OF REP', rep, constituency?.code || constName, false, 'REPRESENTATIVE')}
+          {renderSlot('🇳🇬', 'PRESIDENT', pres, isPresUndecided, 'Federal Republic', false, 'PRESIDENT')}
+          {renderSlot('🏛', 'GOVERNOR', gov, isGovUndecided, isFCT ? 'N/A (FCT)' : `${state?.name || ''} State`, isFCT, 'GOVERNOR')}
+          {renderSlot('📜', 'SENATOR', sen, isSenUndecided, district?.code || districtName, false, 'SENATOR')}
+          {renderSlot('🏛', 'HOUSE OF REP', rep, isRepUndecided, constituency?.code || constName, false, 'REPRESENTATIVE')}
         </div>
       </div>
 

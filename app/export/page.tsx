@@ -108,8 +108,9 @@ export default function ExportPage() {
 
   const aspectRatios: { id: CardAspectRatio; label: string; sub: string }[] = [
     { id: 'twitter_landscape', label: 'X / Landscape', sub: '1200 × 675' },
-    { id: 'instagram_square', label: 'IG Square', sub: '1080 × 1080' },
-    { id: 'instagram_portrait', label: 'Portrait / Story', sub: '1080 × 1350' },
+    { id: 'instagram_square', label: 'IG / Square', sub: '1080 × 1080' },
+    { id: 'instagram_portrait', label: 'FB / Portrait', sub: '1080 × 1350' },
+    { id: 'whatsapp_status', label: 'WhatsApp Status', sub: '1080 × 1920' },
   ];
 
   const stylePresets: { id: CardStylePreset; label: string }[] = [
