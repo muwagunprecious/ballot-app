@@ -17,19 +17,18 @@ export const Navbar: React.FC = () => {
   const [daysRemaining, setDaysRemaining] = useState<number>(858);
 
   useEffect(() => {
-    // 2027 Nigerian Presidential & National Assembly Election target date (approx Feb 20, 2027)
-    const targetDate = new Date('2027-02-20T08:00:00Z').getTime();
+    // 2027 Nigerian Presidential & National Assembly Election target date: Jan 16, 2027
+    const targetDate = new Date('2027-01-16T08:00:00Z').getTime();
     const now = new Date().getTime();
     const diffDays = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
     setDaysRemaining(diffDays);
   }, []);
 
   const navLinks = [
-    { name: 'Generate', href: '/wizard' },
+    { name: 'Generate', href: '/' },
   ];
 
   const isActive = (href: string) => {
-    if (href === '/wizard' && (pathname.startsWith('/wizard') || pathname === '/')) return true;
     return pathname === href;
   };
 
@@ -45,7 +44,7 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="flex items-baseline space-x-1.5">
                 <span className="text-white font-bold tracking-tight text-sm group-hover:text-[#20C878] transition-colors font-sans">
-                  My 2027 candidates lineup
+                  My 2027 elections line-up
                 </span>
                 <span className="text-[10px] text-[#55675B] font-mono uppercase hidden sm:inline">
                   Nigeria

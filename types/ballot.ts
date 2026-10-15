@@ -77,6 +77,7 @@ export type CardStylePreset = 'emerald_classic' | 'obsidian_minimal' | 'civic_he
 
 export type CardAspectRatio =
   | 'twitter_landscape' // 1200x675 (16:9 approx)
+  | 'facebook_post'      // 1200x630 (1.91:1 approx)
   | 'instagram_square'   // 1080x1080 (1:1)
   | 'instagram_portrait' // 1080x1350 (4:5)
   | 'whatsapp_portrait' // 1080x1350 (4:5)

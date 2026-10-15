@@ -1,10 +1,11 @@
 'use client';
 
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { LineupSelection, CardStylePreset, CardAspectRatio } from '@/types/ballot';
 import { getCandidateById } from '@/lib/data/candidates';
 import { getStateByCode, getSenatorialDistrict, getFederalConstituency } from '@/lib/data/states';
 import { LandmarkSvg } from './LandmarkSvg';
+import { PartyLogo } from './PartyLogo';
 
 interface BallotCardProps {
   lineup: LineupSelection;
@@ -21,36 +22,48 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   interactive = false,
   onOfficeClick,
 }, ref) => {
+  const [daysRemaining, setDaysRemaining] = useState<number>(274);
+
+  useEffect(() => {
+    // 2027 Nigerian Presidential election: Jan 16, 2027
+    const targetDate = new Date('2027-01-16T08:00:00Z').getTime();
+    const now = new Date().getTime();
+    const diff = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
+    setDaysRemaining(diff);
+  }, []);
+
   const state = getStateByCode(lineup.stateCode);
   const { district } = getSenatorialDistrict(lineup.stateCode, lineup.senatorialDistrictId);
   const { constituency } = getFederalConstituency(lineup.stateCode, lineup.federalConstituencyId);
 
-  const isPresUndecided = !lineup.presidentId || lineup.presidentId === 'undecided';
-  const isGovUndecided = !lineup.governorId || lineup.governorId === 'undecided';
-  const isSenUndecided = !lineup.senatorId || lineup.senatorId === 'undecided';
-  const isRepUndecided = !lineup.representativeId || lineup.representativeId === 'undecided';
+  const isPresSelected = !!lineup.presidentId && lineup.presidentId !== 'undecided';
+  const isGovSelected = !!lineup.governorId && lineup.governorId !== 'undecided';
+  const isSenSelected = !!lineup.senatorId && lineup.senatorId !== 'undecided';
+  const isRepSelected = !!lineup.representativeId && lineup.representativeId !== 'undecided';
 
-  const pres = isPresUndecided ? undefined : getCandidateById(lineup.presidentId);
-  const gov = isGovUndecided ? undefined : getCandidateById(lineup.governorId);
-  const sen = isSenUndecided ? undefined : getCandidateById(lineup.senatorId);
-  const rep = isRepUndecided ? undefined : getCandidateById(lineup.representativeId);
+  const pres = isPresSelected ? getCandidateById(lineup.presidentId) : undefined;
+  const gov = isGovSelected ? getCandidateById(lineup.governorId) : undefined;
+  const sen = isSenSelected ? getCandidateById(lineup.senatorId) : undefined;
+  const rep = isRepSelected ? getCandidateById(lineup.representativeId) : undefined;
 
   const isFCT = lineup.stateCode === 'FC';
   const isDark = stylePreset === 'obsidian_minimal';
   const isHeritage = stylePreset === 'civic_heritage';
 
-  // Responsive dimensions for various platforms (Twitter, Instagram, WhatsApp status)
+  // Responsive dimensions for various platforms (Twitter, Facebook, Instagram, WhatsApp)
   const getContainerClasses = () => {
     switch (aspectRatio) {
       case 'twitter_landscape':
         return 'w-full max-w-[760px] min-h-[440px]';
+      case 'facebook_post':
+        return 'w-full max-w-[760px] min-h-[420px]';
       case 'instagram_square':
         return 'w-full max-w-[560px] min-h-[560px]';
       case 'instagram_portrait':
       case 'whatsapp_portrait':
-        return 'w-full max-w-[500px] min-h-[600px]';
+        return 'w-full max-w-[500px] min-h-[620px]';
       case 'whatsapp_status':
-        return 'w-full max-w-[440px] min-h-[700px]';
+        return 'w-full max-w-[440px] min-h-[720px]';
       default:
         return 'w-full max-w-[760px] min-h-[440px]';
     }
@@ -58,43 +71,47 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
 
   // Theme color tokens
   const cardBg = isDark
-    ? 'bg-[#0E1511] text-[#F5F7F5]'
+    ? 'bg-[#0A100C] text-[#F3F4F6]'
     : isHeritage
     ? 'bg-[#FAF8F5] text-[#14231A]'
-    : 'bg-[#FFFFFF] text-[#0D1812]';
+    : 'bg-[#FFFFFF] text-[#0A100C]';
 
   const outerBorder = isDark
-    ? 'border-[#26382E]'
+    ? 'border-[#1E3024]'
     : isHeritage
-    ? 'border-[#C2CFC6]'
-    : 'border-[#086338]/30 shadow-2xl';
+    ? 'border-[#B4C5BA]'
+    : 'border-[#086338]/25 shadow-xl';
 
   const boxBg = isDark
-    ? 'bg-[#141E18] border-[#25392D]'
+    ? 'bg-[#111A14] border-[#1D2B20]'
     : isHeritage
     ? 'bg-[#F2ECE4] border-[#D3DDD7]'
-    : 'bg-[#F8FAF9] border-[#D9E5DE]';
+    : 'bg-[#F8FAF9] border-[#DFE7E2]';
 
   const accentColor = isDark ? '#20C878' : '#086338';
-  const mutedText = isDark ? 'text-[#8EA395]' : 'text-[#4F6859]';
-  const watermarkOpacity = isDark ? 0.04 : 0.06;
+  const mutedText = isDark ? 'text-[#8EA395]' : 'text-[#526D5C]';
+  const watermarkOpacity = isDark ? 0.03 : 0.05;
 
-  // Format user attribution
-  const userName = lineup.userName || 'Emmanuel Okoegwale';
-  const userHandle = lineup.userHandle ? (lineup.userHandle.startsWith('@') ? lineup.userHandle : `@${lineup.userHandle}`) : '@Em_0098';
-
-  // Format location string
-  const districtName = district?.name || 'Central';
-  const constName = constituency?.name || 'Constituency';
+  // Format location string: Mandatory State & Federal Constituency
+  const constName = constituency?.name || constituency?.code || 'Federal Constituency';
+  const stateDisplayName = state?.name || 'Abia';
   const locationHeader = isFCT
-    ? `FCT ABUJA · ${constName.toUpperCase()}`
-    : `${(state?.name || 'ABIA').toUpperCase()} · ${districtName.toUpperCase()} / ${constName.toUpperCase()}`;
+    ? `${constName}, FCT Abuja`
+    : `${constName}, ${stateDisplayName} State`;
+
+  // Optional user attribution
+  const hasUserAttribution = !!lineup.userName?.trim() || !!lineup.userHandle?.trim();
+  const userName = lineup.userName?.trim();
+  const userHandle = lineup.userHandle?.trim()
+    ? lineup.userHandle.startsWith('@')
+      ? lineup.userHandle
+      : `@${lineup.userHandle}`
+    : '';
 
   const renderSlot = (
     icon: string,
     title: string,
     candidate?: ReturnType<typeof getCandidateById>,
-    isUndecided: boolean = false,
     subtitle?: string,
     disabled = false,
     officeKey?: 'PRESIDENT' | 'GOVERNOR' | 'SENATOR' | 'REPRESENTATIVE'
@@ -102,59 +119,67 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
     return (
       <div
         onClick={() => interactive && officeKey && onOfficeClick && onOfficeClick(officeKey)}
-        className={`relative flex flex-col justify-between p-3.5 sm:p-4 rounded-xl border ${boxBg} transition-all ${
-          interactive ? 'cursor-pointer hover:border-[#20C878] hover:shadow-md' : ''
+        className={`relative flex flex-col justify-between p-3 sm:p-3.5 rounded-xl border ${boxBg} transition-all ${
+          interactive ? 'cursor-pointer hover:border-[#20C878] hover:shadow-xs' : ''
         }`}
       >
         {/* Slot Top Bar */}
-        <div className="flex items-center justify-between gap-1.5 pb-2 border-b border-black/5 dark:border-white/10">
+        <div className="flex items-center justify-between gap-1.5 pb-1.5 border-b border-black/5 dark:border-white/5">
           <div className="flex items-center space-x-1.5">
             <span className="text-[12px]">{icon}</span>
-            <span className="text-[11px] font-mono font-bold tracking-wider uppercase" style={{ color: accentColor }}>
+            <span className="text-[11px] font-mono font-black tracking-wider uppercase" style={{ color: accentColor }}>
               {title}
             </span>
           </div>
           {subtitle && (
-            <span className={`text-[9px] font-mono uppercase font-semibold truncate max-w-[130px] sm:max-w-[180px] ${mutedText}`}>
+            <span className={`text-[9px] font-mono uppercase font-semibold truncate max-w-[140px] sm:max-w-[200px] ${mutedText}`}>
               {subtitle}
             </span>
           )}
         </div>
 
-        {/* Slot Content: Pure text-first candidate name + party, no images */}
+        {/* Slot Content: Party Logo Emblem + Candidate Name + Party */}
         {disabled ? (
-          <div className="py-3 text-center my-auto">
-            <span className={`text-xs italic font-medium ${mutedText}`}>Office not applicable (FCT Federal Jurisdiction)</span>
+          <div className="py-2.5 text-center my-auto">
+            <span className={`text-[11px] italic font-medium ${mutedText}`}>Office not applicable (Federal Capital Territory)</span>
           </div>
-        ) : !isUndecided && candidate ? (
-          <div className="my-auto py-2 space-y-1.5">
-            <h4 className="text-sm sm:text-base font-extrabold tracking-tight truncate leading-snug text-black dark:text-white">
-              {candidate.name}
-            </h4>
-            <div className="flex items-center space-x-2">
-              <span
-                className="px-2.5 py-0.5 rounded text-[10px] sm:text-[11px] font-black text-white tracking-wider shadow-2xs"
-                style={{ backgroundColor: candidate.partyColor || '#086338' }}
-              >
-                {candidate.partyAcronym}
-              </span>
-              <span className={`text-[11px] font-medium truncate ${mutedText}`}>
-                {candidate.partyId ? candidate.partyId.toUpperCase() : ''}
-              </span>
+        ) : candidate ? (
+          <div className="my-auto py-2 flex items-center space-x-3">
+            {/* Party Emblem / Logo Badge */}
+            <PartyLogo
+              acronym={candidate.partyAcronym}
+              size={36}
+              className="shrink-0"
+            />
+            <div className="min-w-0 flex-1 space-y-0.5">
+              <h4 className="text-xs sm:text-sm font-extrabold tracking-tight truncate leading-tight text-inherit">
+                {candidate.name}
+              </h4>
+              <div className="flex items-center space-x-2">
+                <span
+                  className="px-2 py-0.2 rounded text-[10px] font-black text-white tracking-wider"
+                  style={{ backgroundColor: candidate.partyColor || '#086338' }}
+                >
+                  {candidate.partyAcronym}
+                </span>
+                <span className={`text-[10px] font-medium truncate ${mutedText}`}>
+                  {candidate.partyId ? candidate.partyId.toUpperCase() : ''}
+                </span>
+              </div>
             </div>
           </div>
         ) : (
-          <div className="my-auto py-2 space-y-1.5">
-            <h4 className="text-sm sm:text-base font-bold italic tracking-tight text-gray-400 dark:text-gray-500">
-              Not Decided
-            </h4>
-            <div className="flex items-center space-x-2">
-              <span className="px-2 py-0.5 rounded bg-gray-200 dark:bg-gray-800 text-[10px] font-mono font-semibold text-gray-600 dark:text-gray-400">
-                UNDECIDED
-              </span>
-              <span className={`text-[10px] ${mutedText}`}>
-                {interactive ? 'Tap to choose' : 'Voter undecided'}
-              </span>
+          <div className="my-auto py-2 flex items-center space-x-3 opacity-60">
+            <div className="w-9 h-9 rounded-lg border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center shrink-0">
+              <span className="text-[10px] font-mono font-bold text-gray-400">—</span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <h4 className="text-xs sm:text-sm font-medium italic text-gray-500">
+                (No candidate selected)
+              </h4>
+              <p className={`text-[10px] ${mutedText}`}>
+                {interactive ? 'Tap to choose' : 'Voter abstained'}
+              </p>
             </div>
           </div>
         )}
@@ -172,64 +197,75 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0">
         <LandmarkSvg
           type={state?.landmarkSvgType || 'generic_monument'}
-          className="w-[110%] h-[110%] object-contain"
+          className="w-[115%] h-[115%] object-contain"
           opacity={watermarkOpacity}
           color={accentColor}
         />
       </div>
 
       {/* CARD HEADER */}
-      <div className="relative z-10 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 border-b border-black/10 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.01]">
+      <div className="relative z-10 px-4 sm:px-6 pt-4 pb-2.5 border-b border-black/10 dark:border-white/10 bg-black/[0.015] dark:bg-white/[0.015]">
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-0.5">
             <div className="flex items-center space-x-2">
               <span className="text-base sm:text-lg">🗳</span>
               <h2 className="text-sm sm:text-base font-black tracking-wider uppercase font-mono" style={{ color: accentColor }}>
-                MY 2027 CANDIDATES LINEUP
+                My 2027 elections line-up [{daysRemaining} days to go!]
               </h2>
             </div>
-            <p className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wide uppercase text-[#086338] dark:text-[#20C878]">
-              {locationHeader}
+            <p className="text-[11px] font-mono font-bold text-[#EAB308] dark:text-[#FBBF24]">
+              Vote on Jan 16 and Feb 06, 2027
+            </p>
+            <p className="text-[10px] sm:text-[11px] font-bold tracking-wide uppercase text-black/80 dark:text-white/90">
+              📍 {locationHeader}
             </p>
           </div>
 
-          <div className="text-right flex flex-col items-end">
-            <p className={`text-[10px] sm:text-[11px] font-medium ${mutedText}`}>
-              Generating: <span className="font-bold text-black dark:text-white">{userName}</span>{' '}
-              <span className="font-mono font-semibold" style={{ color: accentColor }}>{userHandle}</span>
-            </p>
-          </div>
+          {/* Optional User Attribution (Only if provided) */}
+          {hasUserAttribution && (
+            <div className="text-right flex flex-col items-end shrink-0 pl-2">
+              <span className="text-[9px] font-mono uppercase tracking-wider text-[#8EA395]">Lineup by</span>
+              {userName && (
+                <span className="text-xs font-black truncate max-w-[140px] text-black dark:text-white">
+                  {userName}
+                </span>
+              )}
+              {userHandle && (
+                <span className="text-[11px] font-mono font-bold" style={{ color: accentColor }}>
+                  {userHandle}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
       {/* 4 CANDIDATE BOXES GRID */}
-      <div className="relative z-10 p-3.5 sm:p-5 flex-1 flex flex-col justify-center">
+      <div className="relative z-10 p-3 sm:p-4 flex-1 flex flex-col justify-center">
         <div
           className={`grid gap-2.5 sm:gap-3 ${
-            aspectRatio === 'twitter_landscape' || aspectRatio === 'instagram_square'
+            aspectRatio === 'twitter_landscape' || aspectRatio === 'facebook_post' || aspectRatio === 'instagram_square'
               ? 'grid-cols-2'
               : 'grid-cols-1'
           }`}
         >
-          {renderSlot('🇳🇬', 'PRESIDENT', pres, isPresUndecided, 'Federal Republic', false, 'PRESIDENT')}
-          {renderSlot('🏛', 'GOVERNOR', gov, isGovUndecided, isFCT ? 'N/A (FCT)' : `${state?.name || ''} State`, isFCT, 'GOVERNOR')}
-          {renderSlot('📜', 'SENATOR', sen, isSenUndecided, district?.code || districtName, false, 'SENATOR')}
-          {renderSlot('🏛', 'HOUSE OF REP', rep, isRepUndecided, constituency?.code || constName, false, 'REPRESENTATIVE')}
+          {renderSlot('🇳🇬', 'PRESIDENTIAL', pres, 'Federal Republic', false, 'PRESIDENT')}
+          {renderSlot('🏛', 'GOVERNORSHIP', gov, isFCT ? 'N/A (FCT)' : `${stateDisplayName} State`, isFCT, 'GOVERNOR')}
+          {renderSlot('📜', 'SENATORIAL', sen, district?.code || district?.name || 'District', false, 'SENATOR')}
+          {renderSlot('🏛', 'HOUSE OF REP', rep, constName, false, 'REPRESENTATIVE')}
         </div>
       </div>
 
       {/* CARD FOOTER */}
       <div className="relative z-10 px-4 sm:px-6 py-2.5 bg-black/5 dark:bg-white/5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] sm:text-[11px]">
-        <div className="flex items-center space-x-2">
-          <span className="font-semibold opacity-90">
-            Generate yours on X / Twitter —
-          </span>
-          <span className="font-mono font-black" style={{ color: accentColor }}>
-            #My2027lineup
+        <div className="flex items-center space-x-1.5">
+          <span className="opacity-80">Make yours:</span>
+          <span className="font-mono font-black underline tracking-wide" style={{ color: accentColor }}>
+            www.my2027lineup.com
           </span>
         </div>
-        <div className="font-mono font-bold opacity-75 hidden sm:block">
-          #NaijaElections2027
+        <div className="font-mono font-bold opacity-80 text-right">
+          Not an official ballot #my2027lineup
         </div>
       </div>
     </div>
