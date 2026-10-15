@@ -42,16 +42,7 @@ export default function HomePage() {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [isExporting, setIsExporting] = useState(false);
-  const [daysRemaining, setDaysRemaining] = useState<number>(274);
   const [currentStep, setCurrentStep] = useState<number>(1); // 1: President, 2: Governor, 3: Senator, 4: Rep, 5: Customize & Download
-
-  useEffect(() => {
-    // 2027 General Elections Presidential target: Jan 16, 2027
-    const targetDate = new Date('2027-01-16T08:00:00Z').getTime();
-    const now = new Date().getTime();
-    const diff = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
-    setDaysRemaining(diff);
-  }, []);
 
   const currentState = getStateByCode(currentLineup.stateCode) || NIGERIAN_STATES[0];
   const isFCT = currentLineup.stateCode === 'FC';
@@ -197,47 +188,6 @@ export default function HomePage() {
 
   return (
     <div className="space-y-6 pb-20 pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* COMPACT COUNTDOWN HEADER */}
-      <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-[#0C1A11] via-[#112417] to-[#0A140E] border border-[#20C878]/30 shadow-md">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-[#20C878]/15 border border-[#20C878]/40 flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4 text-[#20C878]" />
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-sm sm:text-base font-black text-white font-mono uppercase tracking-wider">
-                  My 2027 elections line-up [{daysRemaining} days to go!]
-                </h1>
-                <span className="px-2 py-0.5 rounded-full bg-[#EAB308]/20 text-[#FACC15] font-mono font-bold text-[10px]">
-                  Vote on Jan 16 and Feb 06, 2027
-                </span>
-              </div>
-              <p className="text-xs text-[#8EA395] mt-0.5">
-                Pick your candidates step-by-step, generate your card, and share across social media.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2 shrink-0">
-            <button
-              onClick={handleShareOnX}
-              className="px-3 py-1.5 rounded-lg bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
-            >
-              <TwitterIcon className="w-3.5 h-3.5 fill-white" />
-              <span>Share on X</span>
-            </button>
-            <button
-              onClick={handleDownloadCard}
-              disabled={isExporting}
-              className="px-3.5 py-1.5 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-black flex items-center space-x-1.5 transition-all shadow-xs"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>{isExporting ? 'Saving...' : 'Download Card'}</span>
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* PROGRESS STEP TABS / BREADCRUMBS */}
       <div className="flex items-center justify-between gap-1 overflow-x-auto pb-1 px-1 custom-scrollbar">
