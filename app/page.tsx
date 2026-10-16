@@ -14,6 +14,9 @@ import {
   ChevronLeft,
   ArrowRight,
   RotateCcw,
+  X,
+  Vote,
+  Check,
 } from 'lucide-react';
 
 const TwitterIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
@@ -28,12 +31,15 @@ const WhatsAppIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   </svg>
 );
 
+type OfficeType = 'PRESIDENT' | 'GOVERNOR' | 'SENATOR' | 'REPRESENTATIVE';
+
 export default function HomePage() {
   const { currentLineup, updateCurrentLineup } = useBallotStore();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [isExporting, setIsExporting] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [activeModal, setActiveModal] = useState<OfficeType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const currentState = getStateByCode(currentLineup.stateCode) || NIGERIAN_STATES[0];
@@ -71,6 +77,11 @@ export default function HomePage() {
     federalConstituencyId: activeConstituency?.id,
   });
 
+  const selectedPresident = presidentialCandidates.find((c) => c.id === currentLineup.presidentId);
+  const selectedGovernor = governorshipCandidates.find((c) => c.id === currentLineup.governorId);
+  const selectedSenator = senatorialCandidates.find((c) => c.id === currentLineup.senatorId);
+  const selectedRep = repCandidates.find((c) => c.id === currentLineup.representativeId);
+
   const handleStateChange = (newCode: string) => {
     const newState = getStateByCode(newCode);
     if (!newState) return;
@@ -80,22 +91,13 @@ export default function HomePage() {
     );
     const defaultConst = matchingConsts[0]?.id || newState.federalConstituencies[0]?.id || '';
 
-    const newGovs = getCandidatesForRace({ office: 'GOVERNOR', stateCode: newCode });
-    const newSens = getCandidatesForRace({ office: 'SENATOR', stateCode: newCode, senatorialDistrictId: defaultDist });
-    const newReps = getCandidatesForRace({
-      office: 'REPRESENTATIVE',
-      stateCode: newCode,
-      senatorialDistrictId: defaultDist,
-      federalConstituencyId: defaultConst,
-    });
-
     updateCurrentLineup({
       stateCode: newCode,
       senatorialDistrictId: defaultDist,
       federalConstituencyId: defaultConst,
-      governorId: newCode === 'FC' ? undefined : newGovs[0]?.id,
-      senatorId: newSens[0]?.id,
-      representativeId: newReps[0]?.id,
+      governorId: undefined,
+      senatorId: undefined,
+      representativeId: undefined,
     });
   };
 
@@ -105,37 +107,69 @@ export default function HomePage() {
     );
     const defaultConst = matchingConsts[0]?.id || currentState.federalConstituencies[0]?.id || '';
 
-    const newSens = getCandidatesForRace({
-      office: 'SENATOR',
-      stateCode: currentLineup.stateCode,
-      senatorialDistrictId: distId,
-    });
-    const newReps = getCandidatesForRace({
-      office: 'REPRESENTATIVE',
-      stateCode: currentLineup.stateCode,
-      senatorialDistrictId: distId,
-      federalConstituencyId: defaultConst,
-    });
-
     updateCurrentLineup({
       senatorialDistrictId: distId,
       federalConstituencyId: defaultConst,
-      senatorId: newSens[0]?.id,
-      representativeId: newReps[0]?.id,
+      senatorId: undefined,
+      representativeId: undefined,
     });
   };
 
   const handleConstituencyChange = (constId: string) => {
-    const newReps = getCandidatesForRace({
-      office: 'REPRESENTATIVE',
-      stateCode: currentLineup.stateCode,
-      senatorialDistrictId: activeDistrict?.id,
-      federalConstituencyId: constId,
-    });
     updateCurrentLineup({
       federalConstituencyId: constId,
-      representativeId: newReps[0]?.id,
+      representativeId: undefined,
     });
+  };
+
+  const handleCandidateSelect = (candId: string) => {
+    if (activeModal === 'PRESIDENT') {
+      updateCurrentLineup({ presidentId: candId });
+      setActiveModal(null);
+      setCurrentStep(2);
+    } else if (activeModal === 'GOVERNOR') {
+      updateCurrentLineup({ governorId: candId });
+      setActiveModal(null);
+      setCurrentStep(3);
+    } else if (activeModal === 'SENATOR') {
+      updateCurrentLineup({ senatorId: candId });
+      setActiveModal(null);
+      setCurrentStep(4);
+    } else if (activeModal === 'REPRESENTATIVE') {
+      updateCurrentLineup({ representativeId: candId });
+      setActiveModal(null);
+      setCurrentStep(5);
+    }
+  };
+
+  const getModalCandidates = () => {
+    let list: typeof presidentialCandidates = [];
+    if (activeModal === 'PRESIDENT') list = presidentialCandidates;
+    else if (activeModal === 'GOVERNOR') list = governorshipCandidates;
+    else if (activeModal === 'SENATOR') list = senatorialCandidates;
+    else if (activeModal === 'REPRESENTATIVE') list = repCandidates;
+
+    if (!searchQuery.trim()) return list;
+    const q = searchQuery.toLowerCase();
+    return list.filter(
+      (c) => c.name.toLowerCase().includes(q) || c.partyAcronym.toLowerCase().includes(q)
+    );
+  };
+
+  const getModalTitle = () => {
+    if (activeModal === 'PRESIDENT') return 'Select President';
+    if (activeModal === 'GOVERNOR') return `Select Governor (${currentState.name} State)`;
+    if (activeModal === 'SENATOR') return `Select Senator (${activeDistrict?.name || 'District'})`;
+    if (activeModal === 'REPRESENTATIVE') return `Select Representative (${activeConstituency?.name || 'Constituency'})`;
+    return '';
+  };
+
+  const getModalSelectedId = () => {
+    if (activeModal === 'PRESIDENT') return currentLineup.presidentId;
+    if (activeModal === 'GOVERNOR') return currentLineup.governorId;
+    if (activeModal === 'SENATOR') return currentLineup.senatorId;
+    if (activeModal === 'REPRESENTATIVE') return currentLineup.representativeId;
+    return undefined;
   };
 
   const handleDownloadCard = async () => {
@@ -172,14 +206,6 @@ export default function HomePage() {
     { num: 5, label: 'Card' },
   ];
 
-  const filterList = (list: typeof presidentialCandidates) => {
-    if (!searchQuery.trim()) return list;
-    const q = searchQuery.toLowerCase();
-    return list.filter(
-      (c) => c.name.toLowerCase().includes(q) || c.partyAcronym.toLowerCase().includes(q)
-    );
-  };
-
   return (
     <div className="pb-16 pt-2 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-4">
       {/* MINIMAL PROGRESS STEP TABS */}
@@ -192,6 +218,7 @@ export default function HomePage() {
               key={st.num}
               onClick={() => {
                 setCurrentStep(st.num);
+                setActiveModal(null);
                 setSearchQuery('');
               }}
               className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
@@ -214,81 +241,86 @@ export default function HomePage() {
         <div className="lg:col-span-6 space-y-3">
           {/* ===================== STEP 1: PRESIDENT ===================== */}
           {currentStep === 1 && (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
-                <h3 className="text-sm font-bold text-white">Select President</h3>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
+                <div>
+                  <h3 className="text-base font-bold text-white">Select President</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Choose your 2027 presidential candidate.</p>
+                </div>
                 {currentLineup.presidentId && (
                   <button
                     onClick={() => updateCurrentLineup({ presidentId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
                   >
                     Clear
                   </button>
                 )}
               </div>
 
-              {/* SEARCH FILTER */}
-              <div className="relative">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-gray-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Filter candidate or party..."
-                  className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                />
-              </div>
-
-              {/* CLEAN 1-LINE CANDIDATE ROWS */}
-              <div className="max-h-[380px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
-                {filterList(presidentialCandidates).map((cand) => {
-                  const isSelected = currentLineup.presidentId === cand.id;
-                  return (
-                    <div
-                      key={cand.id}
-                      onClick={() => updateCurrentLineup({ presidentId: cand.id })}
-                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
-                        isSelected
-                          ? 'bg-[#18291F] border-[#20C878] text-white'
-                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
-                        </div>
-                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
-                        <span className="text-xs font-semibold truncate">{cand.name}</span>
-                      </div>
-
-                      <span
-                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
-                        style={{ backgroundColor: cand.partyColor || '#086338' }}
-                      >
-                        {cand.partyAcronym}
-                      </span>
+              {/* CLEAN CARD SELECTOR */}
+              {selectedPresident ? (
+                <div
+                  onClick={() => {
+                    setActiveModal('PRESIDENT');
+                    setSearchQuery('');
+                  }}
+                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                >
+                  <div className="flex items-center space-x-3.5 min-w-0">
+                    <PartyLogo acronym={selectedPresident.partyAcronym} size={36} className="shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Presidential Choice</div>
+                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedPresident.name}</div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <span
+                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                      style={{ backgroundColor: selectedPresident.partyColor || '#086338' }}
+                    >
+                      {selectedPresident.partyAcronym}
+                    </span>
+                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveModal('PRESIDENT');
+                    setSearchQuery('');
+                  }}
+                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                >
+                  <div className="flex items-center space-x-3.5">
+                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                      <Vote className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                        Select President
+                      </div>
+                      <div className="text-xs text-gray-400">Click to view all 22 candidates</div>
+                    </div>
+                  </div>
+                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                    <span>Select</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </button>
+              )}
 
               {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
                 <button
-                  onClick={() => {
-                    setCurrentStep(2);
-                    setSearchQuery('');
-                  }}
+                  onClick={() => setCurrentStep(2)}
                   className="text-xs text-gray-400 hover:text-white"
                 >
                   Skip
                 </button>
 
                 <button
-                  onClick={() => {
-                    setCurrentStep(2);
-                    setSearchQuery('');
-                  }}
+                  onClick={() => setCurrentStep(2)}
                   className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs ml-auto"
                 >
                   <span>Next</span>
@@ -300,13 +332,16 @@ export default function HomePage() {
 
           {/* ===================== STEP 2: GOVERNOR ===================== */}
           {currentStep === 2 && (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
-                <h3 className="text-sm font-bold text-white">Select Governor</h3>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
+                <div>
+                  <h3 className="text-base font-bold text-white">Select Governor</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Pick governor for {currentState.name} State.</p>
+                </div>
                 {currentLineup.governorId && (
                   <button
                     onClick={() => updateCurrentLineup({ governorId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
                   >
                     Clear
                   </button>
@@ -330,41 +365,59 @@ export default function HomePage() {
               </div>
 
               {isFCT ? (
-                <div className="py-6 text-center text-xs text-gray-400">
+                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
                   No governorship election in FCT.
                 </div>
-              ) : (
-                <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
-                  {governorshipCandidates.map((cand) => {
-                    const isSelected = currentLineup.governorId === cand.id;
-                    return (
-                      <div
-                        key={cand.id}
-                        onClick={() => updateCurrentLineup({ governorId: cand.id })}
-                        className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
-                          isSelected
-                            ? 'bg-[#18291F] border-[#20C878] text-white'
-                            : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-2.5 min-w-0">
-                          <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
-                          </div>
-                          <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
-                          <span className="text-xs font-semibold truncate">{cand.name}</span>
-                        </div>
-
-                        <span
-                          className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
-                          style={{ backgroundColor: cand.partyColor || '#086338' }}
-                        >
-                          {cand.partyAcronym}
-                        </span>
-                      </div>
-                    );
-                  })}
+              ) : selectedGovernor ? (
+                <div
+                  onClick={() => {
+                    setActiveModal('GOVERNOR');
+                    setSearchQuery('');
+                  }}
+                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                >
+                  <div className="flex items-center space-x-3.5 min-w-0">
+                    <PartyLogo acronym={selectedGovernor.partyAcronym} size={36} className="shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Governorship Choice</div>
+                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedGovernor.name}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <span
+                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                      style={{ backgroundColor: selectedGovernor.partyColor || '#086338' }}
+                    >
+                      {selectedGovernor.partyAcronym}
+                    </span>
+                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                  </div>
                 </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveModal('GOVERNOR');
+                    setSearchQuery('');
+                  }}
+                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                >
+                  <div className="flex items-center space-x-3.5">
+                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                      <Vote className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                        Select Governor
+                      </div>
+                      <div className="text-xs text-gray-400">Click to choose candidate for {currentState.name}</div>
+                    </div>
+                  </div>
+                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                    <span>Select</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </button>
               )}
 
               {/* CONTROLS */}
@@ -377,26 +430,37 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <button
-                  onClick={() => setCurrentStep(3)}
-                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
-                >
-                  <span>Next</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setCurrentStep(3)}
+                    className="text-xs text-gray-400 hover:text-white"
+                  >
+                    Skip
+                  </button>
+                  <button
+                    onClick={() => setCurrentStep(3)}
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
           {/* ===================== STEP 3: SENATORIAL DISTRICT ===================== */}
           {currentStep === 3 && (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
-                <h3 className="text-sm font-bold text-white">Select Senator</h3>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
+                <div>
+                  <h3 className="text-base font-bold text-white">Select Senator</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Pick senator for {activeDistrict?.name || 'District'}.</p>
+                </div>
                 {currentLineup.senatorId && (
                   <button
                     onClick={() => updateCurrentLineup({ senatorId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
                   >
                     Clear
                   </button>
@@ -405,7 +469,7 @@ export default function HomePage() {
 
               {/* DISTRICT DROPDOWN */}
               <div>
-                <label className="block text-[11px] text-gray-400 mb-1">District</label>
+                <label className="block text-[11px] text-gray-400 mb-1">Senatorial District</label>
                 <select
                   value={activeDistrict?.id || ''}
                   onChange={(e) => handleDistrictChange(e.target.value)}
@@ -419,37 +483,57 @@ export default function HomePage() {
                 </select>
               </div>
 
-              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
-                {senatorialCandidates.map((cand) => {
-                  const isSelected = currentLineup.senatorId === cand.id;
-                  return (
-                    <div
-                      key={cand.id}
-                      onClick={() => updateCurrentLineup({ senatorId: cand.id })}
-                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
-                        isSelected
-                          ? 'bg-[#18291F] border-[#20C878] text-white'
-                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
-                        </div>
-                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
-                        <span className="text-xs font-semibold truncate">{cand.name}</span>
-                      </div>
-
-                      <span
-                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
-                        style={{ backgroundColor: cand.partyColor || '#086338' }}
-                      >
-                        {cand.partyAcronym}
-                      </span>
+              {selectedSenator ? (
+                <div
+                  onClick={() => {
+                    setActiveModal('SENATOR');
+                    setSearchQuery('');
+                  }}
+                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                >
+                  <div className="flex items-center space-x-3.5 min-w-0">
+                    <PartyLogo acronym={selectedSenator.partyAcronym} size={36} className="shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Senatorial Choice</div>
+                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedSenator.name}</div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <span
+                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                      style={{ backgroundColor: selectedSenator.partyColor || '#086338' }}
+                    >
+                      {selectedSenator.partyAcronym}
+                    </span>
+                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveModal('SENATOR');
+                    setSearchQuery('');
+                  }}
+                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                >
+                  <div className="flex items-center space-x-3.5">
+                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                      <Vote className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                        Select Senator
+                      </div>
+                      <div className="text-xs text-gray-400">Click to choose candidate for {activeDistrict?.name}</div>
+                    </div>
+                  </div>
+                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                    <span>Select</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </button>
+              )}
 
               {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
@@ -461,26 +545,37 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <button
-                  onClick={() => setCurrentStep(4)}
-                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
-                >
-                  <span>Next</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setCurrentStep(4)}
+                    className="text-xs text-gray-400 hover:text-white"
+                  >
+                    Skip
+                  </button>
+                  <button
+                    onClick={() => setCurrentStep(4)}
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
           {/* ===================== STEP 4: HOUSE OF REP ===================== */}
           {currentStep === 4 && (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
-                <h3 className="text-sm font-bold text-white">Select House of Reps</h3>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
+                <div>
+                  <h3 className="text-base font-bold text-white">Select House of Reps</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Pick representative for {activeConstituency?.name || 'Constituency'}.</p>
+                </div>
                 {currentLineup.representativeId && (
                   <button
                     onClick={() => updateCurrentLineup({ representativeId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
                   >
                     Clear
                   </button>
@@ -489,7 +584,7 @@ export default function HomePage() {
 
               {/* CONSTITUENCY DROPDOWN */}
               <div>
-                <label className="block text-[11px] text-gray-400 mb-1">Constituency</label>
+                <label className="block text-[11px] text-gray-400 mb-1">Federal Constituency</label>
                 <select
                   value={activeConstituency?.id || ''}
                   onChange={(e) => handleConstituencyChange(e.target.value)}
@@ -503,37 +598,57 @@ export default function HomePage() {
                 </select>
               </div>
 
-              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
-                {repCandidates.map((cand) => {
-                  const isSelected = currentLineup.representativeId === cand.id;
-                  return (
-                    <div
-                      key={cand.id}
-                      onClick={() => updateCurrentLineup({ representativeId: cand.id })}
-                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
-                        isSelected
-                          ? 'bg-[#18291F] border-[#20C878] text-white'
-                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
-                        </div>
-                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
-                        <span className="text-xs font-semibold truncate">{cand.name}</span>
-                      </div>
-
-                      <span
-                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
-                        style={{ backgroundColor: cand.partyColor || '#086338' }}
-                      >
-                        {cand.partyAcronym}
-                      </span>
+              {selectedRep ? (
+                <div
+                  onClick={() => {
+                    setActiveModal('REPRESENTATIVE');
+                    setSearchQuery('');
+                  }}
+                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                >
+                  <div className="flex items-center space-x-3.5 min-w-0">
+                    <PartyLogo acronym={selectedRep.partyAcronym} size={36} className="shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Representative Choice</div>
+                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedRep.name}</div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                  <div className="flex items-center space-x-2 shrink-0">
+                    <span
+                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                      style={{ backgroundColor: selectedRep.partyColor || '#086338' }}
+                    >
+                      {selectedRep.partyAcronym}
+                    </span>
+                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveModal('REPRESENTATIVE');
+                    setSearchQuery('');
+                  }}
+                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                >
+                  <div className="flex items-center space-x-3.5">
+                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                      <Vote className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                        Select Representative
+                      </div>
+                      <div className="text-xs text-gray-400">Click to choose candidate for {activeConstituency?.name}</div>
+                    </div>
+                  </div>
+                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                    <span>Select</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </button>
+              )}
 
               {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
@@ -545,28 +660,39 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <button
-                  onClick={() => setCurrentStep(5)}
-                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
-                >
-                  <span>Finish Card</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setCurrentStep(5)}
+                    className="text-xs text-gray-400 hover:text-white"
+                  >
+                    Skip
+                  </button>
+                  <button
+                    onClick={() => setCurrentStep(5)}
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                  >
+                    <span>Finish Card</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
           {/* ===================== STEP 5: CARD DETAILS & SHARE ===================== */}
           {currentStep === 5 && (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
-                <h3 className="text-sm font-bold text-white">Card Details</h3>
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
+                <div>
+                  <h3 className="text-base font-bold text-white">Card Details</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Customize your name and share format.</p>
+                </div>
                 <button
                   onClick={() => setCurrentStep(1)}
                   className="text-xs text-[#20C878] hover:underline flex items-center space-x-1"
                 >
                   <RotateCcw className="w-3 h-3" />
-                  <span>Edit</span>
+                  <span>Edit Lineup</span>
                 </button>
               </div>
 
@@ -682,7 +808,7 @@ export default function HomePage() {
         {/* RIGHT COLUMN: REALTIME BALLOT CARD PREVIEW */}
         <div className="lg:col-span-6 lg:sticky lg:top-16 space-y-3">
           <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-bold text-white">Live Preview</span>
+            <span className="font-bold text-white">Live Lineup Card</span>
             <span>
               {activeConstituency?.code || 'Constituency'}, {currentState.name}
             </span>
@@ -720,6 +846,116 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ===================== CANDIDATE POPUP MODAL ===================== */}
+      {activeModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setActiveModal(null);
+            }
+          }}
+        >
+          <div className="bg-[#0D1410] border border-[#213025] rounded-2xl w-full max-w-lg max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            {/* MODAL HEADER */}
+            <div className="p-4 border-b border-[#1A251E] flex items-center justify-between bg-[#111A14]">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white">{getModalTitle()}</h3>
+                <p className="text-xs text-[#20C878] mt-0.5">Click candidate to select and go to next step</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModal(null)}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#1A251E] transition-colors"
+                aria-label="Close popup"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* SEARCH BAR */}
+            <div className="p-3 border-b border-[#1A251E] bg-[#0A0F0C]">
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Filter candidate or party..."
+                  autoFocus
+                  className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                />
+              </div>
+            </div>
+
+            {/* CANDIDATE LIST */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-1.5 custom-scrollbar">
+              {getModalCandidates().map((cand) => {
+                const isSelected = getModalSelectedId() === cand.id;
+                return (
+                  <div
+                    key={cand.id}
+                    onClick={() => handleCandidateSelect(cand.id)}
+                    className={`px-3 py-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      isSelected
+                        ? 'bg-[#18291F] border-[#20C878] text-white shadow-sm'
+                        : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#20C878] hover:bg-[#16231A]'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
+                        {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
+                      </div>
+                      <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
+                      <span className="text-xs sm:text-sm font-semibold truncate text-white">{cand.name}</span>
+                    </div>
+
+                    <span
+                      className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
+                      style={{ backgroundColor: cand.partyColor || '#086338' }}
+                    >
+                      {cand.partyAcronym}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {getModalCandidates().length === 0 && (
+                <div className="py-8 text-center text-xs text-gray-400">
+                  No candidates match your search.
+                </div>
+              )}
+            </div>
+
+            {/* MODAL FOOTER */}
+            <div className="p-3 border-t border-[#1A251E] bg-[#0A0F0C] flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveModal(null);
+                  if (activeModal === 'PRESIDENT') setCurrentStep(2);
+                  else if (activeModal === 'GOVERNOR') setCurrentStep(3);
+                  else if (activeModal === 'SENATOR') setCurrentStep(4);
+                  else if (activeModal === 'REPRESENTATIVE') setCurrentStep(5);
+                }}
+                className="text-xs text-gray-400 hover:text-white"
+              >
+                Skip this office →
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveModal(null)}
+                className="px-3.5 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs hover:bg-[#1A251E]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

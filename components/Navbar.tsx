@@ -44,7 +44,7 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="flex items-baseline space-x-1.5">
                 <span className="text-white font-bold tracking-tight text-sm group-hover:text-[#20C878] transition-colors font-sans">
-                  My 2027 elections line-up
+                  My 2027 candidates lineup
                 </span>
                 <span className="text-[10px] text-[#55675B] font-mono uppercase hidden sm:inline">
                   Nigeria
