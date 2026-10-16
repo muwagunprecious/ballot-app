@@ -12,6 +12,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2006,
     nationalChairman: 'Maxwell Mgbudem',
     headquarters: 'Abuja',
+    logoUrl: '/parties/a.png',
   },
   {
     id: 'aa',
@@ -24,6 +25,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2005,
     nationalChairman: 'Kenneth Udeze',
     headquarters: 'Abuja',
+    logoUrl: '/parties/aa.jpg',
   },
   {
     id: 'aac',
@@ -36,6 +38,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2018,
     nationalChairman: 'Omoyele Sowore',
     headquarters: 'Utako, Abuja',
+    logoUrl: '/parties/aac.jpg',
   },
   {
     id: 'adc',
@@ -48,6 +51,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2005,
     nationalChairman: 'Ralphs Okey Nwosu',
     headquarters: 'Maitama, Abuja',
+    logoUrl: '/parties/adc.jpg',
   },
   {
     id: 'adp',
@@ -60,6 +64,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2017,
     nationalChairman: 'Yabagi Sani',
     headquarters: 'Abuja',
+    logoUrl: '/parties/adp.png',
   },
   {
     id: 'apc',
@@ -72,6 +77,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2013,
     nationalChairman: 'Abdullahi Umar Ganduje',
     headquarters: 'Blantyre Street, Wuse II, Abuja',
+    logoUrl: '/parties/apc.jpg',
   },
   {
     id: 'apga',
@@ -84,6 +90,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2002,
     nationalChairman: 'Sly Ezeokenwa',
     headquarters: 'Wuse Zone 4, Abuja',
+    logoUrl: '/parties/apga.jpg',
   },
   {
     id: 'apm',
@@ -96,6 +103,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2018,
     nationalChairman: 'Yusuf Mamman Dantalle',
     headquarters: 'Abuja',
+    logoUrl: '/parties/apm.jpg',
   },
   {
     id: 'app',
@@ -108,6 +116,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2017,
     nationalChairman: 'Uchenna Nnadi',
     headquarters: 'Abuja',
+    logoUrl: '/parties/app.png',
   },
   {
     id: 'bp',
@@ -120,6 +129,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2019,
     nationalChairman: 'Sonny Adeniyi',
     headquarters: 'Abuja',
+    logoUrl: '/parties/bp.jpg',
   },
   {
     id: 'dla',
@@ -132,6 +142,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2021,
     nationalChairman: 'Chukwuma Eze',
     headquarters: 'Abuja',
+    logoUrl: '/parties/dla.jpg',
   },
   {
     id: 'lp',
@@ -144,6 +155,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2002,
     nationalChairman: 'Julius Abure',
     headquarters: 'Utako District, Abuja',
+    logoUrl: '/parties/lp.jpg',
   },
   {
     id: 'ndc',
@@ -156,6 +168,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2019,
     nationalChairman: 'Ibrahim Mohammed',
     headquarters: 'Abuja',
+    logoUrl: '/parties/ndc.jpeg',
   },
   {
     id: 'ndp',
@@ -168,6 +181,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2003,
     nationalChairman: 'Adamu Abubakar',
     headquarters: 'Abuja',
+    logoUrl: '/parties/ndp.jpg',
   },
   {
     id: 'nnpp',
@@ -180,6 +194,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2001,
     nationalChairman: 'Ajuji Ahmed',
     headquarters: 'Braamfischers Crescent, Wuse II, Abuja',
+    logoUrl: '/parties/nnpp.jpg',
   },
   {
     id: 'nrm',
@@ -192,6 +207,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2017,
     nationalChairman: 'Felix Osakwe',
     headquarters: 'Abuja',
+    logoUrl: '/parties/nrm.png',
   },
   {
     id: 'pdp',
@@ -204,6 +220,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 1998,
     nationalChairman: 'Umar Damagum (Acting)',
     headquarters: 'Wadata Plaza, Wuse Zone 5, Abuja',
+    logoUrl: '/parties/pdp.png',
   },
   {
     id: 'prp',
@@ -216,6 +233,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 1978,
     nationalChairman: 'Falalu Bello',
     headquarters: 'Kaduna / Abuja',
+    logoUrl: '/parties/prp.png',
   },
   {
     id: 'sdp',
@@ -228,6 +246,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 1989,
     nationalChairman: 'Shehu Gabam',
     headquarters: 'Garki Area 11, Abuja',
+    logoUrl: '/parties/sdp.png',
   },
   {
     id: 'yp',
@@ -240,6 +259,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2018,
     nationalChairman: 'Tomiwa Aladekomo',
     headquarters: 'Abuja',
+    logoUrl: '/parties/yp.png',
   },
   {
     id: 'ypp',
@@ -252,6 +272,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2017,
     nationalChairman: 'Bishop Amakiri',
     headquarters: 'Central Business District, Abuja',
+    logoUrl: '/parties/ypp.jpeg',
   },
   {
     id: 'zlp',
@@ -264,6 +285,7 @@ export const POLITICAL_PARTIES: PoliticalParty[] = [
     foundedYear: 2018,
     nationalChairman: 'Dan Nwanyanwu',
     headquarters: 'Garki 2, Abuja',
+    logoUrl: '/parties/zlp.jpg',
   },
 ];
 
@@ -285,4 +307,9 @@ export function getPartyByAcronym(acronym?: string): PoliticalParty | undefined 
 export function getPartyColor(acronym: string): string {
   const party = getPartyByAcronym(acronym);
   return party ? party.color : '#20C878';
+}
+
+export function getPartyLogoUrl(acronym: string): string | undefined {
+  const party = getPartyByAcronym(acronym);
+  return party?.logoUrl;
 }

@@ -19,6 +19,7 @@ export interface PoliticalParty {
   foundedYear: number;
   nationalChairman?: string;
   headquarters?: string;
+  logoUrl?: string;
 }
 
 export interface SenatorialDistrict {
