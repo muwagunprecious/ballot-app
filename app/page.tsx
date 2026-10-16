@@ -1,27 +1,18 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { BallotCard } from '@/components/ballot/BallotCard';
 import { PartyLogo } from '@/components/ballot/PartyLogo';
 import { useBallotStore } from '@/lib/ballot/store';
 import { NIGERIAN_STATES, getStateByCode } from '@/lib/data/states';
-import { POLITICAL_PARTIES } from '@/lib/data/parties';
-import { getCandidatesForRace, getCandidateById } from '@/lib/data/candidates';
+import { getCandidatesForRace } from '@/lib/data/candidates';
 import { exportBallotAsPng, triggerCelebration } from '@/lib/export';
-import { Office, CardStylePreset, CardAspectRatio } from '@/types/ballot';
+import { CardStylePreset, CardAspectRatio } from '@/types/ballot';
 import {
-  Vote,
-  MapPin,
-  Share2,
   Download,
-  Sparkles,
-  Check,
-  ChevronRight,
+  Search,
   ChevronLeft,
-  Clock,
   ArrowRight,
-  User,
-  CheckCircle2,
   RotateCcw,
 } from 'lucide-react';
 
@@ -42,17 +33,16 @@ export default function HomePage() {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [isExporting, setIsExporting] = useState(false);
-  const [currentStep, setCurrentStep] = useState<number>(1); // 1: President, 2: Governor, 3: Senator, 4: Rep, 5: Customize & Download
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const currentState = getStateByCode(currentLineup.stateCode) || NIGERIAN_STATES[0];
   const isFCT = currentLineup.stateCode === 'FC';
 
-  // Active senatorial district
   const activeDistrict =
     currentState.senatorialDistricts.find((d) => d.id === currentLineup.senatorialDistrictId) ||
     currentState.senatorialDistricts[0];
 
-  // STRICT CASCADING: Only show federal constituencies belonging to active senatorial district
   const availableConstituencies = currentState.federalConstituencies.filter(
     (c) => c.senatorialDistrictId === activeDistrict?.id
   );
@@ -62,7 +52,6 @@ export default function HomePage() {
     availableConstituencies[0] ||
     currentState.federalConstituencies[0];
 
-  // Candidates for the 4 steps, all sorted alphabetically by party acronym
   const presidentialCandidates = getCandidatesForRace({ office: 'PRESIDENT' });
 
   const governorshipCandidates = isFCT
@@ -82,7 +71,6 @@ export default function HomePage() {
     federalConstituencyId: activeConstituency?.id,
   });
 
-  // State Change: Cascade down to first district and matching constituency
   const handleStateChange = (newCode: string) => {
     const newState = getStateByCode(newCode);
     if (!newState) return;
@@ -111,7 +99,6 @@ export default function HomePage() {
     });
   };
 
-  // District Change: Strictly cascades federal constituency to matching district
   const handleDistrictChange = (distId: string) => {
     const matchingConsts = currentState.federalConstituencies.filter(
       (c) => c.senatorialDistrictId === distId
@@ -155,7 +142,7 @@ export default function HomePage() {
     if (!cardRef.current) return;
     setIsExporting(true);
     try {
-      const filename = `my-2027-elections-lineup-${currentLineup.stateCode.toLowerCase()}.png`;
+      const filename = `my-2027-lineup-${currentLineup.stateCode.toLowerCase()}.png`;
       await exportBallotAsPng(cardRef.current, filename, currentLineup.aspectRatio);
       triggerCelebration();
     } catch (e) {
@@ -166,129 +153,116 @@ export default function HomePage() {
   };
 
   const handleShareOnX = () => {
-    const constName = activeConstituency?.name || 'Federal Constituency';
-    const text = `Here is my official candidates lineup for Nigeria 2027!\n\n📍 ${constName}, ${currentState.name} State\n🗳 Make your 2027 lineup: https://www.my2027lineup.com\n\n#my2027lineup #NaijaElections2027`;
+    const constName = activeConstituency?.name || 'Constituency';
+    const text = `Here is my 2027 candidates lineup!\n\n📍 ${constName}, ${currentState.name} State\n🗳 Make yours: https://www.my2027lineup.com\n#my2027lineup`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const handleShareWhatsApp = () => {
-    const constName = activeConstituency?.name || 'Federal Constituency';
-    const text = `Here is my official candidates lineup for Nigeria 2027! 🇳🇬\n\n📍 ${constName}, ${currentState.name} State\n🗳 Create and share your lineup here: https://www.my2027lineup.com\n#my2027lineup`;
+    const constName = activeConstituency?.name || 'Constituency';
+    const text = `Here is my 2027 candidates lineup! 🇳🇬\n📍 ${constName}, ${currentState.name} State\n🗳 Make yours: https://www.my2027lineup.com\n#my2027lineup`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  // Step labels for the navigation progress bar
   const steps = [
-    { num: 1, label: 'President', office: 'PRESIDENT' },
-    { num: 2, label: 'Governor', office: 'GOVERNOR' },
-    { num: 3, label: 'Senator', office: 'SENATOR' },
-    { num: 4, label: 'House of Rep', office: 'REPRESENTATIVE' },
-    { num: 5, label: 'Card & Share', office: 'CUSTOMIZE' },
+    { num: 1, label: 'President' },
+    { num: 2, label: 'Governor' },
+    { num: 3, label: 'Senate' },
+    { num: 4, label: 'House' },
+    { num: 5, label: 'Card' },
   ];
 
-  return (
-    <div className="space-y-6 pb-20 pt-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  const filterList = (list: typeof presidentialCandidates) => {
+    if (!searchQuery.trim()) return list;
+    const q = searchQuery.toLowerCase();
+    return list.filter(
+      (c) => c.name.toLowerCase().includes(q) || c.partyAcronym.toLowerCase().includes(q)
+    );
+  };
 
-      {/* PROGRESS STEP TABS / BREADCRUMBS */}
-      <div className="flex items-center justify-between gap-1 overflow-x-auto pb-1 px-1 custom-scrollbar">
+  return (
+    <div className="pb-16 pt-2 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-4">
+      {/* MINIMAL PROGRESS STEP TABS */}
+      <div className="flex items-center gap-1.5 overflow-x-auto py-1">
         {steps.map((st) => {
           const isActive = currentStep === st.num;
           const isPassed = currentStep > st.num;
           return (
             <button
               key={st.num}
-              onClick={() => setCurrentStep(st.num)}
-              className={`flex-1 min-w-[100px] py-2 px-3 rounded-xl border text-center transition-all ${
+              onClick={() => {
+                setCurrentStep(st.num);
+                setSearchQuery('');
+              }}
+              className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
                 isActive
-                  ? 'bg-[#192B20] border-[#20C878] text-white shadow-xs ring-1 ring-[#20C878]'
+                  ? 'bg-[#192B20] border-[#20C878] text-[#20C878] font-bold'
                   : isPassed
-                  ? 'bg-[#121C16] border-[#23352A] text-[#20C878] hover:border-[#385141]'
-                  : 'bg-[#0E1511] border-[#1A251E] text-[#8EA395] hover:text-white'
+                  ? 'bg-[#111A14] border-[#1F2C23] text-white hover:border-[#334639]'
+                  : 'bg-[#0D1310] border-[#18221C] text-gray-400 hover:text-white'
               }`}
             >
-              <div className="flex items-center justify-center space-x-1.5 text-xs font-mono font-bold">
-                <span
-                  className={`w-4 h-4 rounded-full text-[10px] flex items-center justify-center ${
-                    isActive
-                      ? 'bg-[#20C878] text-[#0A110D]'
-                      : isPassed
-                      ? 'bg-[#20C878]/20 text-[#20C878]'
-                      : 'bg-white/10 text-gray-400'
-                  }`}
-                >
-                  {isPassed ? '✓' : st.num}
-                </span>
-                <span className="truncate">{st.label}</span>
-              </div>
+              <span className="text-xs font-mono">{st.num}. {st.label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* TWO-COLUMN STUDIO: ONLY CURRENT SECTION SHOWN (LEFT) & REALTIME BALLOT CARD (RIGHT) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* LEFT COLUMN: ACTIVE STEP SECTION */}
-        <div className="lg:col-span-6 space-y-4">
+      {/* TWO-COLUMN: CLEAN STEP (LEFT) & CARD PREVIEW (RIGHT) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        {/* LEFT COLUMN: FOCUSED ACTIVE STEP */}
+        <div className="lg:col-span-6 space-y-3">
           {/* ===================== STEP 1: PRESIDENT ===================== */}
           {currentStep === 1 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0E1511] border border-[#1A251E] space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-[#20C878]/20 text-[#20C878] text-[11px] font-mono font-bold flex items-center justify-center">
-                    1
-                  </span>
-                  <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-                    Step 1: President of Nigeria
-                  </h3>
-                </div>
-                {currentLineup.presidentId && currentLineup.presidentId !== 'undecided' && (
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
+                <h3 className="text-sm font-bold text-white">Select President</h3>
+                {currentLineup.presidentId && (
                   <button
                     onClick={() => updateCurrentLineup({ presidentId: undefined })}
-                    className="text-[11px] text-gray-400 hover:text-white underline font-mono"
+                    className="text-xs text-gray-400 hover:text-white"
                   >
-                    Clear choice
+                    Clear
                   </button>
                 )}
               </div>
 
-              <p className="text-xs text-[#8EA395]">
-                Pick your preferred candidate from the registered parties (listed alphabetically). Once selected, click <strong className="text-white">Next</strong> to proceed:
-              </p>
+              {/* SEARCH FILTER */}
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Filter candidate or party..."
+                  className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                />
+              </div>
 
-              {/* CANDIDATES LIST BY PARTIES ALPHABETICALLY */}
-              <div className="max-h-[380px] overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
-                {presidentialCandidates.map((cand) => {
+              {/* CLEAN 1-LINE CANDIDATE ROWS */}
+              <div className="max-h-[380px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
+                {filterList(presidentialCandidates).map((cand) => {
                   const isSelected = currentLineup.presidentId === cand.id;
                   return (
                     <div
                       key={cand.id}
                       onClick={() => updateCurrentLineup({ presidentId: cand.id })}
-                      className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-[#192B20] border-[#20C878] text-white ring-1 ring-[#20C878]'
-                          : 'bg-[#141E18] border-[#26382E] text-[#D0DED4] hover:border-[#385141]'
+                          ? 'bg-[#18291F] border-[#20C878] text-white'
+                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
                       }`}
                     >
-                      <div className="flex items-center space-x-3 min-w-0">
-                        {/* Radio circle */}
-                        <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
+                      <div className="flex items-center space-x-2.5 min-w-0">
+                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
                         </div>
-
-                        <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
-
-                        <div className="truncate">
-                          <span className="text-xs sm:text-sm font-extrabold text-white truncate block">
-                            {cand.name}
-                          </span>
-                          <span className="text-[10px] font-mono text-[#8EA395]">
-                            {cand.partyAcronym} · {POLITICAL_PARTIES.find((p) => p.acronym === cand.partyAcronym)?.name}
-                          </span>
-                        </div>
+                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
+                        <span className="text-xs font-semibold truncate">{cand.name}</span>
                       </div>
 
                       <span
-                        className="px-2 py-0.5 rounded text-[10px] font-black text-white shrink-0 ml-2"
+                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
                         style={{ backgroundColor: cand.partyColor || '#086338' }}
                       >
                         {cand.partyAcronym}
@@ -298,21 +272,27 @@ export default function HomePage() {
                 })}
               </div>
 
-              {/* STEP 1 NAVIGATION BUTTONS */}
+              {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
                 <button
-                  onClick={() => setCurrentStep(2)}
-                  className="text-xs font-mono text-[#8EA395] hover:text-white underline py-2"
+                  onClick={() => {
+                    setCurrentStep(2);
+                    setSearchQuery('');
+                  }}
+                  className="text-xs text-gray-400 hover:text-white"
                 >
-                  Skip for now
+                  Skip
                 </button>
 
                 <button
-                  onClick={() => setCurrentStep(2)}
-                  className="px-5 py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-black flex items-center space-x-2 transition-all shadow-md ml-auto"
+                  onClick={() => {
+                    setCurrentStep(2);
+                    setSearchQuery('');
+                  }}
+                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs ml-auto"
                 >
-                  <span>Next: Choose Governor</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Next</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -320,79 +300,63 @@ export default function HomePage() {
 
           {/* ===================== STEP 2: GOVERNOR ===================== */}
           {currentStep === 2 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0E1511] border border-[#1A251E] space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-[#20C878]/20 text-[#20C878] text-[11px] font-mono font-bold flex items-center justify-center">
-                    2
-                  </span>
-                  <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-                    Step 2: Governor (State Election)
-                  </h3>
-                </div>
-                {currentLineup.governorId && currentLineup.governorId !== 'undecided' && (
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
+                <h3 className="text-sm font-bold text-white">Select Governor</h3>
+                {currentLineup.governorId && (
                   <button
                     onClick={() => updateCurrentLineup({ governorId: undefined })}
-                    className="text-[11px] text-gray-400 hover:text-white underline font-mono"
+                    className="text-xs text-gray-400 hover:text-white"
                   >
-                    Clear choice
+                    Clear
                   </button>
                 )}
               </div>
 
-              {/* STATE DROPDOWN (ALPHABETICAL, DEFAULT ABIA) */}
+              {/* STATE DROPDOWN */}
               <div>
-                <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                  Voting State (Alphabetical · Default: Abia)
-                </label>
+                <label className="block text-[11px] text-gray-400 mb-1">State</label>
                 <select
                   value={currentLineup.stateCode}
                   onChange={(e) => handleStateChange(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs font-medium focus:outline-hidden focus:border-[#20C878]"
+                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
                   {NIGERIAN_STATES.map((s) => (
-                    <option key={s.code} value={s.code} className="bg-[#141E18] text-white">
-                      {s.name} State {s.code === 'FC' ? '(Federal Jurisdiction)' : ''}
+                    <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
+                      {s.name} State {s.code === 'FC' ? '(FCT)' : ''}
                     </option>
                   ))}
                 </select>
               </div>
 
               {isFCT ? (
-                <div className="p-4 rounded-xl bg-[#141E18] border border-[#26382E] text-center text-xs text-[#8EA395]">
-                  FCT Abuja is under federal jurisdiction. Governorship election does not apply.
+                <div className="py-6 text-center text-xs text-gray-400">
+                  No governorship election in FCT.
                 </div>
               ) : (
-                <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
+                <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
                   {governorshipCandidates.map((cand) => {
                     const isSelected = currentLineup.governorId === cand.id;
                     return (
                       <div
                         key={cand.id}
                         onClick={() => updateCurrentLineup({ governorId: cand.id })}
-                        className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                        className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
                           isSelected
-                            ? 'bg-[#192B20] border-[#20C878] text-white ring-1 ring-[#20C878]'
-                            : 'bg-[#141E18] border-[#26382E] text-[#D0DED4] hover:border-[#385141]'
+                            ? 'bg-[#18291F] border-[#20C878] text-white'
+                            : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
                         }`}
                       >
-                        <div className="flex items-center space-x-3 min-w-0">
-                          <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                            {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
+                        <div className="flex items-center space-x-2.5 min-w-0">
+                          <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
+                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
                           </div>
-                          <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
-                          <div className="truncate">
-                            <span className="text-xs sm:text-sm font-extrabold text-white truncate block">
-                              {cand.name}
-                            </span>
-                            <span className="text-[10px] font-mono text-[#8EA395]">
-                              {cand.partyAcronym} · {POLITICAL_PARTIES.find((p) => p.acronym === cand.partyAcronym)?.name}
-                            </span>
-                          </div>
+                          <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
+                          <span className="text-xs font-semibold truncate">{cand.name}</span>
                         </div>
 
                         <span
-                          className="px-2 py-0.5 rounded text-[10px] font-black text-white shrink-0 ml-2"
+                          className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
                           style={{ backgroundColor: cand.partyColor || '#086338' }}
                         >
                           {cand.partyAcronym}
@@ -403,22 +367,22 @@ export default function HomePage() {
                 </div>
               )}
 
-              {/* STEP 2 NAVIGATION BUTTONS */}
+              {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="px-3.5 py-2 rounded-xl bg-[#141E18] border border-[#26382E] text-white text-xs font-mono flex items-center space-x-1.5 hover:border-[#385141]"
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back to President</span>
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
                 </button>
 
                 <button
                   onClick={() => setCurrentStep(3)}
-                  className="px-5 py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-black flex items-center space-x-2 transition-all shadow-md"
+                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
                 >
-                  <span>Next: Senatorial District</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Next</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -426,74 +390,58 @@ export default function HomePage() {
 
           {/* ===================== STEP 3: SENATORIAL DISTRICT ===================== */}
           {currentStep === 3 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0E1511] border border-[#1A251E] space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-[#20C878]/20 text-[#20C878] text-[11px] font-mono font-bold flex items-center justify-center">
-                    3
-                  </span>
-                  <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-                    Step 3: Senatorial District
-                  </h3>
-                </div>
-                {currentLineup.senatorId && currentLineup.senatorId !== 'undecided' && (
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
+                <h3 className="text-sm font-bold text-white">Select Senator</h3>
+                {currentLineup.senatorId && (
                   <button
                     onClick={() => updateCurrentLineup({ senatorId: undefined })}
-                    className="text-[11px] text-gray-400 hover:text-white underline font-mono"
+                    className="text-xs text-gray-400 hover:text-white"
                   >
-                    Clear choice
+                    Clear
                   </button>
                 )}
               </div>
 
-              {/* SENATORIAL DISTRICT DROPDOWN */}
+              {/* DISTRICT DROPDOWN */}
               <div>
-                <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                  Select Senatorial District ({currentState.name} State)
-                </label>
+                <label className="block text-[11px] text-gray-400 mb-1">District</label>
                 <select
                   value={activeDistrict?.id || ''}
                   onChange={(e) => handleDistrictChange(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs font-medium focus:outline-hidden focus:border-[#20C878]"
+                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
                   {currentState.senatorialDistricts.map((d) => (
-                    <option key={d.id} value={d.id} className="bg-[#141E18] text-white">
-                      {d.name} ({d.code})
+                    <option key={d.id} value={d.id} className="bg-[#131B15] text-white">
+                      {d.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
+              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
                 {senatorialCandidates.map((cand) => {
                   const isSelected = currentLineup.senatorId === cand.id;
                   return (
                     <div
                       key={cand.id}
                       onClick={() => updateCurrentLineup({ senatorId: cand.id })}
-                      className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-[#192B20] border-[#20C878] text-white ring-1 ring-[#20C878]'
-                          : 'bg-[#141E18] border-[#26382E] text-[#D0DED4] hover:border-[#385141]'
+                          ? 'bg-[#18291F] border-[#20C878] text-white'
+                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
                       }`}
                     >
-                      <div className="flex items-center space-x-3 min-w-0">
-                        <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
+                      <div className="flex items-center space-x-2.5 min-w-0">
+                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
                         </div>
-                        <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
-                        <div className="truncate">
-                          <span className="text-xs sm:text-sm font-extrabold text-white truncate block">
-                            {cand.name}
-                          </span>
-                          <span className="text-[10px] font-mono text-[#8EA395]">
-                            {cand.partyAcronym} · {POLITICAL_PARTIES.find((p) => p.acronym === cand.partyAcronym)?.name}
-                          </span>
-                        </div>
+                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
+                        <span className="text-xs font-semibold truncate">{cand.name}</span>
                       </div>
 
                       <span
-                        className="px-2 py-0.5 rounded text-[10px] font-black text-white shrink-0 ml-2"
+                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
                         style={{ backgroundColor: cand.partyColor || '#086338' }}
                       >
                         {cand.partyAcronym}
@@ -503,22 +451,22 @@ export default function HomePage() {
                 })}
               </div>
 
-              {/* STEP 3 NAVIGATION BUTTONS */}
+              {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
                 <button
                   onClick={() => setCurrentStep(2)}
-                  className="px-3.5 py-2 rounded-xl bg-[#141E18] border border-[#26382E] text-white text-xs font-mono flex items-center space-x-1.5 hover:border-[#385141]"
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back to Governor</span>
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
                 </button>
 
                 <button
                   onClick={() => setCurrentStep(4)}
-                  className="px-5 py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-black flex items-center space-x-2 transition-all shadow-md"
+                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
                 >
-                  <span>Next: House of Rep</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Next</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -526,74 +474,58 @@ export default function HomePage() {
 
           {/* ===================== STEP 4: HOUSE OF REP ===================== */}
           {currentStep === 4 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0E1511] border border-[#1A251E] space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-[#20C878]/20 text-[#20C878] text-[11px] font-mono font-bold flex items-center justify-center">
-                    4
-                  </span>
-                  <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-                    Step 4: House of Representatives
-                  </h3>
-                </div>
-                {currentLineup.representativeId && currentLineup.representativeId !== 'undecided' && (
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
+                <h3 className="text-sm font-bold text-white">Select House of Reps</h3>
+                {currentLineup.representativeId && (
                   <button
                     onClick={() => updateCurrentLineup({ representativeId: undefined })}
-                    className="text-[11px] text-gray-400 hover:text-white underline font-mono"
+                    className="text-xs text-gray-400 hover:text-white"
                   >
-                    Clear choice
+                    Clear
                   </button>
                 )}
               </div>
 
-              {/* STRICTLY CONSTRAINED FEDERAL CONSTITUENCY DROPDOWN */}
+              {/* CONSTITUENCY DROPDOWN */}
               <div>
-                <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                  Federal Constituency (In {activeDistrict?.name || 'District'})
-                </label>
+                <label className="block text-[11px] text-gray-400 mb-1">Constituency</label>
                 <select
                   value={activeConstituency?.id || ''}
                   onChange={(e) => handleConstituencyChange(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs font-medium focus:outline-hidden focus:border-[#20C878]"
+                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
                   {availableConstituencies.map((c) => (
-                    <option key={c.id} value={c.id} className="bg-[#141E18] text-white">
+                    <option key={c.id} value={c.id} className="bg-[#131B15] text-white">
                       {c.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
+              <div className="max-h-[340px] overflow-y-auto space-y-1.5 pr-0.5 custom-scrollbar">
                 {repCandidates.map((cand) => {
                   const isSelected = currentLineup.representativeId === cand.id;
                   return (
                     <div
                       key={cand.id}
                       onClick={() => updateCurrentLineup({ representativeId: cand.id })}
-                      className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`px-3 py-2.5 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-[#192B20] border-[#20C878] text-white ring-1 ring-[#20C878]'
-                          : 'bg-[#141E18] border-[#26382E] text-[#D0DED4] hover:border-[#385141]'
+                          ? 'bg-[#18291F] border-[#20C878] text-white'
+                          : 'bg-[#121914] border-[#1D2720] text-gray-200 hover:border-[#2D3E32]'
                       }`}
                     >
-                      <div className="flex items-center space-x-3 min-w-0">
-                        <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
-                          {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
+                      <div className="flex items-center space-x-2.5 min-w-0">
+                        <div className="w-3.5 h-3.5 rounded-full border border-gray-500 flex items-center justify-center shrink-0">
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#20C878]" />}
                         </div>
-                        <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
-                        <div className="truncate">
-                          <span className="text-xs sm:text-sm font-extrabold text-white truncate block">
-                            {cand.name}
-                          </span>
-                          <span className="text-[10px] font-mono text-[#8EA395]">
-                            {cand.partyAcronym} · {POLITICAL_PARTIES.find((p) => p.acronym === cand.partyAcronym)?.name}
-                          </span>
-                        </div>
+                        <PartyLogo acronym={cand.partyAcronym} size={28} className="shrink-0" />
+                        <span className="text-xs font-semibold truncate">{cand.name}</span>
                       </div>
 
                       <span
-                        className="px-2 py-0.5 rounded text-[10px] font-black text-white shrink-0 ml-2"
+                        className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 ml-2"
                         style={{ backgroundColor: cand.partyColor || '#086338' }}
                       >
                         {cand.partyAcronym}
@@ -603,100 +535,85 @@ export default function HomePage() {
                 })}
               </div>
 
-              {/* STEP 4 NAVIGATION BUTTONS */}
+              {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
                 <button
                   onClick={() => setCurrentStep(3)}
-                  className="px-3.5 py-2 rounded-xl bg-[#141E18] border border-[#26382E] text-white text-xs font-mono flex items-center space-x-1.5 hover:border-[#385141]"
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back to Senator</span>
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
                 </button>
 
                 <button
                   onClick={() => setCurrentStep(5)}
-                  className="px-5 py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-black flex items-center space-x-2 transition-all shadow-md"
+                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
                 >
-                  <span>Next: Customize Card</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Finish Card</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
           )}
 
-          {/* ===================== STEP 5: CUSTOMIZE & SHARE ===================== */}
+          {/* ===================== STEP 5: CARD DETAILS & SHARE ===================== */}
           {currentStep === 5 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0E1511] border border-[#1A251E] space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-[#20C878]/20 text-[#20C878] text-[11px] font-mono font-bold flex items-center justify-center">
-                    5
-                  </span>
-                  <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-white">
-                    Step 5: Customize & Share Card
-                  </h3>
-                </div>
+            <div className="p-4 sm:p-5 rounded-xl bg-[#0D1310] border border-[#1A251E] space-y-3">
+              <div className="flex items-center justify-between pb-1.5 border-b border-[#1A251E]">
+                <h3 className="text-sm font-bold text-white">Card Details</h3>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="text-xs text-[#20C878] hover:underline font-mono flex items-center space-x-1"
+                  className="text-xs text-[#20C878] hover:underline flex items-center space-x-1"
                 >
                   <RotateCcw className="w-3 h-3" />
-                  <span>Edit Candidates</span>
+                  <span>Edit</span>
                 </button>
               </div>
 
-              {/* OPTIONAL NAME & HANDLE */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* NAME & HANDLE */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                    Your Name <span className="text-[10px] text-gray-500">(Optional)</span>
-                  </label>
+                  <label className="block text-[11px] text-gray-400 mb-1">Name (optional)</label>
                   <input
                     type="text"
                     value={currentLineup.userName || ''}
                     onChange={(e) => updateCurrentLineup({ userName: e.target.value })}
-                    placeholder="e.g. Precious Muwagun"
-                    className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                    placeholder="Your name"
+                    className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                    Social Handle <span className="text-[10px] text-gray-500">(Optional)</span>
-                  </label>
+                  <label className="block text-[11px] text-gray-400 mb-1">Handle (optional)</label>
                   <input
                     type="text"
                     value={currentLineup.userHandle || ''}
                     onChange={(e) => updateCurrentLineup({ userHandle: e.target.value })}
-                    placeholder="@yourhandle"
-                    className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs font-mono focus:outline-hidden focus:border-[#20C878]"
+                    placeholder="@handle"
+                    className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                   />
                 </div>
               </div>
 
-              {/* FORMAT DROPDOWN & THEME SELECTOR */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              {/* FORMAT & THEME */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 <div>
-                  <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                    Card Format (Platform Size)
-                  </label>
+                  <label className="block text-[11px] text-gray-400 mb-1">Format</label>
                   <select
                     value={currentLineup.aspectRatio}
                     onChange={(e) => updateCurrentLineup({ aspectRatio: e.target.value as CardAspectRatio })}
-                    className="w-full px-3 py-2.5 rounded-lg bg-[#141E18] border border-[#26382E] text-white text-xs font-medium focus:outline-hidden focus:border-[#20C878]"
+                    className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                   >
-                    <option value="twitter_landscape">X / Twitter (16:9 Landscape)</option>
-                    <option value="facebook_post">Facebook (1.91:1 Landscape)</option>
-                    <option value="whatsapp_status">WhatsApp Status (9:16 Story)</option>
-                    <option value="instagram_square">Instagram (1:1 Square)</option>
+                    <option value="twitter_landscape">X / Twitter (16:9)</option>
+                    <option value="facebook_post">Facebook (1.91:1)</option>
+                    <option value="whatsapp_status">WhatsApp Status (9:16)</option>
+                    <option value="instagram_square">Instagram (1:1)</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono text-[#8EA395] mb-1">
-                    Card Theme
-                  </label>
-                  <div className="grid grid-cols-3 gap-1.5">
+                  <label className="block text-[11px] text-gray-400 mb-1">Theme</label>
+                  <div className="grid grid-cols-3 gap-1">
                     {[
                       { key: 'obsidian_minimal', label: 'Dark' },
                       { key: 'emerald_classic', label: 'White' },
@@ -705,10 +622,10 @@ export default function HomePage() {
                       <button
                         key={t.key}
                         onClick={() => updateCurrentLineup({ stylePreset: t.key as CardStylePreset })}
-                        className={`py-2 px-2 rounded-lg text-xs font-mono font-bold transition-all border ${
+                        className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all border ${
                           currentLineup.stylePreset === t.key
                             ? 'bg-[#20C878] text-[#0A110D] border-[#20C878]'
-                            : 'bg-[#141E18] border-[#26382E] text-[#8EA395] hover:text-white'
+                            : 'bg-[#131B15] border-[#212E25] text-gray-400 hover:text-white'
                         }`}
                       >
                         {t.label}
@@ -718,21 +635,21 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* PRIMARY ACTION BUTTONS */}
-              <div className="space-y-2.5 pt-2 border-t border-[#1A251E]">
+              {/* ACTION BUTTONS */}
+              <div className="space-y-2 pt-2 border-t border-[#1A251E]">
                 <button
                   onClick={handleDownloadCard}
                   disabled={isExporting}
-                  className="w-full py-3.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-sm font-black flex items-center justify-center space-x-2 transition-all shadow-lg"
+                  className="w-full py-3 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-xs font-black flex items-center justify-center space-x-2 transition-all shadow-md"
                 >
                   <Download className="w-4 h-4" />
-                  <span>{isExporting ? 'Generating PNG...' : 'Download Card (PNG)'}</span>
+                  <span>{isExporting ? 'Generating PNG...' : 'Download Card'}</span>
                 </button>
 
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleShareOnX}
-                    className="w-full py-2.5 rounded-xl bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center justify-center space-x-2 transition-all"
+                    className="w-full py-2.5 rounded-lg bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
                   >
                     <TwitterIcon className="w-3.5 h-3.5 fill-white" />
                     <span>Share on X</span>
@@ -740,7 +657,7 @@ export default function HomePage() {
 
                   <button
                     onClick={handleShareWhatsApp}
-                    className="w-full py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold flex items-center justify-center space-x-2 transition-all"
+                    className="w-full py-2.5 rounded-lg bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
                   >
                     <WhatsAppIcon className="w-3.5 h-3.5 fill-white" />
                     <span>WhatsApp</span>
@@ -748,34 +665,31 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* BACK BUTTON */}
-              <div className="pt-1 flex items-center justify-between">
+              {/* BACK */}
+              <div className="pt-1">
                 <button
                   onClick={() => setCurrentStep(4)}
-                  className="px-3.5 py-2 rounded-xl bg-[#141E18] border border-[#26382E] text-white text-xs font-mono flex items-center space-x-1.5 hover:border-[#385141]"
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1"
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back to House of Rep</span>
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
                 </button>
               </div>
             </div>
           )}
         </div>
 
-        {/* RIGHT COLUMN: STICKY REALTIME BALLOT CARD PREVIEW */}
-        <div className="lg:col-span-6 lg:sticky lg:top-20 space-y-4">
-          <div className="flex items-center justify-between text-xs font-mono text-[#8EA395]">
-            <span className="flex items-center space-x-1.5 font-bold uppercase text-white">
-              <span className="w-2 h-2 rounded-full bg-[#20C878] animate-pulse" />
-              <span>Realtime Lineup Card</span>
-            </span>
+        {/* RIGHT COLUMN: REALTIME BALLOT CARD PREVIEW */}
+        <div className="lg:col-span-6 lg:sticky lg:top-16 space-y-3">
+          <div className="flex items-center justify-between text-xs text-gray-400">
+            <span className="font-bold text-white">Live Preview</span>
             <span>
               {activeConstituency?.code || 'Constituency'}, {currentState.name}
             </span>
           </div>
 
           {/* RENDERED BALLOT CARD */}
-          <div className="flex justify-center p-2 sm:p-3 rounded-2xl bg-[#080D0A] border border-[#1A251E] overflow-hidden">
+          <div className="flex justify-center p-2 rounded-xl bg-[#080D0A] border border-[#1A251E] overflow-hidden">
             <BallotCard
               ref={cardRef}
               lineup={currentLineup}
@@ -785,29 +699,25 @@ export default function HomePage() {
             />
           </div>
 
-          {/* QUICK ACTION BAR */}
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          {/* QUICK DOWNLOAD & SHARE */}
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleDownloadCard}
               disabled={isExporting}
-              className="py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-xs font-black flex items-center justify-center space-x-1.5 transition-all shadow-md"
+              className="py-2.5 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>{isExporting ? 'Saving...' : 'Download PNG'}</span>
+              <span>{isExporting ? 'Saving...' : 'Download'}</span>
             </button>
 
             <button
               onClick={handleShareOnX}
-              className="py-2.5 rounded-xl bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all shadow-md"
+              className="py-2.5 rounded-lg bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
             >
               <TwitterIcon className="w-3.5 h-3.5 fill-white" />
               <span>Share on X</span>
             </button>
           </div>
-
-          <p className="text-center text-[10px] font-mono text-[#627A6C]">
-            Fast · Instant preview · Zero server load · www.my2027lineup.com
-          </p>
         </div>
       </div>
     </div>

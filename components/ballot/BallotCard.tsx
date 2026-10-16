@@ -25,7 +25,6 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const [daysRemaining, setDaysRemaining] = useState<number>(274);
 
   useEffect(() => {
-    // 2027 Nigerian Presidential election: Jan 16, 2027
     const targetDate = new Date('2027-01-16T08:00:00Z').getTime();
     const now = new Date().getTime();
     const diff = Math.max(0, Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24)));
@@ -50,26 +49,24 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const isDark = stylePreset === 'obsidian_minimal';
   const isHeritage = stylePreset === 'civic_heritage';
 
-  // Responsive dimensions for various platforms (Twitter, Facebook, Instagram, WhatsApp)
   const getContainerClasses = () => {
     switch (aspectRatio) {
       case 'twitter_landscape':
-        return 'w-full max-w-[760px] min-h-[440px]';
-      case 'facebook_post':
         return 'w-full max-w-[760px] min-h-[420px]';
+      case 'facebook_post':
+        return 'w-full max-w-[760px] min-h-[400px]';
       case 'instagram_square':
-        return 'w-full max-w-[560px] min-h-[560px]';
+        return 'w-full max-w-[540px] min-h-[540px]';
       case 'instagram_portrait':
       case 'whatsapp_portrait':
-        return 'w-full max-w-[500px] min-h-[620px]';
+        return 'w-full max-w-[480px] min-h-[600px]';
       case 'whatsapp_status':
-        return 'w-full max-w-[440px] min-h-[720px]';
+        return 'w-full max-w-[420px] min-h-[700px]';
       default:
-        return 'w-full max-w-[760px] min-h-[440px]';
+        return 'w-full max-w-[760px] min-h-[420px]';
     }
   };
 
-  // Theme color tokens
   const cardBg = isDark
     ? 'bg-[#0A100C] text-[#F3F4F6]'
     : isHeritage
@@ -80,7 +77,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
     ? 'border-[#1E3024]'
     : isHeritage
     ? 'border-[#B4C5BA]'
-    : 'border-[#086338]/25 shadow-xl';
+    : 'border-[#086338]/20 shadow-xl';
 
   const boxBg = isDark
     ? 'bg-[#111A14] border-[#1D2B20]'
@@ -90,16 +87,14 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
 
   const accentColor = isDark ? '#20C878' : '#086338';
   const mutedText = isDark ? 'text-[#8EA395]' : 'text-[#526D5C]';
-  const watermarkOpacity = isDark ? 0.03 : 0.05;
+  const watermarkOpacity = isDark ? 0.03 : 0.04;
 
-  // Format location string: Mandatory State & Federal Constituency
-  const constName = constituency?.name || constituency?.code || 'Federal Constituency';
+  const constName = constituency?.name || constituency?.code || 'Constituency';
   const stateDisplayName = state?.name || 'Abia';
   const locationHeader = isFCT
     ? `${constName}, FCT Abuja`
     : `${constName}, ${stateDisplayName} State`;
 
-  // Optional user attribution
   const hasUserAttribution = !!lineup.userName?.trim() || !!lineup.userHandle?.trim();
   const userName = lineup.userName?.trim();
   const userHandle = lineup.userHandle?.trim()
@@ -109,7 +104,6 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
     : '';
 
   const renderSlot = (
-    icon: string,
     title: string,
     candidate?: ReturnType<typeof getCandidateById>,
     subtitle?: string,
@@ -119,68 +113,48 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
     return (
       <div
         onClick={() => interactive && officeKey && onOfficeClick && onOfficeClick(officeKey)}
-        className={`relative flex flex-col justify-between p-3 sm:p-3.5 rounded-xl border ${boxBg} transition-all ${
-          interactive ? 'cursor-pointer hover:border-[#20C878] hover:shadow-xs' : ''
+        className={`relative flex flex-col justify-between p-3 rounded-xl border ${boxBg} transition-all ${
+          interactive ? 'cursor-pointer hover:border-[#20C878]' : ''
         }`}
       >
-        {/* Slot Top Bar */}
-        <div className="flex items-center justify-between gap-1.5 pb-1.5 border-b border-black/5 dark:border-white/5">
-          <div className="flex items-center space-x-1.5">
-            <span className="text-[12px]">{icon}</span>
-            <span className="text-[11px] font-mono font-black tracking-wider uppercase" style={{ color: accentColor }}>
-              {title}
-            </span>
-          </div>
+        {/* Top Label */}
+        <div className="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider" style={{ color: accentColor }}>
+            {title}
+          </span>
           {subtitle && (
-            <span className={`text-[9px] font-mono uppercase font-semibold truncate max-w-[140px] sm:max-w-[200px] ${mutedText}`}>
+            <span className={`text-[9px] font-mono uppercase truncate max-w-[140px] sm:max-w-[180px] ${mutedText}`}>
               {subtitle}
             </span>
           )}
         </div>
 
-        {/* Slot Content: Party Logo Emblem + Candidate Name + Party */}
+        {/* Content */}
         {disabled ? (
-          <div className="py-2.5 text-center my-auto">
-            <span className={`text-[11px] italic font-medium ${mutedText}`}>Office not applicable (Federal Capital Territory)</span>
+          <div className="py-2.5 my-auto text-center">
+            <span className={`text-xs italic ${mutedText}`}>No election (FCT)</span>
           </div>
         ) : candidate ? (
-          <div className="my-auto py-2 flex items-center space-x-3">
-            {/* Party Emblem / Logo Badge */}
-            <PartyLogo
-              acronym={candidate.partyAcronym}
-              size={36}
-              className="shrink-0"
-            />
-            <div className="min-w-0 flex-1 space-y-0.5">
-              <h4 className="text-xs sm:text-sm font-extrabold tracking-tight truncate leading-tight text-inherit">
+          <div className="my-auto py-2 flex items-center justify-between gap-2.5">
+            <div className="flex items-center space-x-2.5 min-w-0">
+              <PartyLogo acronym={candidate.partyAcronym} size={32} className="shrink-0" />
+              <h4 className="text-xs sm:text-sm font-bold truncate leading-tight text-inherit">
                 {candidate.name}
               </h4>
-              <div className="flex items-center space-x-2">
-                <span
-                  className="px-2 py-0.2 rounded text-[10px] font-black text-white tracking-wider"
-                  style={{ backgroundColor: candidate.partyColor || '#086338' }}
-                >
-                  {candidate.partyAcronym}
-                </span>
-                <span className={`text-[10px] font-medium truncate ${mutedText}`}>
-                  {candidate.partyId ? candidate.partyId.toUpperCase() : ''}
-                </span>
-              </div>
             </div>
+            <span
+              className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0"
+              style={{ backgroundColor: candidate.partyColor || '#086338' }}
+            >
+              {candidate.partyAcronym}
+            </span>
           </div>
         ) : (
-          <div className="my-auto py-2 flex items-center space-x-3 opacity-60">
-            <div className="w-9 h-9 rounded-lg border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center shrink-0">
-              <span className="text-[10px] font-mono font-bold text-gray-400">—</span>
+          <div className="my-auto py-2 flex items-center space-x-2.5 opacity-50">
+            <div className="w-8 h-8 rounded-lg border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center shrink-0">
+              <span className="text-[10px] text-gray-400">—</span>
             </div>
-            <div className="min-w-0 flex-1">
-              <h4 className="text-xs sm:text-sm font-medium italic text-gray-500">
-                (No candidate selected)
-              </h4>
-              <p className={`text-[10px] ${mutedText}`}>
-                {interactive ? 'Tap to choose' : 'Voter abstained'}
-              </p>
-            </div>
+            <span className="text-xs text-gray-400 italic">Unselected</span>
           </div>
         )}
       </div>
@@ -204,29 +178,25 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       </div>
 
       {/* CARD HEADER */}
-      <div className="relative z-10 px-4 sm:px-6 pt-4 pb-2.5 border-b border-black/10 dark:border-white/10 bg-black/[0.015] dark:bg-white/[0.015]">
+      <div className="relative z-10 px-4 sm:px-5 pt-3.5 pb-2 border-b border-black/10 dark:border-white/10">
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-0.5">
-            <div className="flex items-center space-x-2">
-              <span className="text-base sm:text-lg">🗳</span>
-              <h2 className="text-sm sm:text-base font-black tracking-wider uppercase font-mono" style={{ color: accentColor }}>
-                My 2027 elections line-up [{daysRemaining} days to go!]
-              </h2>
-            </div>
-            <p className="text-[11px] font-mono font-bold text-[#EAB308] dark:text-[#FBBF24]">
-              Vote on Jan 16 and Feb 06, 2027
+            <h2 className="text-sm sm:text-base font-black tracking-wider uppercase font-mono" style={{ color: accentColor }}>
+              My 2027 Lineup [{daysRemaining}d to go]
+            </h2>
+            <p className="text-[10px] font-mono font-bold text-[#EAB308] dark:text-[#FBBF24]">
+              Vote Jan 16 & Feb 06, 2027
             </p>
-            <p className="text-[10px] sm:text-[11px] font-bold tracking-wide uppercase text-black/80 dark:text-white/90">
+            <p className="text-[10px] font-bold tracking-wide uppercase text-black/80 dark:text-white/90">
               📍 {locationHeader}
             </p>
           </div>
 
-          {/* Optional User Attribution (Only if provided) */}
+          {/* Optional User Attribution */}
           {hasUserAttribution && (
             <div className="text-right flex flex-col items-end shrink-0 pl-2">
-              <span className="text-[9px] font-mono uppercase tracking-wider text-[#8EA395]">Lineup by</span>
               {userName && (
-                <span className="text-xs font-black truncate max-w-[140px] text-black dark:text-white">
+                <span className="text-xs font-bold truncate max-w-[140px] text-black dark:text-white">
                   {userName}
                 </span>
               )}
@@ -243,30 +213,27 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       {/* 4 CANDIDATE BOXES GRID */}
       <div className="relative z-10 p-3 sm:p-4 flex-1 flex flex-col justify-center">
         <div
-          className={`grid gap-2.5 sm:gap-3 ${
+          className={`grid gap-2.5 ${
             aspectRatio === 'twitter_landscape' || aspectRatio === 'facebook_post' || aspectRatio === 'instagram_square'
               ? 'grid-cols-2'
               : 'grid-cols-1'
           }`}
         >
-          {renderSlot('🇳🇬', 'PRESIDENTIAL', pres, 'Federal Republic', false, 'PRESIDENT')}
-          {renderSlot('🏛', 'GOVERNORSHIP', gov, isFCT ? 'N/A (FCT)' : `${stateDisplayName} State`, isFCT, 'GOVERNOR')}
-          {renderSlot('📜', 'SENATORIAL', sen, district?.code || district?.name || 'District', false, 'SENATOR')}
-          {renderSlot('🏛', 'HOUSE OF REP', rep, constName, false, 'REPRESENTATIVE')}
+          {renderSlot('President', pres, 'Federal', false, 'PRESIDENT')}
+          {renderSlot('Governor', gov, isFCT ? 'FCT' : `${stateDisplayName}`, isFCT, 'GOVERNOR')}
+          {renderSlot('Senator', sen, district?.code || district?.name || 'District', false, 'SENATOR')}
+          {renderSlot('House of Rep', rep, constName, false, 'REPRESENTATIVE')}
         </div>
       </div>
 
       {/* CARD FOOTER */}
-      <div className="relative z-10 px-4 sm:px-6 py-2.5 bg-black/5 dark:bg-white/5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] sm:text-[11px]">
-        <div className="flex items-center space-x-1.5">
-          <span className="opacity-80">Make yours:</span>
-          <span className="font-mono font-black underline tracking-wide" style={{ color: accentColor }}>
-            www.my2027lineup.com
-          </span>
-        </div>
-        <div className="font-mono font-bold opacity-80 text-right">
-          Not an official ballot #my2027lineup
-        </div>
+      <div className="relative z-10 px-4 sm:px-5 py-2 bg-black/5 dark:bg-white/5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px]">
+        <span className="font-mono font-bold underline" style={{ color: accentColor }}>
+          www.my2027lineup.com
+        </span>
+        <span className="font-mono text-gray-400">
+          #my2027lineup
+        </span>
       </div>
     </div>
   );
