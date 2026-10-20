@@ -4,7 +4,12 @@ import React, { useState, useRef } from 'react';
 import { BallotCard } from '@/components/ballot/BallotCard';
 import { PartyLogo } from '@/components/ballot/PartyLogo';
 import { useBallotStore } from '@/lib/ballot/store';
-import { NIGERIAN_STATES, getStateByCode } from '@/lib/data/states';
+import {
+  NIGERIAN_STATES,
+  getStateByCode,
+  GOVERNORSHIP_STATES,
+  OFF_CYCLE_GOV_STATE_CODES,
+} from '@/lib/data/states';
 import { getCandidatesForRace } from '@/lib/data/candidates';
 import { exportBallotAsPng, triggerCelebration } from '@/lib/export';
 import { CardStylePreset, CardAspectRatio } from '@/types/ballot';
@@ -16,7 +21,6 @@ import {
   RotateCcw,
   X,
   Vote,
-  Check,
 } from 'lucide-react';
 
 const TwitterIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
@@ -43,81 +47,80 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const currentState = getStateByCode(currentLineup.stateCode) || NIGERIAN_STATES[0];
-  const isFCT = currentLineup.stateCode === 'FC';
+  const isOffCycleGov = OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode);
 
-  const activeDistrict =
-    currentState.senatorialDistricts.find((d) => d.id === currentLineup.senatorialDistrictId) ||
-    currentState.senatorialDistricts[0];
+  // Senatorial District: strictly use selection, NO default fallback
+  const activeDistrict = currentLineup.senatorialDistrictId
+    ? currentState.senatorialDistricts.find((d) => d.id === currentLineup.senatorialDistrictId)
+    : undefined;
 
-  const availableConstituencies = currentState.federalConstituencies.filter(
-    (c) => c.senatorialDistrictId === activeDistrict?.id
-  );
+  // Available constituencies: ONLY those belonging to the selected senatorial district
+  const availableConstituencies = activeDistrict
+    ? currentState.federalConstituencies.filter((c) => c.senatorialDistrictId === activeDistrict.id)
+    : [];
 
-  const activeConstituency =
-    availableConstituencies.find((c) => c.id === currentLineup.federalConstituencyId) ||
-    availableConstituencies[0] ||
-    currentState.federalConstituencies[0];
+  // Federal Constituency: strictly use selection, NO default fallback
+  const activeConstituency = currentLineup.federalConstituencyId
+    ? availableConstituencies.find((c) => c.id === currentLineup.federalConstituencyId)
+    : undefined;
 
   const presidentialCandidates = getCandidatesForRace({ office: 'PRESIDENT' });
 
-  const governorshipCandidates = isFCT
+  const governorshipCandidates = isOffCycleGov
     ? []
     : getCandidatesForRace({ office: 'GOVERNOR', stateCode: currentLineup.stateCode });
 
-  const senatorialCandidates = getCandidatesForRace({
-    office: 'SENATOR',
-    stateCode: currentLineup.stateCode,
-    senatorialDistrictId: activeDistrict?.id,
-  });
+  const senatorialCandidates = activeDistrict
+    ? getCandidatesForRace({
+        office: 'SENATOR',
+        stateCode: currentLineup.stateCode,
+        senatorialDistrictId: activeDistrict.id,
+      })
+    : [];
 
-  const repCandidates = getCandidatesForRace({
-    office: 'REPRESENTATIVE',
-    stateCode: currentLineup.stateCode,
-    senatorialDistrictId: activeDistrict?.id,
-    federalConstituencyId: activeConstituency?.id,
-  });
+  const repCandidates = activeConstituency
+    ? getCandidatesForRace({
+        office: 'REPRESENTATIVE',
+        stateCode: currentLineup.stateCode,
+        senatorialDistrictId: activeDistrict?.id,
+        federalConstituencyId: activeConstituency.id,
+      })
+    : [];
 
   const selectedPresident = presidentialCandidates.find((c) => c.id === currentLineup.presidentId);
   const selectedGovernor = governorshipCandidates.find((c) => c.id === currentLineup.governorId);
   const selectedSenator = senatorialCandidates.find((c) => c.id === currentLineup.senatorId);
   const selectedRep = repCandidates.find((c) => c.id === currentLineup.representativeId);
 
+  // Cascading update: Changing State resets Senate and House selections
   const handleStateChange = (newCode: string) => {
     const newState = getStateByCode(newCode);
     if (!newState) return;
-    const defaultDist = newState.senatorialDistricts[0]?.id || '';
-    const matchingConsts = newState.federalConstituencies.filter(
-      (c) => c.senatorialDistrictId === defaultDist
-    );
-    const defaultConst = matchingConsts[0]?.id || newState.federalConstituencies[0]?.id || '';
 
     updateCurrentLineup({
       stateCode: newCode,
-      senatorialDistrictId: defaultDist,
-      federalConstituencyId: defaultConst,
+      senatorialDistrictId: undefined,
+      federalConstituencyId: undefined,
       governorId: undefined,
       senatorId: undefined,
       representativeId: undefined,
     });
   };
 
+  // Cascading update: Changing Senatorial District makes House selection blank and requires an update
   const handleDistrictChange = (distId: string) => {
-    const matchingConsts = currentState.federalConstituencies.filter(
-      (c) => c.senatorialDistrictId === distId
-    );
-    const defaultConst = matchingConsts[0]?.id || currentState.federalConstituencies[0]?.id || '';
-
     updateCurrentLineup({
-      senatorialDistrictId: distId,
-      federalConstituencyId: defaultConst,
+      senatorialDistrictId: distId || undefined,
+      federalConstituencyId: undefined,
       senatorId: undefined,
       representativeId: undefined,
     });
   };
 
+  // Constituency change
   const handleConstituencyChange = (constId: string) => {
     updateCurrentLineup({
-      federalConstituencyId: constId,
+      federalConstituencyId: constId || undefined,
       representativeId: undefined,
     });
   };
@@ -158,7 +161,7 @@ export default function HomePage() {
 
   const getModalTitle = () => {
     if (activeModal === 'PRESIDENT') return 'Select President';
-    if (activeModal === 'GOVERNOR') return `Select Governor (${currentState.name} State)`;
+    if (activeModal === 'GOVERNOR') return `Select State's Governorship Candidate (${currentState.name} State)`;
     if (activeModal === 'SENATOR') return `Select Senator (${activeDistrict?.name || 'District'})`;
     if (activeModal === 'REPRESENTATIVE') return `Select Representative (${activeConstituency?.name || 'Constituency'})`;
     return '';
@@ -187,14 +190,14 @@ export default function HomePage() {
   };
 
   const handleShareOnX = () => {
-    const constName = activeConstituency?.name || 'Constituency';
-    const text = `Here is my 2027 candidates lineup!\n\n📍 ${constName}, ${currentState.name} State\n🗳 Make yours: https://www.my2027lineup.com\n#my2027lineup`;
+    const locText = activeDistrict ? `${activeDistrict.name}, ${currentState.name} State` : `${currentState.name} State`;
+    const text = `Here is my 2027 ballot line-up Nigeria!\n\n📍 ${locText}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const handleShareWhatsApp = () => {
-    const constName = activeConstituency?.name || 'Constituency';
-    const text = `Here is my 2027 candidates lineup! 🇳🇬\n📍 ${constName}, ${currentState.name} State\n🗳 Make yours: https://www.my2027lineup.com\n#my2027lineup`;
+    const locText = activeDistrict ? `${activeDistrict.name}, ${currentState.name} State` : `${currentState.name} State`;
+    const text = `Here is my 2027 ballot line-up Nigeria! 🇳🇬\n📍 ${locText}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -203,7 +206,7 @@ export default function HomePage() {
     { num: 2, label: 'Governor' },
     { num: 3, label: 'Senate' },
     { num: 4, label: 'House' },
-    { num: 5, label: 'Card' },
+    { num: 5, label: 'Customize Card' },
   ];
 
   return (
@@ -257,7 +260,7 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* CLEAN CARD SELECTOR */}
+              {/* CARD SELECTOR */}
               {selectedPresident ? (
                 <div
                   onClick={() => {
@@ -270,7 +273,7 @@ export default function HomePage() {
                     <PartyLogo acronym={selectedPresident.partyAcronym} size={36} className="shrink-0" />
                     <div className="min-w-0">
                       <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Presidential Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedPresident.name}</div>
+                      <div className="text-sm sm:text-base font-bold text-white break-words">{selectedPresident.name}</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 shrink-0">
@@ -316,7 +319,7 @@ export default function HomePage() {
                   onClick={() => setCurrentStep(2)}
                   className="text-xs text-gray-400 hover:text-white"
                 >
-                  Skip
+                  (Undecided) Skip
                 </button>
 
                 <button
@@ -336,7 +339,7 @@ export default function HomePage() {
               <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
                 <div>
                   <h3 className="text-base font-bold text-white">Select Governor</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Pick governor for {currentState.name} State.</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Select State&apos;s Governorship candidate.</p>
                 </div>
                 {currentLineup.governorId && (
                   <button
@@ -348,25 +351,39 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* STATE DROPDOWN */}
+              {/* STATE DROPDOWN (ONLY 28 CONDUCTING STATES) */}
               <div>
-                <label className="block text-[11px] text-gray-400 mb-1">State</label>
+                <label className="block text-[11px] text-gray-400 mb-1">State (2027 Governorship Elections)</label>
                 <select
-                  value={currentLineup.stateCode}
-                  onChange={(e) => handleStateChange(e.target.value)}
+                  value={isOffCycleGov ? '' : currentLineup.stateCode}
+                  onChange={(e) => {
+                    if (e.target.value) handleStateChange(e.target.value);
+                  }}
                   className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
-                  {NIGERIAN_STATES.map((s) => (
+                  {isOffCycleGov && (
+                    <option value="" disabled className="bg-[#131B15] text-gray-400">
+                      {currentState.name} State (Off-cycle - No election)
+                    </option>
+                  )}
+                  {GOVERNORSHIP_STATES.map((s) => (
                     <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                      {s.name} State {s.code === 'FC' ? '(FCT)' : ''}
+                      {s.name} State
                     </option>
                   ))}
                 </select>
               </div>
 
-              {isFCT ? (
-                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
-                  No governorship election in FCT.
+              {isOffCycleGov ? (
+                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-1">
+                  <p className="font-semibold text-amber-400">
+                    No governorship election in {currentState.name} State in 2027.
+                  </p>
+                  <p className="text-[11px] text-gray-500">
+                    {currentLineup.stateCode === 'FC'
+                      ? 'The Federal Capital Territory does not have a Governor.'
+                      : `${currentState.name} is one of 8 off-cycle states with a separate election timetable.`}
+                  </p>
                 </div>
               ) : selectedGovernor ? (
                 <div
@@ -380,7 +397,7 @@ export default function HomePage() {
                     <PartyLogo acronym={selectedGovernor.partyAcronym} size={36} className="shrink-0" />
                     <div className="min-w-0">
                       <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Governorship Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedGovernor.name}</div>
+                      <div className="text-sm sm:text-base font-bold text-white break-words">{selectedGovernor.name}</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 shrink-0">
@@ -410,7 +427,7 @@ export default function HomePage() {
                       <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
                         Select Governor
                       </div>
-                      <div className="text-xs text-gray-400">Click to choose candidate for {currentState.name}</div>
+                      <div className="text-xs text-gray-400">Click to choose candidate for {currentState.name} State</div>
                     </div>
                   </div>
                   <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
@@ -435,7 +452,7 @@ export default function HomePage() {
                     onClick={() => setCurrentStep(3)}
                     className="text-xs text-gray-400 hover:text-white"
                   >
-                    Skip
+                    (Undecided) Skip
                   </button>
                   <button
                     onClick={() => setCurrentStep(3)}
@@ -455,7 +472,9 @@ export default function HomePage() {
               <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
                 <div>
                   <h3 className="text-base font-bold text-white">Select Senator</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Pick senator for {activeDistrict?.name || 'District'}.</p>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {activeDistrict ? `Pick senator for ${activeDistrict.name}.` : `Select senatorial district in ${currentState.name} State.`}
+                  </p>
                 </div>
                 {currentLineup.senatorId && (
                   <button
@@ -467,14 +486,17 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* DISTRICT DROPDOWN */}
+              {/* DISTRICT DROPDOWN - NO PRE-SELECTION */}
               <div>
-                <label className="block text-[11px] text-gray-400 mb-1">Senatorial District</label>
+                <label className="block text-[11px] text-gray-400 mb-1">Senatorial District ({currentState.name} State)</label>
                 <select
-                  value={activeDistrict?.id || ''}
+                  value={currentLineup.senatorialDistrictId || ''}
                   onChange={(e) => handleDistrictChange(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
+                  <option value="" className="bg-[#131B15] text-gray-400">
+                    -- Select Senatorial District --
+                  </option>
                   {currentState.senatorialDistricts.map((d) => (
                     <option key={d.id} value={d.id} className="bg-[#131B15] text-white">
                       {d.name}
@@ -495,7 +517,7 @@ export default function HomePage() {
                     <PartyLogo acronym={selectedSenator.partyAcronym} size={36} className="shrink-0" />
                     <div className="min-w-0">
                       <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Senatorial Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedSenator.name}</div>
+                      <div className="text-sm sm:text-base font-bold text-white break-words">{selectedSenator.name}</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2 shrink-0">
@@ -508,7 +530,7 @@ export default function HomePage() {
                     <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
                   </div>
                 </div>
-              ) : (
+              ) : activeDistrict ? (
                 <button
                   type="button"
                   onClick={() => {
@@ -525,7 +547,7 @@ export default function HomePage() {
                       <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
                         Select Senator
                       </div>
-                      <div className="text-xs text-gray-400">Click to choose candidate for {activeDistrict?.name}</div>
+                      <div className="text-xs text-gray-400">Click to choose candidate for {activeDistrict.name}</div>
                     </div>
                   </div>
                   <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
@@ -533,6 +555,10 @@ export default function HomePage() {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </button>
+              ) : (
+                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                  Please select a Senatorial District above to view candidates.
+                </div>
               )}
 
               {/* CONTROLS */}
@@ -550,7 +576,7 @@ export default function HomePage() {
                     onClick={() => setCurrentStep(4)}
                     className="text-xs text-gray-400 hover:text-white"
                   >
-                    Skip
+                    (Undecided) Skip
                   </button>
                   <button
                     onClick={() => setCurrentStep(4)}
@@ -570,7 +596,13 @@ export default function HomePage() {
               <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
                 <div>
                   <h3 className="text-base font-bold text-white">Select House of Reps</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Pick representative for {activeConstituency?.name || 'Constituency'}.</p>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {activeConstituency
+                      ? `Pick representative for ${activeConstituency.name}.`
+                      : activeDistrict
+                      ? `Select constituency within ${activeDistrict.name}.`
+                      : 'Select senatorial district first.'}
+                  </p>
                 </div>
                 {currentLineup.representativeId && (
                   <button
@@ -582,72 +614,95 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* CONSTITUENCY DROPDOWN */}
-              <div>
-                <label className="block text-[11px] text-gray-400 mb-1">Federal Constituency</label>
-                <select
-                  value={activeConstituency?.id || ''}
-                  onChange={(e) => handleConstituencyChange(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                >
-                  {availableConstituencies.map((c) => (
-                    <option key={c.id} value={c.id} className="bg-[#131B15] text-white">
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {selectedRep ? (
-                <div
-                  onClick={() => {
-                    setActiveModal('REPRESENTATIVE');
-                    setSearchQuery('');
-                  }}
-                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                >
-                  <div className="flex items-center space-x-3.5 min-w-0">
-                    <PartyLogo acronym={selectedRep.partyAcronym} size={36} className="shrink-0" />
-                    <div className="min-w-0">
-                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Representative Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white truncate">{selectedRep.name}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 shrink-0">
-                    <span
-                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
-                      style={{ backgroundColor: selectedRep.partyColor || '#086338' }}
-                    >
-                      {selectedRep.partyAcronym}
-                    </span>
-                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
-                  </div>
+              {!currentLineup.senatorialDistrictId ? (
+                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2">
+                  <p>Please select a Senatorial District in Step 3 first.</p>
+                  <button
+                    onClick={() => setCurrentStep(3)}
+                    className="px-3 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs"
+                  >
+                    ← Back to Step 3 (Senate)
+                  </button>
                 </div>
               ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModal('REPRESENTATIVE');
-                    setSearchQuery('');
-                  }}
-                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
-                >
-                  <div className="flex items-center space-x-3.5">
-                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
-                      <Vote className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
-                        Select Representative
+                <>
+                  {/* CONSTITUENCY DROPDOWN (ONLY CONSTITUENCIES IN THIS SENATORIAL DISTRICT) */}
+                  <div>
+                    <label className="block text-[11px] text-gray-400 mb-1">
+                      Federal Constituency ({activeDistrict?.name})
+                    </label>
+                    <select
+                      value={currentLineup.federalConstituencyId || ''}
+                      onChange={(e) => handleConstituencyChange(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                    >
+                      <option value="" className="bg-[#131B15] text-gray-400">
+                        -- Select Federal Constituency --
+                      </option>
+                      {availableConstituencies.map((c) => (
+                        <option key={c.id} value={c.id} className="bg-[#131B15] text-white">
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {selectedRep ? (
+                    <div
+                      onClick={() => {
+                        setActiveModal('REPRESENTATIVE');
+                        setSearchQuery('');
+                      }}
+                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0">
+                        <PartyLogo acronym={selectedRep.partyAcronym} size={36} className="shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Representative Choice</div>
+                          <div className="text-sm sm:text-base font-bold text-white break-words">{selectedRep.name}</div>
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-400">Click to choose candidate for {activeConstituency?.name}</div>
+                      <div className="flex items-center space-x-2 shrink-0">
+                        <span
+                          className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                          style={{ backgroundColor: selectedRep.partyColor || '#086338' }}
+                        >
+                          {selectedRep.partyAcronym}
+                        </span>
+                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
-                    <span>Select</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </button>
+                  ) : activeConstituency ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal('REPRESENTATIVE');
+                        setSearchQuery('');
+                      }}
+                      className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                    >
+                      <div className="flex items-center space-x-3.5">
+                        <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                          <Vote className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                            Select Representative
+                          </div>
+                          <div className="text-xs text-gray-400">Click to choose candidate for {activeConstituency.name}</div>
+                        </div>
+                      </div>
+                      <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                        <span>Select</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    </button>
+                  ) : (
+                    <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                      Please select a Federal Constituency above to view candidates.
+                    </div>
+                  )}
+                </>
               )}
 
               {/* CONTROLS */}
@@ -665,7 +720,7 @@ export default function HomePage() {
                     onClick={() => setCurrentStep(5)}
                     className="text-xs text-gray-400 hover:text-white"
                   >
-                    Skip
+                    (Undecided) Skip
                   </button>
                   <button
                     onClick={() => setCurrentStep(5)}
@@ -679,13 +734,13 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* ===================== STEP 5: CARD DETAILS & SHARE ===================== */}
+          {/* ===================== STEP 5: CUSTOMIZE CARD ===================== */}
           {currentStep === 5 && (
             <div className="p-5 sm:p-6 rounded-2xl bg-[#0D1310] border border-[#1A251E] space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-[#1A251E]">
                 <div>
-                  <h3 className="text-base font-bold text-white">Card Details</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Customize your name and share format.</p>
+                  <h3 className="text-base font-bold text-white">Customize Card</h3>
+                  <p className="text-xs text-gray-400 mt-0.5">Enter details, pick platform format, and generate.</p>
                 </div>
                 <button
                   onClick={() => setCurrentStep(1)}
@@ -696,21 +751,38 @@ export default function HomePage() {
                 </button>
               </div>
 
-              {/* NAME & HANDLE */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {/* STRICT REQUIRED ORDER: Name (1st) -> Format (2nd) -> Handle (3rd) -> Theme (4th) */}
+              <div className="space-y-3.5">
+                {/* 1. NAME (FIRST) */}
                 <div>
-                  <label className="block text-[11px] text-gray-400 mb-1">Name (optional)</label>
+                  <label className="block text-[11px] text-gray-400 mb-1 font-medium">1. Your Name (optional)</label>
                   <input
                     type="text"
                     value={currentLineup.userName || ''}
                     onChange={(e) => updateCurrentLineup({ userName: e.target.value })}
-                    placeholder="Your name"
+                    placeholder="Enter your name"
                     className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                   />
                 </div>
 
+                {/* 2. FORMAT (SECOND) */}
                 <div>
-                  <label className="block text-[11px] text-gray-400 mb-1">Handle (optional)</label>
+                  <label className="block text-[11px] text-gray-400 mb-1 font-medium">2. Social Media Platform / Format</label>
+                  <select
+                    value={currentLineup.aspectRatio}
+                    onChange={(e) => updateCurrentLineup({ aspectRatio: e.target.value as CardAspectRatio })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                  >
+                    <option value="twitter_landscape">X / Twitter Landscape (16:9)</option>
+                    <option value="whatsapp_status">WhatsApp Status / Stories (9:16)</option>
+                    <option value="facebook_post">Facebook Feed Post (1.91:1)</option>
+                    <option value="instagram_square">Instagram Square (1:1)</option>
+                  </select>
+                </div>
+
+                {/* 3. SOCIAL MEDIA HANDLE (THIRD) */}
+                <div>
+                  <label className="block text-[11px] text-gray-400 mb-1 font-medium">3. Social Media Handle (optional)</label>
                   <input
                     type="text"
                     value={currentLineup.userHandle || ''}
@@ -719,27 +791,11 @@ export default function HomePage() {
                     className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                   />
                 </div>
-              </div>
 
-              {/* FORMAT & THEME */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                {/* 4. THEME (FOURTH) */}
                 <div>
-                  <label className="block text-[11px] text-gray-400 mb-1">Format</label>
-                  <select
-                    value={currentLineup.aspectRatio}
-                    onChange={(e) => updateCurrentLineup({ aspectRatio: e.target.value as CardAspectRatio })}
-                    className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                  >
-                    <option value="twitter_landscape">X / Twitter (16:9)</option>
-                    <option value="facebook_post">Facebook (1.91:1)</option>
-                    <option value="whatsapp_status">WhatsApp Status (9:16)</option>
-                    <option value="instagram_square">Instagram (1:1)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] text-gray-400 mb-1">Theme</label>
-                  <div className="grid grid-cols-3 gap-1">
+                  <label className="block text-[11px] text-gray-400 mb-1 font-medium">4. Card Theme</label>
+                  <div className="grid grid-cols-3 gap-1.5">
                     {[
                       { key: 'obsidian_minimal', label: 'Dark' },
                       { key: 'emerald_classic', label: 'White' },
@@ -748,7 +804,7 @@ export default function HomePage() {
                       <button
                         key={t.key}
                         onClick={() => updateCurrentLineup({ stylePreset: t.key as CardStylePreset })}
-                        className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all border ${
+                        className={`py-2 px-2 rounded-lg text-xs font-bold transition-all border ${
                           currentLineup.stylePreset === t.key
                             ? 'bg-[#20C878] text-[#0A110D] border-[#20C878]'
                             : 'bg-[#131B15] border-[#212E25] text-gray-400 hover:text-white'
@@ -761,15 +817,15 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* ACTION BUTTONS */}
-              <div className="space-y-2 pt-2 border-t border-[#1A251E]">
+              {/* ACTION BUTTON: THE ONLY PRIMARY GENERATE BUTTON IN USER SECTION */}
+              <div className="space-y-2.5 pt-3 border-t border-[#1A251E]">
                 <button
                   onClick={handleDownloadCard}
                   disabled={isExporting}
-                  className="w-full py-3 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-xs font-black flex items-center justify-center space-x-2 transition-all shadow-md"
+                  className="w-full py-3.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-sm font-black flex items-center justify-center space-x-2 transition-all shadow-lg"
                 >
                   <Download className="w-4 h-4" />
-                  <span>{isExporting ? 'Generating PNG...' : 'Download Card'}</span>
+                  <span>{isExporting ? 'Generating PNG...' : 'Generate Ballot Card'}</span>
                 </button>
 
                 <div className="grid grid-cols-2 gap-2">
@@ -810,7 +866,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between text-xs text-gray-400">
             <span className="font-bold text-white">Live Lineup Card</span>
             <span>
-              {activeConstituency?.code || 'Constituency'}, {currentState.name}
+              {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} State
             </span>
           </div>
 
@@ -823,26 +879,6 @@ export default function HomePage() {
               aspectRatio={currentLineup.aspectRatio}
               interactive={false}
             />
-          </div>
-
-          {/* QUICK DOWNLOAD & SHARE */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={handleDownloadCard}
-              disabled={isExporting}
-              className="py-2.5 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] disabled:opacity-40 text-[#08120B] text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>{isExporting ? 'Saving...' : 'Download'}</span>
-            </button>
-
-            <button
-              onClick={handleShareOnX}
-              className="py-2.5 rounded-lg bg-[#1D9BF0] hover:bg-[#1A8CD8] text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
-            >
-              <TwitterIcon className="w-3.5 h-3.5 fill-white" />
-              <span>Share on X</span>
-            </button>
           </div>
         </div>
       </div>
@@ -910,7 +946,7 @@ export default function HomePage() {
                         {isSelected && <div className="w-2 h-2 rounded-full bg-[#20C878]" />}
                       </div>
                       <PartyLogo acronym={cand.partyAcronym} size={30} className="shrink-0" />
-                      <span className="text-xs sm:text-sm font-semibold truncate text-white">{cand.name}</span>
+                      <span className="text-xs sm:text-sm font-semibold text-white break-words">{cand.name}</span>
                     </div>
 
                     <span
@@ -943,7 +979,7 @@ export default function HomePage() {
                 }}
                 className="text-xs text-gray-400 hover:text-white"
               >
-                Skip this office →
+                (Undecided) Skip →
               </button>
               <button
                 type="button"

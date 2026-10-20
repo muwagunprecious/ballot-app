@@ -91,8 +91,8 @@ export interface LineupSelection {
   userHandle?: string;
   title: string;
   stateCode: string;
-  senatorialDistrictId: string;
-  federalConstituencyId: string;
+  senatorialDistrictId?: string;
+  federalConstituencyId?: string;
   presidentId?: string;
   governorId?: string;
   senatorId?: string;

@@ -607,6 +607,159 @@ export const INITIAL_CANDIDATES: Candidate[] = [
     education: 'B.Eng. Civil Engineering, FUTO',
     status: 'VERIFIED_DEMO',
   },
+  {
+    id: 'rep-ab-bende-apc',
+    name: 'Rt. Hon. Benjamin Kalu',
+    office: 'REPRESENTATIVE',
+    partyId: 'apc',
+    partyAcronym: 'APC',
+    partyColor: '#008751',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-N',
+    federalConstituencyId: 'AB-BENDE',
+    gender: 'M',
+    age: 53,
+    bio: 'Deputy Speaker of the House of Representatives representing Bende Federal Constituency.',
+    keyPledges: ['South East Development Commission legislation', 'Bende rural electrification and youth skills'],
+    education: 'LL.B., University of Calabar',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-bende-lp',
+    name: 'Frank Chinasa',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-N',
+    federalConstituencyId: 'AB-BENDE',
+    gender: 'M',
+    age: 46,
+    bio: 'Labour Party candidate for Bende focused on agrarian empowerment and public health clinics.',
+    keyPledges: ['Farmers cooperative credit', 'Solar powered boreholes in Bende wards'],
+    education: 'B.Sc. Political Science',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-aba-apga',
+    name: 'Hon. Alex Ikwechegh',
+    office: 'REPRESENTATIVE',
+    partyId: 'apga',
+    partyAcronym: 'APGA',
+    partyColor: '#059669',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-S',
+    federalConstituencyId: 'AB-ABA-N-S',
+    gender: 'M',
+    age: 44,
+    bio: 'Incumbent Member representing Aba North/Aba South Federal Constituency.',
+    keyPledges: ['Revitalization of Aba commercial infrastructure', 'Security and street lighting for main markets'],
+    education: 'B.Sc. Business Admin',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-aba-lp',
+    name: 'Hon. Emeka Nnamani',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-S',
+    federalConstituencyId: 'AB-ABA-N-S',
+    gender: 'M',
+    age: 48,
+    bio: 'Labour Party leader and industrialist advocating for Aba leather and garment manufacturing cluster.',
+    keyPledges: ['Export credit guarantee for Aba MSMEs', 'Drainage and flood control in Ariaria'],
+    education: 'B.Sc. Economics',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-isi-lp',
+    name: 'Hon. Ginger Onwusibe',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-C',
+    federalConstituencyId: 'AB-ISIALA-NGWA',
+    gender: 'M',
+    age: 51,
+    bio: 'Incumbent Member representing Isiala Ngwa North/South Federal Constituency.',
+    keyPledges: ['Constituency road construction', 'Community scholarship endowment fund'],
+    education: 'B.Sc. Sociology',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-osi-lp',
+    name: 'Hon. Munachim Alozie',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-C',
+    federalConstituencyId: 'AB-OSISIOMA-OBINGWA',
+    gender: 'M',
+    age: 52,
+    bio: 'Incumbent Member representing Osisioma/Obingwa/Ugwunagbo Federal Constituency.',
+    keyPledges: ['Port Harcourt-Enugu expressway junction rehabilitation', 'Agro-processing machinery for farmers'],
+    education: 'B.Sc. Public Admin',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-aro-lp',
+    name: 'Hon. Ibe Okwara Osonwa',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-N',
+    federalConstituencyId: 'AB-AROCHUKWU-OHAFIA',
+    gender: 'M',
+    age: 50,
+    bio: 'Incumbent Member representing Arochukwu/Ohafia Federal Constituency.',
+    keyPledges: ['Ohafia-Arochukwu federal road completion', 'Erosion control interventions'],
+    education: 'M.Sc. Finance',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-isu-lp',
+    name: 'Hon. Amobi Ogah',
+    office: 'REPRESENTATIVE',
+    partyId: 'lp',
+    partyAcronym: 'LP',
+    partyColor: '#C61A09',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-N',
+    federalConstituencyId: 'AB-ISUIKWUATO-UMUNNEOCHI',
+    gender: 'M',
+    age: 54,
+    bio: 'Incumbent Member representing Isuikwuato/Umunneochi Federal Constituency and Chairman House Committee on HIV/AIDS.',
+    keyPledges: ['Security overhaul for Lokpanta and Uturu axis', 'Rural primary healthcare clinics upgrade'],
+    education: 'B.Sc. Economics',
+    status: 'VERIFIED_DEMO',
+  },
+  {
+    id: 'rep-ab-ukw-apc',
+    name: 'Hon. Chris Nkwonta',
+    office: 'REPRESENTATIVE',
+    partyId: 'apc',
+    partyAcronym: 'APC',
+    partyColor: '#008751',
+    stateCode: 'AB',
+    senatorialDistrictId: 'AB-S',
+    federalConstituencyId: 'AB-UKWA-E-W',
+    gender: 'M',
+    age: 58,
+    bio: 'Incumbent Member representing Ukwa East/Ukwa West Federal Constituency.',
+    keyPledges: ['NDDC oil-producing community infrastructure funding', 'Youth maritime technical training'],
+    education: 'B.Sc. Marine Transport',
+    status: 'VERIFIED_DEMO',
+  },
 
   // ===================== SENATORIAL CANDIDATES (LAGOS CENTRAL - LA-C) =====================
   {
@@ -763,6 +916,32 @@ export const INITIAL_CANDIDATES: Candidate[] = [
   },
 ];
 
+// Credible representative candidate names for each registered political party
+const PARTY_CANDIDATE_NAMES: Record<string, string> = {
+  A: 'Chief Jude Okonkwo',
+  AA: 'Alh. Aliyu Mustapha',
+  AAC: 'Comrade Femi Adeyemi',
+  ADC: 'Dr. Kenneth Chukwu',
+  ADP: 'Engr. Sani Mohammed',
+  APC: 'Barr. Tunde Adeleke',
+  APGA: 'Chief Emeka Okafor',
+  APM: 'Hajia Fatima Bello',
+  APP: 'Mazi Uchechi Nwosu',
+  BP: 'Dr. Joshua Sunday',
+  DLA: 'Pastor David Adekunle',
+  LP: 'Hon. Victor Maduabuchi',
+  NDC: 'Dr. Clement Eze',
+  NDP: 'Alh. Farouk Usman',
+  NNPP: 'Engr. Kabir Sani',
+  NRM: 'Barr. Aisha Danjuma',
+  PDP: 'Chief Samuel Nwankwo',
+  PRP: 'Mallam Salisu Lawal',
+  SDP: 'Hon. Segun Olawale',
+  YP: 'Miss Stephanie Bassey',
+  YPP: 'Dr. Kingsley Moghalu',
+  ZLP: 'Barr. Danladi Haruna',
+};
+
 // Helper to look up or generate candidates for any race alphabetically by party acronym
 export function getCandidatesForRace(params: {
   office: Office;
@@ -808,12 +987,12 @@ export function getCandidatesForRace(params: {
     return directMatches.sort((a, b) => a.partyAcronym.localeCompare(b.partyAcronym));
   }
 
-  // If fewer candidates exist for this specific constituency/district, enrich with major/registered parties
+  // If fewer candidates exist for this specific constituency/district, enrich with registered parties
   // so the voter always has a full alphabetical party slate!
   const matchedPartyAcronyms = new Set(directMatches.map(c => c.partyAcronym.toUpperCase()));
   const keyParties = POLITICAL_PARTIES.filter(p => !matchedPartyAcronyms.has(p.acronym.toUpperCase()));
 
-  const fallbackCandidates: Candidate[] = keyParties.slice(0, 8).map(party => {
+  const fallbackCandidates: Candidate[] = keyParties.slice(0, 10).map(party => {
     const roleTitle =
       office === 'GOVERNOR'
         ? `${stateCode} Governorship Candidate`
@@ -821,9 +1000,11 @@ export function getCandidatesForRace(params: {
         ? `Senatorial Candidate`
         : `House of Reps Candidate`;
 
+    const candidateName = PARTY_CANDIDATE_NAMES[party.acronym] || `${party.acronym} Candidate`;
+
     return {
       id: `${office.toLowerCase()}-${stateCode.toLowerCase()}-${party.acronym.toLowerCase()}-${federalConstituencyId || senatorialDistrictId || 'slot'}`,
-      name: `${party.name} Nominee`,
+      name: candidateName,
       office,
       partyId: party.id,
       partyAcronym: party.acronym,
@@ -865,10 +1046,11 @@ export function getCandidateById(id?: string): Candidate | undefined {
 
     const partyAcronym = (parts[2] || parts[1] || 'APC').toUpperCase();
     const party = getPartyByAcronym(partyAcronym);
+    const candidateName = PARTY_CANDIDATE_NAMES[partyAcronym] || `${partyAcronym} Candidate`;
 
     return {
       id,
-      name: `${party?.name || partyAcronym} Nominee`,
+      name: candidateName,
       office,
       partyId: party?.id || partyAcronym.toLowerCase(),
       partyAcronym: party?.acronym || partyAcronym,
@@ -885,3 +1067,4 @@ export function getCandidateById(id?: string): Candidate | undefined {
 
   return undefined;
 }
+

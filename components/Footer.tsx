@@ -1,24 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Info, Heart, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Heart } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#0B0F0D] border-t border-[#27332B] pt-12 pb-8 text-[#A0ADA4] text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Col 1: Wordmark & Mission */}
-          <div className="md:col-span-1 space-y-3">
+    <footer className="bg-[#0B0F0D] border-t border-[#1F2C23] pt-10 pb-8 text-[#A0ADA4] text-xs">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* Col 1: Brand & Mission */}
+          <div className="space-y-2.5">
             <div className="flex items-center space-x-2">
               <div className="w-6 h-6 rounded bg-[#151D18] border border-[#20C878]/40 flex items-center justify-center">
-                <span className="text-emerald-400 font-bold text-xs">27</span>
+                <span className="text-[#20C878] font-bold text-xs">🗳️</span>
               </div>
-              <span className="text-white font-semibold tracking-tight text-sm">
-                My 2027 Lineup
+              <span className="text-white font-bold tracking-tight text-sm">
+                My 2027 ballot line-up Nigeria
               </span>
             </div>
             <p className="text-[#6D7B71] text-xs leading-relaxed">
-              A civic technology initiative empowering Nigerian citizens to formulate, design, and share personalized electoral slates for the 2027 General Elections.
+              A civic technology initiative empowering Nigerian citizens to formulate, design, and share personalized electoral lineups for the 2027 General Elections.
             </p>
             <div className="flex items-center space-x-1.5 text-[11px] text-[#6D7B71]">
               <span>Made with</span>
@@ -27,103 +27,53 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: Navigation */}
-          <div className="space-y-3">
-            <h4 className="text-white font-medium text-xs tracking-wider uppercase font-mono">Platform</h4>
-            <ul className="space-y-2">
+          {/* Col 2: Initiative Info */}
+          <div className="space-y-2.5">
+            <h4 className="text-white font-bold text-xs tracking-wider uppercase font-mono">Civic Initiative</h4>
+            <ul className="space-y-1.5 text-[#8E9F94]">
               <li>
-                <Link href="/wizard" className="hover:text-emerald-400 transition-colors">
+                <Link href="/" className="hover:text-[#20C878] transition-colors">
                   Create Your Lineup
                 </Link>
               </li>
               <li>
-                <Link href="/candidates" className="hover:text-emerald-400 transition-colors">
-                  Candidate Directory
-                </Link>
+                <span className="text-gray-400">Website: </span>
+                <span className="text-[#20C878] font-mono">www.2027lineup.com</span>
               </li>
               <li>
-                <Link href="/states" className="hover:text-emerald-400 transition-colors">
-                  States & Constituencies
-                </Link>
-              </li>
-              <li>
-                <Link href="/profile" className="hover:text-emerald-400 transition-colors">
-                  Demo User Profile
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="hover:text-emerald-400 transition-colors">
-                  Admin Demo Dashboard
-                </Link>
+                <span className="text-gray-400">Hashtag: </span>
+                <span className="text-[#20C878] font-mono font-bold">#My2027Lineup</span>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Key States */}
-          <div className="space-y-3">
-            <h4 className="text-white font-medium text-xs tracking-wider uppercase font-mono">Explore States</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/states?state=LA" className="hover:text-emerald-400 transition-colors">
-                  Lagos State Lineups
-                </Link>
-              </li>
-              <li>
-                <Link href="/states?state=FC" className="hover:text-emerald-400 transition-colors">
-                  Federal Capital Territory
-                </Link>
-              </li>
-              <li>
-                <Link href="/states?state=KN" className="hover:text-emerald-400 transition-colors">
-                  Kano State Lineups
-                </Link>
-              </li>
-              <li>
-                <Link href="/states?state=RV" className="hover:text-emerald-400 transition-colors">
-                  Rivers State Lineups
-                </Link>
-              </li>
-              <li>
-                <Link href="/states?state=OY" className="hover:text-emerald-400 transition-colors">
-                  Oyo State Lineups
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Civic Disclaimer & Transparency */}
-          <div className="space-y-3">
-            <h4 className="text-white font-medium text-xs tracking-wider uppercase font-mono">Civic Transparency</h4>
-            <div className="p-3 rounded-lg bg-[#101713] border border-[#27332B] space-y-2">
-              <div className="flex items-center space-x-1.5 text-amber-400 text-[11px] font-medium">
+          {/* Col 3: Civic Disclaimer */}
+          <div className="space-y-2.5">
+            <h4 className="text-white font-bold text-xs tracking-wider uppercase font-mono">Civic Transparency</h4>
+            <div className="p-3 rounded-lg bg-[#101713] border border-[#1F2C23] space-y-1.5">
+              <div className="flex items-center space-x-1.5 text-amber-400 text-[11px] font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-                <span>Non-Partisan Prototype</span>
+                <span>Not Official Ballot</span>
               </div>
-              <p className="text-[11px] text-[#6D7B71] leading-normal">
-                This platform is an open-source civic demonstration. It is not affiliated with the Independent National Electoral Commission (INEC). All displayed candidacies represent demo records and personal user preferences.
+              <p className="text-[11px] text-[#6D7B71] leading-relaxed">
+                This platform is an independent civic engagement demonstration and is not affiliated with the Independent National Electoral Commission (INEC). All slates represent personal user choices.
               </p>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 border-t border-[#27332B] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#6D7B71]">
+        <div className="pt-6 border-t border-[#1A251E] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6D7B71]">
           <div>
-            © 2026–2027 My 2027 Lineup (MyNaijaBallot). All rights reserved.
+            © 2026–2027 My 2027 Lineup Nigeria. All rights reserved.
           </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/#transparency" className="hover:text-white transition-colors">
-              Data Methodology
-            </Link>
-            <span>•</span>
-            <Link href="/#faq" className="hover:text-white transition-colors">
-              FAQ
-            </Link>
-            <span>•</span>
-            <span className="text-[#20C878] font-mono">v1.0-editorial-preview</span>
+          <div className="flex items-center space-x-3">
+            <span className="text-amber-500 font-semibold">• Not official ballot •</span>
+            <span className="text-[#20C878] font-mono font-bold">#My2027Lineup</span>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+

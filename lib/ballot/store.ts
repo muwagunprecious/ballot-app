@@ -5,13 +5,13 @@ import { Candidate, LineupSelection, CardStylePreset, CardAspectRatio, UserProfi
 import { INITIAL_CANDIDATES } from '@/lib/data/candidates';
 
 export const DEFAULT_LINEUP: LineupSelection = {
-  id: 'lineup-abia-default',
-  title: 'My 2027 candidates lineup',
+  id: 'lineup-default-2027',
+  title: 'My 2027 ballot line-up Nigeria',
   userName: '',
   userHandle: '',
   stateCode: 'AB',
-  senatorialDistrictId: 'AB-C',
-  federalConstituencyId: 'AB-IKWUANO-UMUAHIA',
+  senatorialDistrictId: undefined,
+  federalConstituencyId: undefined,
   presidentId: undefined,
   governorId: undefined,
   senatorId: undefined,
@@ -90,7 +90,7 @@ export function useBallotStore() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const storedLineup = localStorage.getItem('my2027_current_lineup');
+      const storedLineup = localStorage.getItem('my2027_ballot_v3');
       if (storedLineup) {
         setCurrentLineup(JSON.parse(storedLineup));
       }
@@ -116,7 +116,7 @@ export function useBallotStore() {
       const next = typeof updater === 'function' ? updater(prev) : { ...prev, ...updater, updatedAt: new Date().toISOString() };
       if (typeof window !== 'undefined') {
         try {
-          localStorage.setItem('my2027_current_lineup', JSON.stringify(next));
+          localStorage.setItem('my2027_ballot_v3', JSON.stringify(next));
         } catch (e) {
           console.error(e);
         }

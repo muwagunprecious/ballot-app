@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { LineupSelection, CardStylePreset, CardAspectRatio } from '@/types/ballot';
 import { getCandidateById } from '@/lib/data/candidates';
-import { getStateByCode, getSenatorialDistrict, getFederalConstituency } from '@/lib/data/states';
+import { getStateByCode, getSenatorialDistrict, getFederalConstituency, OFF_CYCLE_GOV_STATE_CODES } from '@/lib/data/states';
 import { LandmarkSvg } from './LandmarkSvg';
 import { PartyLogo } from './PartyLogo';
 
@@ -22,7 +22,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   interactive = false,
   onOfficeClick,
 }, ref) => {
-  const [daysRemaining, setDaysRemaining] = useState<number>(274);
+  const [daysRemaining, setDaysRemaining] = useState<number>(88);
 
   useEffect(() => {
     const targetDate = new Date('2027-01-16T08:00:00Z').getTime();
@@ -32,8 +32,8 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   }, []);
 
   const state = getStateByCode(lineup.stateCode);
-  const { district } = getSenatorialDistrict(lineup.stateCode, lineup.senatorialDistrictId);
-  const { constituency } = getFederalConstituency(lineup.stateCode, lineup.federalConstituencyId);
+  const { district } = getSenatorialDistrict(lineup.stateCode, lineup.senatorialDistrictId || '');
+  const { constituency } = getFederalConstituency(lineup.stateCode, lineup.federalConstituencyId || '');
 
   const isPresSelected = !!lineup.presidentId && lineup.presidentId !== 'undecided';
   const isGovSelected = !!lineup.governorId && lineup.governorId !== 'undecided';
@@ -46,6 +46,8 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const rep = isRepSelected ? getCandidateById(lineup.representativeId) : undefined;
 
   const isFCT = lineup.stateCode === 'FC';
+  const isOffCycleGov = OFF_CYCLE_GOV_STATE_CODES.includes(lineup.stateCode);
+
   const isDark = stylePreset === 'obsidian_minimal';
   const isHeritage = stylePreset === 'civic_heritage';
 
@@ -89,11 +91,13 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const mutedText = isDark ? 'text-[#8EA395]' : 'text-[#526D5C]';
   const watermarkOpacity = isDark ? 0.03 : 0.04;
 
-  const constName = constituency?.name || constituency?.code || 'Constituency';
-  const stateDisplayName = state?.name || 'Abia';
+  const districtName = district?.code || district?.name;
+  const stateDisplayName = state?.name ? `${state.name} State` : 'Nigeria';
   const locationHeader = isFCT
-    ? `${constName}, FCT Abuja`
-    : `${constName}, ${stateDisplayName} State`;
+    ? 'Federal Capital Territory'
+    : districtName
+    ? `${districtName}, ${stateDisplayName}`
+    : `${stateDisplayName}`;
 
   const hasUserAttribution = !!lineup.userName?.trim() || !!lineup.userHandle?.trim();
   const userName = lineup.userName?.trim();
@@ -132,29 +136,31 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
         {/* Content */}
         {disabled ? (
           <div className="py-2.5 my-auto text-center">
-            <span className={`text-xs italic ${mutedText}`}>No election (FCT)</span>
+            <span className={`text-xs italic ${mutedText}`}>
+              {isFCT ? 'No election (FCT)' : 'No election (Off-cycle)'}
+            </span>
           </div>
         ) : candidate ? (
           <div className="my-auto py-2 flex items-center justify-between gap-2.5">
             <div className="flex items-center space-x-2.5 min-w-0">
               <PartyLogo acronym={candidate.partyAcronym} size={32} className="shrink-0" />
-              <h4 className="text-xs sm:text-sm font-bold truncate leading-tight text-inherit">
+              <h4 className="text-xs sm:text-sm font-bold leading-tight break-words text-inherit">
                 {candidate.name}
               </h4>
             </div>
             <span
-              className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0"
+              className="px-2 py-0.5 rounded text-[10px] font-mono font-bold text-white shrink-0 self-center"
               style={{ backgroundColor: candidate.partyColor || '#086338' }}
             >
               {candidate.partyAcronym}
             </span>
           </div>
         ) : (
-          <div className="my-auto py-2 flex items-center space-x-2.5 opacity-50">
+          <div className="my-auto py-2 flex items-center space-x-2.5 opacity-60">
             <div className="w-8 h-8 rounded-lg border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center shrink-0">
               <span className="text-[10px] text-gray-400">—</span>
             </div>
-            <span className="text-xs text-gray-400 italic">Unselected</span>
+            <span className="text-xs text-gray-400 italic font-medium">(Undecided)</span>
           </div>
         )}
       </div>
@@ -182,7 +188,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-0.5">
             <h2 className="text-sm sm:text-base font-black tracking-wider uppercase font-mono" style={{ color: accentColor }}>
-              My 2027 Lineup [{daysRemaining}d to go]
+              My 2027 ballot line-up Nigeria [{daysRemaining} Days to Go]
             </h2>
             <p className="text-[10px] font-mono font-bold text-[#EAB308] dark:text-[#FBBF24]">
               Vote Jan 16 & Feb 06, 2027
@@ -220,19 +226,22 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
           }`}
         >
           {renderSlot('President', pres, 'Federal', false, 'PRESIDENT')}
-          {renderSlot('Governor', gov, isFCT ? 'FCT' : `${stateDisplayName}`, isFCT, 'GOVERNOR')}
-          {renderSlot('Senator', sen, district?.code || district?.name || 'District', false, 'SENATOR')}
-          {renderSlot('House of Rep', rep, constName, false, 'REPRESENTATIVE')}
+          {renderSlot('Governor', gov, isFCT ? 'FCT' : isOffCycleGov ? 'Off-cycle' : `${state?.name || ''}`, isOffCycleGov, 'GOVERNOR')}
+          {renderSlot('Senator', sen, districtName || 'District', false, 'SENATOR')}
+          {renderSlot('House of Rep', rep, constituency?.code || constituency?.name || 'Constituency', false, 'REPRESENTATIVE')}
         </div>
       </div>
 
       {/* CARD FOOTER */}
-      <div className="relative z-10 px-4 sm:px-5 py-2 bg-black/5 dark:bg-white/5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px]">
-        <span className="font-mono font-bold underline" style={{ color: accentColor }}>
-          www.my2027lineup.com
+      <div className="relative z-10 px-4 sm:px-5 py-2.5 bg-black/5 dark:bg-white/5 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-2 text-[10px]">
+        <span className="font-mono font-bold" style={{ color: accentColor }}>
+          www.2027lineup.com
         </span>
-        <span className="font-mono text-gray-400">
-          #my2027lineup
+        <span className="font-mono font-bold uppercase tracking-wider text-amber-500 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+          Not official ballot
+        </span>
+        <span className="font-mono text-gray-400 font-semibold">
+          #My2027Lineup
         </span>
       </div>
     </div>
@@ -240,3 +249,4 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
 });
 
 BallotCard.displayName = 'BallotCard';
+

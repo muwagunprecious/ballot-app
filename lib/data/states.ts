@@ -1127,6 +1127,14 @@ export const NIGERIAN_STATES: StateInfo[] = [...RAW_NIGERIAN_STATES].sort((a, b)
   a.name.localeCompare(b.name)
 );
 
+// The 8 states that will not conduct Governorship elections in 2027 + FCT (which has no Governor)
+export const OFF_CYCLE_GOV_STATE_CODES = ['AN', 'BY', 'ED', 'EK', 'IM', 'KG', 'ON', 'OS', 'FC'];
+
+// States holding governorship elections in 2027 (28 states, alphabetical)
+export const GOVERNORSHIP_STATES = NIGERIAN_STATES.filter(
+  (s) => !OFF_CYCLE_GOV_STATE_CODES.includes(s.code)
+);
+
 export function getStateByCode(code: string): StateInfo | undefined {
   return NIGERIAN_STATES.find(s => s.code.toUpperCase() === code.toUpperCase());
 }
@@ -1135,14 +1143,16 @@ export function getStateByName(name: string): StateInfo | undefined {
   return NIGERIAN_STATES.find(s => s.name.toLowerCase() === name.toLowerCase());
 }
 
-export function getSenatorialDistrict(stateCode: string, districtId: string): { district?: StateInfo['senatorialDistricts'][0]; state?: StateInfo } {
+export function getSenatorialDistrict(stateCode: string, districtId?: string): { district?: StateInfo['senatorialDistricts'][0]; state?: StateInfo } {
   const state = getStateByCode(stateCode);
+  if (!districtId) return { district: undefined, state };
   const district = state?.senatorialDistricts.find(d => d.id === districtId || d.code.toLowerCase() === districtId.toLowerCase());
   return { district, state };
 }
 
-export function getFederalConstituency(stateCode: string, constituencyId: string) {
+export function getFederalConstituency(stateCode: string, constituencyId?: string) {
   const state = getStateByCode(stateCode);
+  if (!constituencyId) return { constituency: undefined, state };
   const constituency = state?.federalConstituencies.find(c => c.id === constituencyId || c.code.toLowerCase() === constituencyId.toLowerCase());
   return { constituency, state };
 }
