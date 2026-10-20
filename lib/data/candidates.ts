@@ -949,13 +949,18 @@ export function getCandidatesForRace(params: {
   senatorialDistrictId?: string;
   federalConstituencyId?: string;
 }): Candidate[] {
-  const { office, stateCode = 'AB', senatorialDistrictId, federalConstituencyId } = params;
+  const { office, stateCode, senatorialDistrictId, federalConstituencyId } = params;
 
   if (office === 'PRESIDENT') {
     // Return all presidential candidates, guaranteed sorted alphabetically by party acronym
     return [...INITIAL_CANDIDATES]
       .filter(c => c.office === 'PRESIDENT')
       .sort((a, b) => a.partyAcronym.localeCompare(b.partyAcronym));
+  }
+
+  // If no state is selected yet, return empty list for state/district races
+  if (!stateCode) {
+    return [];
   }
 
   // Find matches in initial static set

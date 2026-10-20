@@ -9,7 +9,7 @@ export const DEFAULT_LINEUP: LineupSelection = {
   title: 'My 2027 ballot line-up Nigeria',
   userName: '',
   userHandle: '',
-  stateCode: 'AB',
+  stateCode: undefined,
   senatorialDistrictId: undefined,
   federalConstituencyId: undefined,
   presidentId: undefined,
@@ -90,7 +90,7 @@ export function useBallotStore() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const storedLineup = localStorage.getItem('my2027_ballot_v3');
+      const storedLineup = localStorage.getItem('my2027_ballot_v4');
       if (storedLineup) {
         setCurrentLineup(JSON.parse(storedLineup));
       }
@@ -116,7 +116,7 @@ export function useBallotStore() {
       const next = typeof updater === 'function' ? updater(prev) : { ...prev, ...updater, updatedAt: new Date().toISOString() };
       if (typeof window !== 'undefined') {
         try {
-          localStorage.setItem('my2027_ballot_v3', JSON.stringify(next));
+          localStorage.setItem('my2027_ballot_v4', JSON.stringify(next));
         } catch (e) {
           console.error(e);
         }

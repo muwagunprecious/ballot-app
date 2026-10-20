@@ -1135,22 +1135,26 @@ export const GOVERNORSHIP_STATES = NIGERIAN_STATES.filter(
   (s) => !OFF_CYCLE_GOV_STATE_CODES.includes(s.code)
 );
 
-export function getStateByCode(code: string): StateInfo | undefined {
+export function getStateByCode(code?: string): StateInfo | undefined {
+  if (!code) return undefined;
   return NIGERIAN_STATES.find(s => s.code.toUpperCase() === code.toUpperCase());
 }
 
-export function getStateByName(name: string): StateInfo | undefined {
+export function getStateByName(name?: string): StateInfo | undefined {
+  if (!name) return undefined;
   return NIGERIAN_STATES.find(s => s.name.toLowerCase() === name.toLowerCase());
 }
 
-export function getSenatorialDistrict(stateCode: string, districtId?: string): { district?: StateInfo['senatorialDistricts'][0]; state?: StateInfo } {
+export function getSenatorialDistrict(stateCode?: string, districtId?: string): { district?: StateInfo['senatorialDistricts'][0]; state?: StateInfo } {
+  if (!stateCode) return { district: undefined, state: undefined };
   const state = getStateByCode(stateCode);
   if (!districtId) return { district: undefined, state };
   const district = state?.senatorialDistricts.find(d => d.id === districtId || d.code.toLowerCase() === districtId.toLowerCase());
   return { district, state };
 }
 
-export function getFederalConstituency(stateCode: string, constituencyId?: string) {
+export function getFederalConstituency(stateCode?: string, constituencyId?: string) {
+  if (!stateCode) return { constituency: undefined, state: undefined };
   const state = getStateByCode(stateCode);
   if (!constituencyId) return { constituency: undefined, state };
   const constituency = state?.federalConstituencies.find(c => c.id === constituencyId || c.code.toLowerCase() === constituencyId.toLowerCase());

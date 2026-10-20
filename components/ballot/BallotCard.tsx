@@ -31,7 +31,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
     setDaysRemaining(diff);
   }, []);
 
-  const state = getStateByCode(lineup.stateCode);
+  const state = lineup.stateCode ? getStateByCode(lineup.stateCode) : undefined;
   const { district } = getSenatorialDistrict(lineup.stateCode, lineup.senatorialDistrictId || '');
   const { constituency } = getFederalConstituency(lineup.stateCode, lineup.federalConstituencyId || '');
 
@@ -46,7 +46,7 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const rep = isRepSelected ? getCandidateById(lineup.representativeId) : undefined;
 
   const isFCT = lineup.stateCode === 'FC';
-  const isOffCycleGov = OFF_CYCLE_GOV_STATE_CODES.includes(lineup.stateCode);
+  const isOffCycleGov = lineup.stateCode ? OFF_CYCLE_GOV_STATE_CODES.includes(lineup.stateCode) : false;
 
   const isDark = stylePreset === 'obsidian_minimal';
   const isHeritage = stylePreset === 'civic_heritage';
@@ -92,12 +92,12 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
   const watermarkOpacity = isDark ? 0.03 : 0.04;
 
   const districtName = district?.code || district?.name;
-  const stateDisplayName = state?.name ? `${state.name} State` : 'Nigeria';
+  const hasLocation = !!state;
   const locationHeader = isFCT
     ? 'Federal Capital Territory'
     : districtName
-    ? `${districtName}, ${stateDisplayName}`
-    : `${stateDisplayName}`;
+    ? `${districtName}, ${state?.name} State`
+    : `${state?.name} State`;
 
   const hasUserAttribution = !!lineup.userName?.trim() || !!lineup.userHandle?.trim();
   const userName = lineup.userName?.trim();
@@ -193,9 +193,11 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
             <p className="text-[10px] font-mono font-bold text-[#EAB308] dark:text-[#FBBF24]">
               Vote Jan 16 & Feb 06, 2027
             </p>
-            <p className="text-[10px] font-bold tracking-wide uppercase text-black/80 dark:text-white/90">
-              📍 {locationHeader}
-            </p>
+            {hasLocation && (
+              <p className="text-[10px] font-bold tracking-wide uppercase text-black/80 dark:text-white/90">
+                📍 {locationHeader}
+              </p>
+            )}
           </div>
 
           {/* Optional User Attribution */}
@@ -226,9 +228,15 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
           }`}
         >
           {renderSlot('President', pres, 'Federal', false, 'PRESIDENT')}
-          {renderSlot('Governor', gov, isFCT ? 'FCT' : isOffCycleGov ? 'Off-cycle' : `${state?.name || ''}`, isOffCycleGov, 'GOVERNOR')}
-          {renderSlot('Senator', sen, districtName || 'District', false, 'SENATOR')}
-          {renderSlot('House of Rep', rep, constituency?.code || constituency?.name || 'Constituency', false, 'REPRESENTATIVE')}
+          {renderSlot(
+            'Governor',
+            gov,
+            isFCT ? 'FCT' : isOffCycleGov ? 'Off-cycle' : (state?.name ? `${state.name}` : undefined),
+            isOffCycleGov,
+            'GOVERNOR'
+          )}
+          {renderSlot('Senator', sen, districtName || undefined, false, 'SENATOR')}
+          {renderSlot('House of Rep', rep, constituency?.code || constituency?.name || undefined, false, 'REPRESENTATIVE')}
         </div>
       </div>
 

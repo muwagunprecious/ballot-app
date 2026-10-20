@@ -46,16 +46,16 @@ export default function HomePage() {
   const [activeModal, setActiveModal] = useState<OfficeType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const currentState = getStateByCode(currentLineup.stateCode) || NIGERIAN_STATES[0];
-  const isOffCycleGov = OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode);
+  const currentState = currentLineup.stateCode ? getStateByCode(currentLineup.stateCode) : undefined;
+  const isOffCycleGov = currentLineup.stateCode ? OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode) : false;
 
   // Senatorial District: strictly use selection, NO default fallback
-  const activeDistrict = currentLineup.senatorialDistrictId
+  const activeDistrict = currentLineup.senatorialDistrictId && currentState
     ? currentState.senatorialDistricts.find((d) => d.id === currentLineup.senatorialDistrictId)
     : undefined;
 
   // Available constituencies: ONLY those belonging to the selected senatorial district
-  const availableConstituencies = activeDistrict
+  const availableConstituencies = activeDistrict && currentState
     ? currentState.federalConstituencies.filter((c) => c.senatorialDistrictId === activeDistrict.id)
     : [];
 
@@ -66,11 +66,11 @@ export default function HomePage() {
 
   const presidentialCandidates = getCandidatesForRace({ office: 'PRESIDENT' });
 
-  const governorshipCandidates = isOffCycleGov
+  const governorshipCandidates = !currentState || isOffCycleGov
     ? []
     : getCandidatesForRace({ office: 'GOVERNOR', stateCode: currentLineup.stateCode });
 
-  const senatorialCandidates = activeDistrict
+  const senatorialCandidates = currentState && activeDistrict
     ? getCandidatesForRace({
         office: 'SENATOR',
         stateCode: currentLineup.stateCode,
@@ -78,7 +78,7 @@ export default function HomePage() {
       })
     : [];
 
-  const repCandidates = activeConstituency
+  const repCandidates = currentState && activeConstituency
     ? getCandidatesForRace({
         office: 'REPRESENTATIVE',
         stateCode: currentLineup.stateCode,
@@ -94,6 +94,18 @@ export default function HomePage() {
 
   // Cascading update: Changing State resets Senate and House selections
   const handleStateChange = (newCode: string) => {
+    if (!newCode) {
+      updateCurrentLineup({
+        stateCode: undefined,
+        senatorialDistrictId: undefined,
+        federalConstituencyId: undefined,
+        governorId: undefined,
+        senatorId: undefined,
+        representativeId: undefined,
+      });
+      return;
+    }
+
     const newState = getStateByCode(newCode);
     if (!newState) return;
 
@@ -161,7 +173,7 @@ export default function HomePage() {
 
   const getModalTitle = () => {
     if (activeModal === 'PRESIDENT') return 'Select President';
-    if (activeModal === 'GOVERNOR') return `Select State's Governorship Candidate (${currentState.name} State)`;
+    if (activeModal === 'GOVERNOR') return currentState ? `Select State's Governorship Candidate (${currentState.name} State)` : "Select State's Governorship Candidate";
     if (activeModal === 'SENATOR') return `Select Senator (${activeDistrict?.name || 'District'})`;
     if (activeModal === 'REPRESENTATIVE') return `Select Representative (${activeConstituency?.name || 'Constituency'})`;
     return '';
@@ -179,7 +191,8 @@ export default function HomePage() {
     if (!cardRef.current) return;
     setIsExporting(true);
     try {
-      const filename = `my-2027-lineup-${currentLineup.stateCode.toLowerCase()}.png`;
+      const stateSlug = currentState?.name ? `${currentState.name.toLowerCase()}-` : '';
+      const filename = `my-2027-lineup-${stateSlug}${currentLineup.aspectRatio}.png`;
       await exportBallotAsPng(cardRef.current, filename, currentLineup.aspectRatio);
       triggerCelebration();
     } catch (e) {
@@ -190,14 +203,24 @@ export default function HomePage() {
   };
 
   const handleShareOnX = () => {
-    const locText = activeDistrict ? `${activeDistrict.name}, ${currentState.name} State` : `${currentState.name} State`;
-    const text = `Here is my 2027 ballot line-up Nigeria!\n\n📍 ${locText}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
+    const locText = currentState
+      ? activeDistrict
+        ? `${activeDistrict.name}, ${currentState.name} State`
+        : `${currentState.name} State`
+      : '';
+    const locLine = locText ? `📍 ${locText}\n\n` : '';
+    const text = `Here is my 2027 ballot line-up Nigeria!\n\n${locLine}🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const handleShareWhatsApp = () => {
-    const locText = activeDistrict ? `${activeDistrict.name}, ${currentState.name} State` : `${currentState.name} State`;
-    const text = `Here is my 2027 ballot line-up Nigeria! 🇳🇬\n📍 ${locText}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
+    const locText = currentState
+      ? activeDistrict
+        ? `${activeDistrict.name}, ${currentState.name} State`
+        : `${currentState.name} State`
+      : '';
+    const locLine = locText ? `\n📍 ${locText}` : '';
+    const text = `Here is my 2027 ballot line-up Nigeria! 🇳🇬${locLine}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -351,33 +374,42 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* STATE DROPDOWN (ONLY 28 CONDUCTING STATES) */}
+              {/* STATE DROPDOWN */}
               <div>
-                <label className="block text-[11px] text-gray-400 mb-1">State (2027 Governorship Elections)</label>
+                <label className="block text-[11px] text-gray-400 mb-1">State</label>
                 <select
-                  value={isOffCycleGov ? '' : currentLineup.stateCode}
-                  onChange={(e) => {
-                    if (e.target.value) handleStateChange(e.target.value);
-                  }}
+                  value={currentLineup.stateCode || ''}
+                  onChange={(e) => handleStateChange(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                 >
-                  {isOffCycleGov && (
-                    <option value="" disabled className="bg-[#131B15] text-gray-400">
-                      {currentState.name} State (Off-cycle - No election)
-                    </option>
-                  )}
-                  {GOVERNORSHIP_STATES.map((s) => (
-                    <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                      {s.name} State
-                    </option>
-                  ))}
+                  <option value="" className="bg-[#131B15] text-gray-400">
+                    -- Select State --
+                  </option>
+                  <optgroup label="2027 Governorship Elections (28 States)">
+                    {GOVERNORSHIP_STATES.map((s) => (
+                      <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
+                        {s.name} State
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Off-Cycle States (No 2027 Gov Election)">
+                    {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
+                      <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
+                        {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
 
-              {isOffCycleGov ? (
+              {!currentState ? (
+                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                  Please select a State above to choose a Governorship candidate.
+                </div>
+              ) : isOffCycleGov ? (
                 <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-1">
                   <p className="font-semibold text-amber-400">
-                    No governorship election in {currentState.name} State in 2027.
+                    No governorship election in {currentState.name} {currentState.code === 'FC' ? '' : 'State'} in 2027.
                   </p>
                   <p className="text-[11px] text-gray-500">
                     {currentLineup.stateCode === 'FC'
@@ -473,7 +505,11 @@ export default function HomePage() {
                 <div>
                   <h3 className="text-base font-bold text-white">Select Senator</h3>
                   <p className="text-xs text-gray-400 mt-0.5">
-                    {activeDistrict ? `Pick senator for ${activeDistrict.name}.` : `Select senatorial district in ${currentState.name} State.`}
+                    {activeDistrict
+                      ? `Pick senator for ${activeDistrict.name}.`
+                      : currentState
+                      ? `Select senatorial district in ${currentState.name} State.`
+                      : 'Select your state to view senatorial districts.'}
                   </p>
                 </div>
                 {currentLineup.senatorId && (
@@ -486,79 +522,125 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* DISTRICT DROPDOWN - NO PRE-SELECTION */}
-              <div>
-                <label className="block text-[11px] text-gray-400 mb-1">Senatorial District ({currentState.name} State)</label>
-                <select
-                  value={currentLineup.senatorialDistrictId || ''}
-                  onChange={(e) => handleDistrictChange(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                >
-                  <option value="" className="bg-[#131B15] text-gray-400">
-                    -- Select Senatorial District --
-                  </option>
-                  {currentState.senatorialDistricts.map((d) => (
-                    <option key={d.id} value={d.id} className="bg-[#131B15] text-white">
-                      {d.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {selectedSenator ? (
-                <div
-                  onClick={() => {
-                    setActiveModal('SENATOR');
-                    setSearchQuery('');
-                  }}
-                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                >
-                  <div className="flex items-center space-x-3.5 min-w-0">
-                    <PartyLogo acronym={selectedSenator.partyAcronym} size={36} className="shrink-0" />
-                    <div className="min-w-0">
-                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Senatorial Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white break-words">{selectedSenator.name}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 shrink-0">
-                    <span
-                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
-                      style={{ backgroundColor: selectedSenator.partyColor || '#086338' }}
+              {!currentState ? (
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-[11px] text-gray-400 mb-1">State (All 36 States + FCT)</label>
+                    <select
+                      value=""
+                      onChange={(e) => handleStateChange(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
                     >
-                      {selectedSenator.partyAcronym}
-                    </span>
-                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                      <option value="" className="bg-[#131B15] text-gray-400">
+                        -- Select State --
+                      </option>
+                      {NIGERIAN_STATES.map((s) => (
+                        <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
+                          {s.name} {s.code === 'FC' ? '(FCT)' : 'State'}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                    Please select your State above to view Senatorial Districts.
                   </div>
                 </div>
-              ) : activeDistrict ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModal('SENATOR');
-                    setSearchQuery('');
-                  }}
-                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
-                >
-                  <div className="flex items-center space-x-3.5">
-                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
-                      <Vote className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
-                        Select Senator
-                      </div>
-                      <div className="text-xs text-gray-400">Click to choose candidate for {activeDistrict.name}</div>
-                    </div>
-                  </div>
-                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
-                    <span>Select</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </button>
               ) : (
-                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
-                  Please select a Senatorial District above to view candidates.
-                </div>
+                <>
+                  {/* Current State Indicator & Switcher */}
+                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25]">
+                    <div className="text-xs">
+                      <span className="text-gray-400">State: </span>
+                      <span className="font-bold text-white">
+                        {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleStateChange('')}
+                      className="text-[11px] text-[#20C878] hover:underline font-medium"
+                    >
+                      Change State
+                    </button>
+                  </div>
+
+                  {/* DISTRICT DROPDOWN - NO PRE-SELECTION */}
+                  <div>
+                    <label className="block text-[11px] text-gray-400 mb-1">
+                      Senatorial District ({currentState.name} {currentState.code === 'FC' ? '' : 'State'})
+                    </label>
+                    <select
+                      value={currentLineup.senatorialDistrictId || ''}
+                      onChange={(e) => handleDistrictChange(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                    >
+                      <option value="" className="bg-[#131B15] text-gray-400">
+                        -- Select Senatorial District --
+                      </option>
+                      {currentState.senatorialDistricts.map((d) => (
+                        <option key={d.id} value={d.id} className="bg-[#131B15] text-white">
+                          {d.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {selectedSenator ? (
+                    <div
+                      onClick={() => {
+                        setActiveModal('SENATOR');
+                        setSearchQuery('');
+                      }}
+                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0">
+                        <PartyLogo acronym={selectedSenator.partyAcronym} size={36} className="shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Senatorial Choice</div>
+                          <div className="text-sm sm:text-base font-bold text-white break-words">{selectedSenator.name}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2 shrink-0">
+                        <span
+                          className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                          style={{ backgroundColor: selectedSenator.partyColor || '#086338' }}
+                        >
+                          {selectedSenator.partyAcronym}
+                        </span>
+                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                      </div>
+                    </div>
+                  ) : activeDistrict ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal('SENATOR');
+                        setSearchQuery('');
+                      }}
+                      className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                    >
+                      <div className="flex items-center space-x-3.5">
+                        <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                          <Vote className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                            Select Senator
+                          </div>
+                          <div className="text-xs text-gray-400">Click to choose candidate for {activeDistrict.name}</div>
+                        </div>
+                      </div>
+                      <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                        <span>Select</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    </button>
+                  ) : (
+                    <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                      Please select a Senatorial District above to view candidates.
+                    </div>
+                  )}
+                </>
               )}
 
               {/* CONTROLS */}
@@ -614,9 +696,9 @@ export default function HomePage() {
                 )}
               </div>
 
-              {!currentLineup.senatorialDistrictId ? (
+              {!currentState || !currentLineup.senatorialDistrictId ? (
                 <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2">
-                  <p>Please select a Senatorial District in Step 3 first.</p>
+                  <p>Please select a State and Senatorial District in Step 3 first.</p>
                   <button
                     onClick={() => setCurrentStep(3)}
                     className="px-3 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs"
@@ -865,9 +947,11 @@ export default function HomePage() {
         <div className="lg:col-span-6 lg:sticky lg:top-16 space-y-3">
           <div className="flex items-center justify-between text-xs text-gray-400">
             <span className="font-bold text-white">Live Lineup Card</span>
-            <span>
-              {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} State
-            </span>
+            {currentState && (
+              <span>
+                {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
+              </span>
+            )}
           </div>
 
           {/* RENDERED BALLOT CARD */}

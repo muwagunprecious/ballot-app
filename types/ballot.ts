@@ -90,7 +90,7 @@ export interface LineupSelection {
   userName?: string;
   userHandle?: string;
   title: string;
-  stateCode: string;
+  stateCode?: string;
   senatorialDistrictId?: string;
   federalConstituencyId?: string;
   presidentId?: string;
@@ -117,7 +117,7 @@ export interface GeneratedCaption {
 export interface UserProfile {
   name: string;
   handle: string;
-  stateCode: string;
+  stateCode?: string;
   bio: string;
   avatarUrl: string;
   lineupCount: number;

@@ -67,7 +67,8 @@ export default function ExportPage() {
     if (!cardRef.current) return;
     setIsExporting(true);
     try {
-      const filename = `my-2027-lineup-${currentLineup.stateCode.toLowerCase()}-${currentLineup.aspectRatio}.png`;
+      const stateSlug = currentLineup.stateCode ? `${currentLineup.stateCode.toLowerCase()}-` : '';
+      const filename = `my-2027-lineup-${stateSlug}${currentLineup.aspectRatio}.png`;
       await exportBallotAsPng(cardRef.current, filename, currentLineup.aspectRatio);
     } catch (e) {
       console.error('Export failed', e);
