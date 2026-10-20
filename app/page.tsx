@@ -38,13 +38,20 @@ const WhatsAppIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
 type OfficeType = 'PRESIDENT' | 'GOVERNOR' | 'SENATOR' | 'REPRESENTATIVE';
 
 export default function HomePage() {
-  const { currentLineup, updateCurrentLineup } = useBallotStore();
+  const { currentLineup, updateCurrentLineup, resetAllToDefaults } = useBallotStore();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [isExporting, setIsExporting] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [activeModal, setActiveModal] = useState<OfficeType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const handleStartOver = () => {
+    resetAllToDefaults();
+    setCurrentStep(1);
+    setActiveModal(null);
+    setSearchQuery('');
+  };
 
   const currentState = currentLineup.stateCode ? getStateByCode(currentLineup.stateCode) : undefined;
   const isOffCycleGov = currentLineup.stateCode ? OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode) : false;
@@ -234,31 +241,44 @@ export default function HomePage() {
 
   return (
     <div className="pb-16 pt-2 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-4">
-      {/* MINIMAL PROGRESS STEP TABS */}
-      <div className="flex items-center gap-1.5 overflow-x-auto py-1">
-        {steps.map((st) => {
-          const isActive = currentStep === st.num;
-          const isPassed = currentStep > st.num;
-          return (
-            <button
-              key={st.num}
-              onClick={() => {
-                setCurrentStep(st.num);
-                setActiveModal(null);
-                setSearchQuery('');
-              }}
-              className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
-                isActive
-                  ? 'bg-[#192B20] border-[#20C878] text-[#20C878] font-bold'
-                  : isPassed
-                  ? 'bg-[#111A14] border-[#1F2C23] text-white hover:border-[#334639]'
-                  : 'bg-[#0D1310] border-[#18221C] text-gray-400 hover:text-white'
-              }`}
-            >
-              <span className="text-xs font-mono">{st.num}. {st.label}</span>
-            </button>
-          );
-        })}
+      {/* MINIMAL PROGRESS STEP TABS + START OVER */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto py-1 flex-1">
+          {steps.map((st) => {
+            const isActive = currentStep === st.num;
+            const isPassed = currentStep > st.num;
+            return (
+              <button
+                key={st.num}
+                onClick={() => {
+                  setCurrentStep(st.num);
+                  setActiveModal(null);
+                  setSearchQuery('');
+                }}
+                className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
+                  isActive
+                    ? 'bg-[#192B20] border-[#20C878] text-[#20C878] font-bold'
+                    : isPassed
+                    ? 'bg-[#111A14] border-[#1F2C23] text-white hover:border-[#334639]'
+                    : 'bg-[#0D1310] border-[#18221C] text-gray-400 hover:text-white'
+                }`}
+              >
+                <span className="text-xs font-mono">{st.num}. {st.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        {(currentLineup.stateCode || currentLineup.presidentId) && (
+          <button
+            type="button"
+            onClick={handleStartOver}
+            className="shrink-0 px-2.5 py-1.5 rounded-lg bg-[#111A14] hover:bg-[#18261D] text-gray-400 hover:text-white border border-[#1F2C23] text-xs font-mono flex items-center space-x-1.5 transition-all"
+            title="Start over to choose another state or clear lineup"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-[#20C878]" />
+            <span className="hidden sm:inline">Start Over</span>
+          </button>
+        )}
       </div>
 
       {/* TWO-COLUMN: CLEAN STEP (LEFT) & CARD PREVIEW (RIGHT) */}
@@ -374,99 +394,127 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* STATE DROPDOWN */}
-              <div>
-                <label className="block text-[11px] text-gray-400 mb-1">State</label>
-                <select
-                  value={currentLineup.stateCode || ''}
-                  onChange={(e) => handleStateChange(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                >
-                  <option value="" className="bg-[#131B15] text-gray-400">
-                    -- Select State --
-                  </option>
-                  <optgroup label="2027 Governorship Elections (28 States)">
-                    {GOVERNORSHIP_STATES.map((s) => (
-                      <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                        {s.name} State
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Off-Cycle States (No 2027 Gov Election)">
-                    {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
-                      <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
-                        {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
-                      </option>
-                    ))}
-                  </optgroup>
-                </select>
-              </div>
-
+              {/* STATE SELECTION: ONCE SELECTED, IT IS LOCKED */}
               {!currentState ? (
-                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
-                  Please select a State above to choose a Governorship candidate.
-                </div>
-              ) : isOffCycleGov ? (
-                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-1">
-                  <p className="font-semibold text-amber-400">
-                    No governorship election in {currentState.name} {currentState.code === 'FC' ? '' : 'State'} in 2027.
-                  </p>
-                  <p className="text-[11px] text-gray-500">
-                    {currentLineup.stateCode === 'FC'
-                      ? 'The Federal Capital Territory does not have a Governor.'
-                      : `${currentState.name} is one of 8 off-cycle states with a separate election timetable.`}
-                  </p>
-                </div>
-              ) : selectedGovernor ? (
-                <div
-                  onClick={() => {
-                    setActiveModal('GOVERNOR');
-                    setSearchQuery('');
-                  }}
-                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                >
-                  <div className="flex items-center space-x-3.5 min-w-0">
-                    <PartyLogo acronym={selectedGovernor.partyAcronym} size={36} className="shrink-0" />
-                    <div className="min-w-0">
-                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Governorship Choice</div>
-                      <div className="text-sm sm:text-base font-bold text-white break-words">{selectedGovernor.name}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 shrink-0">
-                    <span
-                      className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
-                      style={{ backgroundColor: selectedGovernor.partyColor || '#086338' }}
-                    >
-                      {selectedGovernor.partyAcronym}
-                    </span>
-                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                <div className="space-y-2">
+                  <label className="block text-[11px] text-gray-400 font-medium">Select Your State</label>
+                  <select
+                    value={currentLineup.stateCode || ''}
+                    onChange={(e) => {
+                      if (e.target.value) handleStateChange(e.target.value);
+                    }}
+                    className="w-full px-3 py-2.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                  >
+                    <option value="" className="bg-[#131B15] text-gray-400">
+                      -- Select State --
+                    </option>
+                    <optgroup label="2027 Governorship Elections (28 States)">
+                      {GOVERNORSHIP_STATES.map((s) => (
+                        <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
+                          {s.name} State
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Off-Cycle States (No 2027 Gov Election)">
+                      {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
+                        <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
+                          {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                  <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
+                    Select your State. Your Senatorial District and House of Representatives will be derived from this state.
                   </div>
                 </div>
               ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModal('GOVERNOR');
-                    setSearchQuery('');
-                  }}
-                  className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
-                >
-                  <div className="flex items-center space-x-3.5">
-                    <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
-                      <Vote className="w-5 h-5" />
-                    </div>
+                <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#14231A] border border-[#20C878]/30">
+                  <div className="flex items-center space-x-2.5">
+                    <span className="text-base">📍</span>
                     <div>
-                      <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
-                        Select Governor
+                      <div className="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Your State (Locked)</div>
+                      <div className="text-sm font-bold text-white">
+                        {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
                       </div>
-                      <div className="text-xs text-gray-400">Click to choose candidate for {currentState.name} State</div>
                     </div>
                   </div>
-                  <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
-                    <span>Select</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleStartOver}
+                    className="px-2.5 py-1.5 rounded-lg bg-[#1B2820] hover:bg-[#25382D] text-gray-300 hover:text-white text-xs font-medium flex items-center space-x-1.5 border border-[#2A3F32] transition-colors"
+                    title="To choose or test another state, start all over"
+                  >
+                    <RotateCcw className="w-3 h-3 text-[#20C878]" />
+                    <span>Start all over</span>
+                  </button>
+                </div>
+              )}
+
+              {currentState && (
+                <>
+                  {isOffCycleGov ? (
+                    <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-1">
+                      <p className="font-semibold text-amber-400">
+                        No governorship election in {currentState.name} {currentState.code === 'FC' ? '' : 'State'} in 2027.
+                      </p>
+                      <p className="text-[11px] text-gray-500">
+                        {currentLineup.stateCode === 'FC'
+                          ? 'The Federal Capital Territory does not have a Governor.'
+                          : `${currentState.name} is one of 8 off-cycle states with a separate election timetable.`}
+                      </p>
+                    </div>
+                  ) : selectedGovernor ? (
+                    <div
+                      onClick={() => {
+                        setActiveModal('GOVERNOR');
+                        setSearchQuery('');
+                      }}
+                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
+                    >
+                      <div className="flex items-center space-x-3.5 min-w-0">
+                        <PartyLogo acronym={selectedGovernor.partyAcronym} size={36} className="shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Governorship Choice</div>
+                          <div className="text-sm sm:text-base font-bold text-white break-words">{selectedGovernor.name}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2 shrink-0">
+                        <span
+                          className="px-2.5 py-1 rounded-md text-xs font-mono font-bold text-white"
+                          style={{ backgroundColor: selectedGovernor.partyColor || '#086338' }}
+                        >
+                          {selectedGovernor.partyAcronym}
+                        </span>
+                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal('GOVERNOR');
+                        setSearchQuery('');
+                      }}
+                      className="w-full p-5 rounded-xl bg-[#121A15] border-2 border-dashed border-[#233529] hover:border-[#20C878] hover:bg-[#16241C] cursor-pointer transition-all flex items-center justify-between group text-left"
+                    >
+                      <div className="flex items-center space-x-3.5">
+                        <div className="w-10 h-10 rounded-full bg-[#1A261E] border border-[#2A3E31] flex items-center justify-center text-[#20C878] group-hover:scale-105 transition-transform">
+                          <Vote className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
+                            Select Governor
+                          </div>
+                          <div className="text-xs text-gray-400">Click to choose candidate for {currentState.name} State</div>
+                        </div>
+                      </div>
+                      <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
+                        <span>Select</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    </button>
+                  )}
+                </>
               )}
 
               {/* CONTROLS */}
@@ -523,44 +571,37 @@ export default function HomePage() {
               </div>
 
               {!currentState ? (
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-[11px] text-gray-400 mb-1">State (All 36 States + FCT)</label>
-                    <select
-                      value=""
-                      onChange={(e) => handleStateChange(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                    >
-                      <option value="" className="bg-[#131B15] text-gray-400">
-                        -- Select State --
-                      </option>
-                      {NIGERIAN_STATES.map((s) => (
-                        <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                          {s.name} {s.code === 'FC' ? '(FCT)' : 'State'}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
-                    Please select your State above to view Senatorial Districts.
-                  </div>
+                <div className="p-5 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2.5">
+                  <p className="font-semibold text-white">No State Selected</p>
+                  <p>
+                    Senatorial districts are strictly derived from your state. Please select your state in Step 2.
+                  </p>
+                  <button
+                    onClick={() => setCurrentStep(2)}
+                    className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs inline-flex items-center space-x-1"
+                  >
+                    <span>← Go to Step 2 to select State</span>
+                  </button>
                 </div>
               ) : (
                 <>
-                  {/* Current State Indicator & Switcher */}
-                  <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-[#131B15] border border-[#212E25]">
-                    <div className="text-xs">
-                      <span className="text-gray-400">State: </span>
-                      <span className="font-bold text-white">
+                  {/* LOCKED STATE BANNER */}
+                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#131B15] border border-[#212E25]">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm">📍</span>
+                      <span className="text-xs text-gray-400">State:</span>
+                      <span className="text-xs font-bold text-white">
                         {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
                       </span>
                     </div>
                     <button
                       type="button"
-                      onClick={() => handleStateChange('')}
-                      className="text-[11px] text-[#20C878] hover:underline font-medium"
+                      onClick={handleStartOver}
+                      className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1"
+                      title="To test another state, start all over"
                     >
-                      Change State
+                      <RotateCcw className="w-3 h-3 text-[#20C878]" />
+                      <span>Start all over</span>
                     </button>
                   </div>
 
@@ -696,18 +737,49 @@ export default function HomePage() {
                 )}
               </div>
 
-              {!currentState || !currentLineup.senatorialDistrictId ? (
-                <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2">
-                  <p>Please select a State and Senatorial District in Step 3 first.</p>
+              {!currentState ? (
+                <div className="p-5 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2.5">
+                  <p className="font-semibold text-white">No State Selected</p>
+                  <p>House of Representatives constituencies must be derived from your state. Please select your state in Step 2.</p>
+                  <button
+                    onClick={() => setCurrentStep(2)}
+                    className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs inline-flex items-center space-x-1"
+                  >
+                    <span>← Go to Step 2 to select State</span>
+                  </button>
+                </div>
+              ) : !activeDistrict ? (
+                <div className="p-5 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-2.5">
+                  <p className="font-semibold text-white">No Senatorial District Selected</p>
+                  <p>House constituencies must be derived from your Senatorial District in {currentState.name} State.</p>
                   <button
                     onClick={() => setCurrentStep(3)}
-                    className="px-3 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs"
+                    className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] font-bold text-xs inline-flex items-center space-x-1"
                   >
-                    ← Back to Step 3 (Senate)
+                    <span>← Back to Step 3 (Senate)</span>
                   </button>
                 </div>
               ) : (
                 <>
+                  {/* LOCKED STATE & DISTRICT BANNER */}
+                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#131B15] border border-[#212E25]">
+                    <div className="flex items-center space-x-2 min-w-0 truncate">
+                      <span className="text-sm">📍</span>
+                      <span className="text-xs text-gray-400 truncate">
+                        {activeDistrict.name}, {currentState.name} {currentState.code === 'FC' ? '' : 'State'}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleStartOver}
+                      className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1 shrink-0 ml-2"
+                      title="To test another state, start all over"
+                    >
+                      <RotateCcw className="w-3 h-3 text-[#20C878]" />
+                      <span>Start all over</span>
+                    </button>
+                  </div>
+
                   {/* CONSTITUENCY DROPDOWN (ONLY CONSTITUENCIES IN THIS SENATORIAL DISTRICT) */}
                   <div>
                     <label className="block text-[11px] text-gray-400 mb-1">
@@ -832,6 +904,26 @@ export default function HomePage() {
                   <span>Edit Lineup</span>
                 </button>
               </div>
+
+              {currentState && (
+                <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-[#131B15] border border-[#212E25]">
+                  <div className="flex items-center space-x-2 min-w-0 truncate">
+                    <span className="text-sm">📍</span>
+                    <span className="text-xs font-bold text-white truncate">
+                      {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleStartOver}
+                    className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1 shrink-0 ml-2"
+                    title="To test another state, start all over"
+                  >
+                    <RotateCcw className="w-3 h-3 text-[#20C878]" />
+                    <span>Start all over</span>
+                  </button>
+                </div>
+              )}
 
               {/* STRICT REQUIRED ORDER: Name (1st) -> Format (2nd) -> Handle (3rd) -> Theme (4th) */}
               <div className="space-y-3.5">

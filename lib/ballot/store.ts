@@ -217,6 +217,7 @@ export function useBallotStore() {
     setCandidates(INITIAL_CANDIDATES);
     if (typeof window !== 'undefined') {
       try {
+        localStorage.removeItem('my2027_ballot_v4');
         localStorage.removeItem('my2027_current_lineup');
         localStorage.removeItem('my2027_saved_lineups');
         localStorage.removeItem('my2027_candidates');
