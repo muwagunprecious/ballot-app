@@ -38,20 +38,13 @@ const WhatsAppIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
 type OfficeType = 'PRESIDENT' | 'GOVERNOR' | 'SENATOR' | 'REPRESENTATIVE';
 
 export default function HomePage() {
-  const { currentLineup, updateCurrentLineup, resetAllToDefaults } = useBallotStore();
+  const { currentLineup, updateCurrentLineup } = useBallotStore();
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [isExporting, setIsExporting] = useState(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [activeModal, setActiveModal] = useState<OfficeType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleStartOver = () => {
-    resetAllToDefaults();
-    setCurrentStep(1);
-    setActiveModal(null);
-    setSearchQuery('');
-  };
 
   const currentState = currentLineup.stateCode ? getStateByCode(currentLineup.stateCode) : undefined;
   const isOffCycleGov = currentLineup.stateCode ? OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode) : false;
@@ -241,44 +234,31 @@ export default function HomePage() {
 
   return (
     <div className="pb-16 pt-2 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-4">
-      {/* MINIMAL PROGRESS STEP TABS + START OVER */}
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5 overflow-x-auto py-1 flex-1">
-          {steps.map((st) => {
-            const isActive = currentStep === st.num;
-            const isPassed = currentStep > st.num;
-            return (
-              <button
-                key={st.num}
-                onClick={() => {
-                  setCurrentStep(st.num);
-                  setActiveModal(null);
-                  setSearchQuery('');
-                }}
-                className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
-                  isActive
-                    ? 'bg-[#192B20] border-[#20C878] text-[#20C878] font-bold'
-                    : isPassed
-                    ? 'bg-[#111A14] border-[#1F2C23] text-white hover:border-[#334639]'
-                    : 'bg-[#0D1310] border-[#18221C] text-gray-400 hover:text-white'
-                }`}
-              >
-                <span className="text-xs font-mono">{st.num}. {st.label}</span>
-              </button>
-            );
-          })}
-        </div>
-        {(currentLineup.stateCode || currentLineup.presidentId) && (
-          <button
-            type="button"
-            onClick={handleStartOver}
-            className="shrink-0 px-2.5 py-1.5 rounded-lg bg-[#111A14] hover:bg-[#18261D] text-gray-400 hover:text-white border border-[#1F2C23] text-xs font-mono flex items-center space-x-1.5 transition-all"
-            title="Start over to choose another state or clear lineup"
-          >
-            <RotateCcw className="w-3.5 h-3.5 text-[#20C878]" />
-            <span className="hidden sm:inline">Start Over</span>
-          </button>
-        )}
+      {/* MINIMAL PROGRESS STEP TABS */}
+      <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+        {steps.map((st) => {
+          const isActive = currentStep === st.num;
+          const isPassed = currentStep > st.num;
+          return (
+            <button
+              key={st.num}
+              onClick={() => {
+                setCurrentStep(st.num);
+                setActiveModal(null);
+                setSearchQuery('');
+              }}
+              className={`flex-1 min-w-[70px] py-1.5 px-2.5 rounded-lg border text-center transition-all ${
+                isActive
+                  ? 'bg-[#192B20] border-[#20C878] text-[#20C878] font-bold'
+                  : isPassed
+                  ? 'bg-[#111A14] border-[#1F2C23] text-white hover:border-[#334639]'
+                  : 'bg-[#0D1310] border-[#18221C] text-gray-400 hover:text-white'
+              }`}
+            >
+              <span className="text-xs font-mono">{st.num}. {st.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* TWO-COLUMN: CLEAN STEP (LEFT) & CARD PREVIEW (RIGHT) */}
@@ -438,15 +418,9 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleStartOver}
-                    className="px-2.5 py-1.5 rounded-lg bg-[#1B2820] hover:bg-[#25382D] text-gray-300 hover:text-white text-xs font-medium flex items-center space-x-1.5 border border-[#2A3F32] transition-colors"
-                    title="To choose or test another state, start all over"
-                  >
-                    <RotateCcw className="w-3 h-3 text-[#20C878]" />
-                    <span>Start all over</span>
-                  </button>
+                  <span className="px-2.5 py-1 rounded-full bg-[#1B2820] text-gray-400 text-[11px] font-mono border border-[#2A3F32]">
+                    Locked
+                  </span>
                 </div>
               )}
 
@@ -594,15 +568,6 @@ export default function HomePage() {
                         {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={handleStartOver}
-                      className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1"
-                      title="To test another state, start all over"
-                    >
-                      <RotateCcw className="w-3 h-3 text-[#20C878]" />
-                      <span>Start all over</span>
-                    </button>
                   </div>
 
                   {/* DISTRICT DROPDOWN - NO PRE-SELECTION */}
@@ -769,15 +734,6 @@ export default function HomePage() {
                         {activeDistrict.name}, {currentState.name} {currentState.code === 'FC' ? '' : 'State'}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={handleStartOver}
-                      className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1 shrink-0 ml-2"
-                      title="To test another state, start all over"
-                    >
-                      <RotateCcw className="w-3 h-3 text-[#20C878]" />
-                      <span>Start all over</span>
-                    </button>
                   </div>
 
                   {/* CONSTITUENCY DROPDOWN (ONLY CONSTITUENCIES IN THIS SENATORIAL DISTRICT) */}
@@ -913,15 +869,6 @@ export default function HomePage() {
                       {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleStartOver}
-                    className="text-[11px] text-gray-400 hover:text-white flex items-center space-x-1 shrink-0 ml-2"
-                    title="To test another state, start all over"
-                  >
-                    <RotateCcw className="w-3 h-3 text-[#20C878]" />
-                    <span>Start all over</span>
-                  </button>
                 </div>
               )}
 
