@@ -326,7 +326,7 @@ export default function HomePage() {
                       <div className="text-base font-bold text-white group-hover:text-[#20C878] transition-colors">
                         Select President
                       </div>
-                      <div className="text-xs text-gray-400">Click to view all 22 candidates</div>
+                      <div className="text-xs text-gray-400">Click to view all candidates</div>
                     </div>
                   </div>
                   <div className="px-3.5 py-1.5 rounded-lg bg-[#20C878] text-[#08120B] text-xs font-bold flex items-center space-x-1 group-hover:bg-[#1AB36B] transition-colors">
