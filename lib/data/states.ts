@@ -1,4 +1,7 @@
-import { StateInfo } from '@/types/ballot';
+import { StateInfo, FederalConstituency } from '@/types/ballot';
+import ALL_CONSTITUENCIES_DATA from './constituencies.json';
+
+const ALL_CONSTITUENCIES = ALL_CONSTITUENCIES_DATA as FederalConstituency[];
 
 const RAW_NIGERIAN_STATES: StateInfo[] = [
   {
@@ -1123,7 +1126,13 @@ const RAW_NIGERIAN_STATES: StateInfo[] = [
   },
 ];
 
-export const NIGERIAN_STATES: StateInfo[] = [...RAW_NIGERIAN_STATES].sort((a, b) =>
+export const NIGERIAN_STATES: StateInfo[] = RAW_NIGERIAN_STATES.map((state) => {
+  const constituencies = ALL_CONSTITUENCIES.filter((c) => c.stateCode === state.code);
+  return {
+    ...state,
+    federalConstituencies: constituencies.length > 0 ? constituencies : state.federalConstituencies,
+  };
+}).sort((a, b) =>
   a.name.localeCompare(b.name)
 );
 

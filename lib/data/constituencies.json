@@ -1,0 +1,4029 @@
+[
+  {
+    "id": "AB-ABA-NORTH-ABA-SOUTH",
+    "code": "Aba North/Aba South",
+    "name": "Aba North/Aba South Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-C",
+    "lgas": [
+      "Aba North",
+      "Aba South"
+    ]
+  },
+  {
+    "id": "AB-AROCHUKWU-OHAFIA",
+    "code": "Arochukwu/Ohafia",
+    "name": "Arochukwu/Ohafia Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-N",
+    "lgas": [
+      "Arochukwu",
+      "Ohafia"
+    ]
+  },
+  {
+    "id": "AB-BENDE",
+    "code": "Bende",
+    "name": "Bende Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-S",
+    "lgas": [
+      "Bende"
+    ]
+  },
+  {
+    "id": "AB-ISIALA-NGWA-NORTH-ISIALA-NGWA-SOUTH",
+    "code": "Isiala Ngwa North/Isiala Ngwa South",
+    "name": "Isiala Ngwa North/Isiala Ngwa South Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-C",
+    "lgas": [
+      "Isiala Ngwa North",
+      "Isiala Ngwa South"
+    ]
+  },
+  {
+    "id": "AB-ISUIKWUATO-UMU-NNEOCHI",
+    "code": "Isuikwuato/Umu-Nneochi",
+    "name": "Isuikwuato/Umu-Nneochi Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-N",
+    "lgas": [
+      "Isuikwuato",
+      "Umu-Nneochi"
+    ]
+  },
+  {
+    "id": "AB-OBINGWA-UGWUNAGBO-OSISIOMA",
+    "code": "Obingwa/Ugwunagbo/Osisioma",
+    "name": "Obingwa/Ugwunagbo/Osisioma Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-S",
+    "lgas": [
+      "Obingwa",
+      "Ugwunagbo",
+      "Osisioma"
+    ]
+  },
+  {
+    "id": "AB-UKWA-EAST-UKWA-WEST",
+    "code": "Ukwa East/Ukwa West",
+    "name": "Ukwa East/Ukwa West Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-C",
+    "lgas": [
+      "Ukwa East",
+      "Ukwa West"
+    ]
+  },
+  {
+    "id": "AB-UMUAHIA-NORTH-UMUAHIA-SOUTH-IKWUANO",
+    "code": "Umuahia North/Umuahia South/Ikwuano",
+    "name": "Umuahia North/Umuahia South/Ikwuano Federal Constituency",
+    "stateCode": "AB",
+    "senatorialDistrictId": "AB-N",
+    "lgas": [
+      "Umuahia North",
+      "Umuahia South",
+      "Ikwuano"
+    ]
+  },
+  {
+    "id": "AD-DEMSA-NUMAN-LAMURDE",
+    "code": "Demsa/Numan/Lamurde",
+    "name": "Demsa/Numan/Lamurde Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-N",
+    "lgas": [
+      "Demsa",
+      "Numan",
+      "Lamurde"
+    ]
+  },
+  {
+    "id": "AD-FUFORE-SONG",
+    "code": "FUFORE/SONG",
+    "name": "FUFORE/SONG Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-C",
+    "lgas": [
+      "FUFORE",
+      "SONG"
+    ]
+  },
+  {
+    "id": "AD-GOMBI-HONG",
+    "code": "Gombi/Hong",
+    "name": "Gombi/Hong Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-S",
+    "lgas": [
+      "Gombi",
+      "Hong"
+    ]
+  },
+  {
+    "id": "AD-GUYUK-SHELLENG",
+    "code": "Guyuk/Shelleng",
+    "name": "Guyuk/Shelleng Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-N",
+    "lgas": [
+      "Guyuk",
+      "Shelleng"
+    ]
+  },
+  {
+    "id": "AD-MADAGALI-MICHIKA",
+    "code": "Madagali/Michika",
+    "name": "Madagali/Michika Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-C",
+    "lgas": [
+      "Madagali",
+      "Michika"
+    ]
+  },
+  {
+    "id": "AD-MAIHA-MUBI-NORTH-MUBI-SOUTH",
+    "code": "Maiha/Mubi North/Mubi South",
+    "name": "Maiha/Mubi North/Mubi South Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-S",
+    "lgas": [
+      "Maiha",
+      "Mubi North",
+      "Mubi South"
+    ]
+  },
+  {
+    "id": "AD-MAYO-BELWA-GANYE-JADA-TOUNGO",
+    "code": "Mayo Belwa/Ganye/Jada/Toungo",
+    "name": "Mayo Belwa/Ganye/Jada/Toungo Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-N",
+    "lgas": [
+      "Mayo Belwa",
+      "Ganye",
+      "Jada",
+      "Toungo"
+    ]
+  },
+  {
+    "id": "AD-YOLA-NORTH-YOLA-SOUTH-GIREI",
+    "code": "Yola North/Yola South/Girei",
+    "name": "Yola North/Yola South/Girei Federal Constituency",
+    "stateCode": "AD",
+    "senatorialDistrictId": "AD-C",
+    "lgas": [
+      "Yola North",
+      "Yola South",
+      "Girei"
+    ]
+  },
+  {
+    "id": "AK-ABAK-ETIM-EKPO-IKA",
+    "code": "Abak/Etim Ekpo/Ika",
+    "name": "Abak/Etim Ekpo/Ika Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NE",
+    "lgas": [
+      "Abak",
+      "Etim Ekpo",
+      "Ika"
+    ]
+  },
+  {
+    "id": "AK-EKET-ONNA-ESIT-EKET-IBENO",
+    "code": "Eket/Onna/Esit Eket/Ibeno",
+    "name": "Eket/Onna/Esit Eket/Ibeno Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NW",
+    "lgas": [
+      "Eket",
+      "Onna",
+      "Esit Eket",
+      "Ibeno"
+    ]
+  },
+  {
+    "id": "AK-ETINAN-NSIT-IBOM-NSIT-UBIUM",
+    "code": "Etinan/Nsit Ibom/Nsit ubium",
+    "name": "Etinan/Nsit Ibom/Nsit ubium Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-S",
+    "lgas": [
+      "Etinan",
+      "Nsit Ibom",
+      "Nsit ubium"
+    ]
+  },
+  {
+    "id": "AK-IKONO-INI",
+    "code": "Ikono/Ini",
+    "name": "Ikono/Ini Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NE",
+    "lgas": [
+      "Ikono",
+      "Ini"
+    ]
+  },
+  {
+    "id": "AK-IKOT-ABASI-MKPAT-ENIN-EASTERN-OBOLO",
+    "code": "Ikot Abasi/Mkpat Enin/Eastern Obolo",
+    "name": "Ikot Abasi/Mkpat Enin/Eastern Obolo Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NW",
+    "lgas": [
+      "Ikot Abasi",
+      "Mkpat Enin",
+      "Eastern Obolo"
+    ]
+  },
+  {
+    "id": "AK-IKOT-EKPENE-ESSIEN-UDIM-OBOT-AKARA",
+    "code": "Ikot Ekpene/Essien Udim/Obot Akara",
+    "name": "Ikot Ekpene/Essien Udim/Obot Akara Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-S",
+    "lgas": [
+      "Ikot Ekpene",
+      "Essien Udim",
+      "Obot Akara"
+    ]
+  },
+  {
+    "id": "AK-ITU-IBIONO-IBOM",
+    "code": "Itu/Ibiono Ibom",
+    "name": "Itu/Ibiono Ibom Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NE",
+    "lgas": [
+      "Itu",
+      "Ibiono Ibom"
+    ]
+  },
+  {
+    "id": "AK-ORON-MBO-OKOBO-UDUNG-UKO-URUE-OFFONG-ORUKO",
+    "code": "Oron/Mbo/Okobo/Udung Uko/Urue Offong/Oruko",
+    "name": "Oron/Mbo/Okobo/Udung Uko/Urue Offong/Oruko Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NW",
+    "lgas": [
+      "Oron",
+      "Mbo",
+      "Okobo",
+      "Udung Uko",
+      "Urue Offong",
+      "Oruko"
+    ]
+  },
+  {
+    "id": "AK-UKANAFUN-ORUK-ANAM",
+    "code": "Ukanafun/Oruk Anam",
+    "name": "Ukanafun/Oruk Anam Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-S",
+    "lgas": [
+      "Ukanafun",
+      "Oruk Anam"
+    ]
+  },
+  {
+    "id": "AK-UYO-URUAN-NSIT-ATAI-IBESIKPO-ASUTAN",
+    "code": "Uyo/Uruan/Nsit Atai/Ibesikpo Asutan",
+    "name": "Uyo/Uruan/Nsit Atai/Ibesikpo Asutan Federal Constituency",
+    "stateCode": "AK",
+    "senatorialDistrictId": "AK-NE",
+    "lgas": [
+      "Uyo",
+      "Uruan",
+      "Nsit Atai",
+      "Ibesikpo Asutan"
+    ]
+  },
+  {
+    "id": "AN-AGUATA",
+    "code": "Aguata",
+    "name": "Aguata Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-C",
+    "lgas": [
+      "Aguata"
+    ]
+  },
+  {
+    "id": "AN-ANAMBRA-EAST-ANAMBRA-WEST",
+    "code": "Anambra East/Anambra West",
+    "name": "Anambra East/Anambra West Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-N",
+    "lgas": [
+      "Anambra East",
+      "Anambra West"
+    ]
+  },
+  {
+    "id": "AN-AWKA-NORTH-AWKA-SOUTH",
+    "code": "Awka North/Awka South",
+    "name": "Awka North/Awka South Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-S",
+    "lgas": [
+      "Awka North",
+      "Awka South"
+    ]
+  },
+  {
+    "id": "AN-IDEMILI-NORTH-IDEMILI-SOUTH",
+    "code": "Idemili North/Idemili South",
+    "name": "Idemili North/Idemili South Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-C",
+    "lgas": [
+      "Idemili North",
+      "Idemili South"
+    ]
+  },
+  {
+    "id": "AN-IHIALA",
+    "code": "Ihiala",
+    "name": "Ihiala Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-N",
+    "lgas": [
+      "Ihiala"
+    ]
+  },
+  {
+    "id": "AN-NJIKOKA-DUNUKOFIA-ANAOCHA",
+    "code": "Njikoka/Dunukofia/Anaocha",
+    "name": "Njikoka/Dunukofia/Anaocha Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-S",
+    "lgas": [
+      "Njikoka",
+      "Dunukofia",
+      "Anaocha"
+    ]
+  },
+  {
+    "id": "AN-NNEWI-NORTH-NNEWI-SOUTH-EKWUSIGO",
+    "code": "Nnewi North/Nnewi South/Ekwusigo",
+    "name": "Nnewi North/Nnewi South/Ekwusigo Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-C",
+    "lgas": [
+      "Nnewi North",
+      "Nnewi South",
+      "Ekwusigo"
+    ]
+  },
+  {
+    "id": "AN-OGBARU",
+    "code": "Ogbaru",
+    "name": "Ogbaru Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-N",
+    "lgas": [
+      "Ogbaru"
+    ]
+  },
+  {
+    "id": "AN-ONITSHA-NORTH-ONITSHA-SOUTH",
+    "code": "Onitsha North/Onitsha South",
+    "name": "Onitsha North/Onitsha South Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-S",
+    "lgas": [
+      "Onitsha North",
+      "Onitsha South"
+    ]
+  },
+  {
+    "id": "AN-ORUMBA-NORTH-ORUMBA-SOUTH",
+    "code": "Orumba North/Orumba South",
+    "name": "Orumba North/Orumba South Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-C",
+    "lgas": [
+      "Orumba North",
+      "Orumba South"
+    ]
+  },
+  {
+    "id": "AN-OYI-AYAMELUM",
+    "code": "Oyi/Ayamelum",
+    "name": "Oyi/Ayamelum Federal Constituency",
+    "stateCode": "AN",
+    "senatorialDistrictId": "AN-N",
+    "lgas": [
+      "Oyi",
+      "Ayamelum"
+    ]
+  },
+  {
+    "id": "BA-ALKALERI-KERFI",
+    "code": "ALKALERI/KERFI",
+    "name": "ALKALERI/KERFI Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-S",
+    "lgas": [
+      "ALKALERI",
+      "KERFI"
+    ]
+  },
+  {
+    "id": "BA-BAUCHI",
+    "code": "Bauchi",
+    "name": "Bauchi Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-C",
+    "lgas": [
+      "Bauchi"
+    ]
+  },
+  {
+    "id": "BA-BOGORO-DASS-TAFAWA-BALEWA",
+    "code": "Bogoro/Dass/Tafawa Balewa",
+    "name": "Bogoro/Dass/Tafawa Balewa Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-N",
+    "lgas": [
+      "Bogoro",
+      "Dass",
+      "Tafawa Balewa"
+    ]
+  },
+  {
+    "id": "BA-DARAZO-GANJUWA",
+    "code": "DARAZO/GANJUWA",
+    "name": "DARAZO/GANJUWA Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-S",
+    "lgas": [
+      "DARAZO",
+      "GANJUWA"
+    ]
+  },
+  {
+    "id": "BA-GAMAWA",
+    "code": "Gamawa",
+    "name": "Gamawa Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-C",
+    "lgas": [
+      "Gamawa"
+    ]
+  },
+  {
+    "id": "BA-JAMA-ARE-ITAS-GADAU",
+    "code": "Jama'are/Itas-Gadau",
+    "name": "Jama'are/Itas-Gadau Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-N",
+    "lgas": [
+      "Jama'are",
+      "Itas-Gadau"
+    ]
+  },
+  {
+    "id": "BA-KATAGUM",
+    "code": "Katagum",
+    "name": "Katagum Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-S",
+    "lgas": [
+      "Katagum"
+    ]
+  },
+  {
+    "id": "BA-MISAU-DAMBAN",
+    "code": "MISAU/DAMBAN",
+    "name": "MISAU/DAMBAN Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-C",
+    "lgas": [
+      "MISAU",
+      "DAMBAN"
+    ]
+  },
+  {
+    "id": "BA-NINGI-WARJI",
+    "code": "Ningi/Warji",
+    "name": "Ningi/Warji Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-N",
+    "lgas": [
+      "Ningi",
+      "Warji"
+    ]
+  },
+  {
+    "id": "BA-SHIRA-GIADE",
+    "code": "Shira/Giade",
+    "name": "Shira/Giade Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-S",
+    "lgas": [
+      "Shira",
+      "Giade"
+    ]
+  },
+  {
+    "id": "BA-TORO",
+    "code": "Toro",
+    "name": "Toro Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-C",
+    "lgas": [
+      "Toro"
+    ]
+  },
+  {
+    "id": "BA-ZAKI",
+    "code": "Zaki",
+    "name": "Zaki Federal Constituency",
+    "stateCode": "BA",
+    "senatorialDistrictId": "BA-N",
+    "lgas": [
+      "Zaki"
+    ]
+  },
+  {
+    "id": "BY-BRASS-NEMBE",
+    "code": "Brass/Nembe",
+    "name": "Brass/Nembe Federal Constituency",
+    "stateCode": "BY",
+    "senatorialDistrictId": "BY-C",
+    "lgas": [
+      "Brass",
+      "Nembe"
+    ]
+  },
+  {
+    "id": "BY-OGBIA",
+    "code": "Ogbia",
+    "name": "Ogbia Federal Constituency",
+    "stateCode": "BY",
+    "senatorialDistrictId": "BY-E",
+    "lgas": [
+      "Ogbia"
+    ]
+  },
+  {
+    "id": "BY-SAGBAMA-EKEREMOR",
+    "code": "Sagbama/Ekeremor",
+    "name": "Sagbama/Ekeremor Federal Constituency",
+    "stateCode": "BY",
+    "senatorialDistrictId": "BY-W",
+    "lgas": [
+      "Sagbama",
+      "Ekeremor"
+    ]
+  },
+  {
+    "id": "BY-SOUTHERN-IJAW",
+    "code": "Southern Ijaw",
+    "name": "Southern Ijaw Federal Constituency",
+    "stateCode": "BY",
+    "senatorialDistrictId": "BY-C",
+    "lgas": [
+      "Southern Ijaw"
+    ]
+  },
+  {
+    "id": "BY-YENAGOA-KOLOKUNA-OPOKUMA",
+    "code": "Yenagoa/Kolokuna/Opokuma",
+    "name": "Yenagoa/Kolokuna/Opokuma Federal Constituency",
+    "stateCode": "BY",
+    "senatorialDistrictId": "BY-E",
+    "lgas": [
+      "Yenagoa",
+      "Kolokuna",
+      "Opokuma"
+    ]
+  },
+  {
+    "id": "BN-ADO-OGBADIGBO-OKPOKWU",
+    "code": "Ado/Ogbadigbo/Okpokwu",
+    "name": "Ado/Ogbadigbo/Okpokwu Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NE",
+    "lgas": [
+      "Ado",
+      "Ogbadigbo",
+      "Okpokwu"
+    ]
+  },
+  {
+    "id": "BN-APA-AGATU",
+    "code": "Apa/Agatu",
+    "name": "Apa/Agatu Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NW",
+    "lgas": [
+      "Apa",
+      "Agatu"
+    ]
+  },
+  {
+    "id": "BN-BURUKU",
+    "code": "Buruku",
+    "name": "Buruku Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-S",
+    "lgas": [
+      "Buruku"
+    ]
+  },
+  {
+    "id": "BN-GBOKO-TARKA",
+    "code": "Gboko/Tarka",
+    "name": "Gboko/Tarka Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NE",
+    "lgas": [
+      "Gboko",
+      "Tarka"
+    ]
+  },
+  {
+    "id": "BN-GUMA-MAKURDI",
+    "code": "Guma/Makurdi",
+    "name": "Guma/Makurdi Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NW",
+    "lgas": [
+      "Guma",
+      "Makurdi"
+    ]
+  },
+  {
+    "id": "BN-GWER-EAST-GWER-WEST",
+    "code": "Gwer East/Gwer West",
+    "name": "Gwer East/Gwer West Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-S",
+    "lgas": [
+      "Gwer East",
+      "Gwer West"
+    ]
+  },
+  {
+    "id": "BN-KATSINA-ALA-UKUM-LOGO",
+    "code": "Katsina-Ala/Ukum/Logo",
+    "name": "Katsina-Ala/Ukum/Logo Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NE",
+    "lgas": [
+      "Katsina-Ala",
+      "Ukum",
+      "Logo"
+    ]
+  },
+  {
+    "id": "BN-KONSHISHA-VANDEIKYA",
+    "code": "Konshisha/Vandeikya",
+    "name": "Konshisha/Vandeikya Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NW",
+    "lgas": [
+      "Konshisha",
+      "Vandeikya"
+    ]
+  },
+  {
+    "id": "BN-KWANDE-USHONGO",
+    "code": "Kwande/Ushongo",
+    "name": "Kwande/Ushongo Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-S",
+    "lgas": [
+      "Kwande",
+      "Ushongo"
+    ]
+  },
+  {
+    "id": "BN-OJU-OBI",
+    "code": "Oju/Obi",
+    "name": "Oju/Obi Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NE",
+    "lgas": [
+      "Oju",
+      "Obi"
+    ]
+  },
+  {
+    "id": "BN-OTUKPO-OHIMINI",
+    "code": "Otukpo/Ohimini",
+    "name": "Otukpo/Ohimini Federal Constituency",
+    "stateCode": "BN",
+    "senatorialDistrictId": "BN-NW",
+    "lgas": [
+      "Otukpo",
+      "Ohimini"
+    ]
+  },
+  {
+    "id": "BO-ASKIRA-UBA-HAWUL",
+    "code": "Askira-Uba/Hawul",
+    "name": "Askira-Uba/Hawul Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-C",
+    "lgas": [
+      "Askira-Uba",
+      "Hawul"
+    ]
+  },
+  {
+    "id": "BO-BAMA-NGALA-KALA-BALGE",
+    "code": "Bama/Ngala/Kala-Balge",
+    "name": "Bama/Ngala/Kala-Balge Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-N",
+    "lgas": [
+      "Bama",
+      "Ngala",
+      "Kala-Balge"
+    ]
+  },
+  {
+    "id": "BO-BIU-KWAYA-KUSAR-SHANI-BAYO",
+    "code": "Biu/Kwaya-Kusar, Shani/Bayo",
+    "name": "Biu/Kwaya-Kusar, Shani/Bayo Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-S",
+    "lgas": [
+      "Biu",
+      "Kwaya-Kusar, Shani",
+      "Bayo"
+    ]
+  },
+  {
+    "id": "BO-DAMBOA-GWOZA-CHIBOK",
+    "code": "Damboa/Gwoza/Chibok",
+    "name": "Damboa/Gwoza/Chibok Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-C",
+    "lgas": [
+      "Damboa",
+      "Gwoza",
+      "Chibok"
+    ]
+  },
+  {
+    "id": "BO-DIKWA-MAFA-KONDUGA",
+    "code": "Dikwa/Mafa/Konduga",
+    "name": "Dikwa/Mafa/Konduga Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-N",
+    "lgas": [
+      "Dikwa",
+      "Mafa",
+      "Konduga"
+    ]
+  },
+  {
+    "id": "BO-JERE",
+    "code": "Jere",
+    "name": "Jere Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-S",
+    "lgas": [
+      "Jere"
+    ]
+  },
+  {
+    "id": "BO-KAGA-GUBIO-MAGUMERI",
+    "code": "Kaga/Gubio/Magumeri",
+    "name": "Kaga/Gubio/Magumeri Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-C",
+    "lgas": [
+      "Kaga",
+      "Gubio",
+      "Magumeri"
+    ]
+  },
+  {
+    "id": "BO-KUKAWA-MOBBAR-ABADAM-GUZAMALI",
+    "code": "Kukawa/Mobbar/Abadam/Guzamali",
+    "name": "Kukawa/Mobbar/Abadam/Guzamali Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-N",
+    "lgas": [
+      "Kukawa",
+      "Mobbar",
+      "Abadam",
+      "Guzamali"
+    ]
+  },
+  {
+    "id": "BO-MAIDUGURI-METROPOLITAN",
+    "code": "Maiduguri (Metropolitan)",
+    "name": "Maiduguri (Metropolitan) Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-S",
+    "lgas": [
+      "Maiduguri (Metropolitan)"
+    ]
+  },
+  {
+    "id": "BO-MONGUNO-NGANZAI-MARTE",
+    "code": "Monguno/Nganzai/Marte",
+    "name": "Monguno/Nganzai/Marte Federal Constituency",
+    "stateCode": "BO",
+    "senatorialDistrictId": "BO-C",
+    "lgas": [
+      "Monguno",
+      "Nganzai",
+      "Marte"
+    ]
+  },
+  {
+    "id": "CR-AKAMKPA-BIASE",
+    "code": "Akamkpa/Biase",
+    "name": "Akamkpa/Biase Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-S",
+    "lgas": [
+      "Akamkpa",
+      "Biase"
+    ]
+  },
+  {
+    "id": "CR-BOKI-IKOM",
+    "code": "Boki/Ikom",
+    "name": "Boki/Ikom Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-C",
+    "lgas": [
+      "Boki",
+      "Ikom"
+    ]
+  },
+  {
+    "id": "CR-CALABAR-MUNICIPAL-ODUKPANI",
+    "code": "Calabar Municipal/Odukpani",
+    "name": "Calabar Municipal/Odukpani Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-N",
+    "lgas": [
+      "Calabar Municipal",
+      "Odukpani"
+    ]
+  },
+  {
+    "id": "CR-CALABAR-SOUTH-AKPABUYO-BAKASSI",
+    "code": "Calabar South/Akpabuyo/Bakassi",
+    "name": "Calabar South/Akpabuyo/Bakassi Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-S",
+    "lgas": [
+      "Calabar South",
+      "Akpabuyo",
+      "Bakassi"
+    ]
+  },
+  {
+    "id": "CR-OBANLIKU-OBUDU-BEKWARRA",
+    "code": "Obanliku/Obudu/Bekwarra",
+    "name": "Obanliku/Obudu/Bekwarra Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-C",
+    "lgas": [
+      "Obanliku",
+      "Obudu",
+      "Bekwarra"
+    ]
+  },
+  {
+    "id": "CR-OBUBRA-ETUNG",
+    "code": "Obubra/Etung",
+    "name": "Obubra/Etung Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-N",
+    "lgas": [
+      "Obubra",
+      "Etung"
+    ]
+  },
+  {
+    "id": "CR-OGOJA-YALA",
+    "code": "Ogoja/Yala",
+    "name": "Ogoja/Yala Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-S",
+    "lgas": [
+      "Ogoja",
+      "Yala"
+    ]
+  },
+  {
+    "id": "CR-YAKURR-ABI",
+    "code": "Yakurr/Abi",
+    "name": "Yakurr/Abi Federal Constituency",
+    "stateCode": "CR",
+    "senatorialDistrictId": "CR-C",
+    "lgas": [
+      "Yakurr",
+      "Abi"
+    ]
+  },
+  {
+    "id": "DT-ANIOCHA-NORTH-ANIOCHA-SOUTH-OSHIMILI-NORTH-SOUTH",
+    "code": "Aniocha North/Aniocha South/Oshimili North & South",
+    "name": "Aniocha North/Aniocha South/Oshimili North & South Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-C",
+    "lgas": [
+      "Aniocha North",
+      "Aniocha South",
+      "Oshimili North & South"
+    ]
+  },
+  {
+    "id": "DT-BOMADI-PATANI",
+    "code": "Bomadi/Patani",
+    "name": "Bomadi/Patani Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-N",
+    "lgas": [
+      "Bomadi",
+      "Patani"
+    ]
+  },
+  {
+    "id": "DT-BURUTU",
+    "code": "Burutu",
+    "name": "Burutu Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-S",
+    "lgas": [
+      "Burutu"
+    ]
+  },
+  {
+    "id": "DT-ETHIOPE-EAST-ETHIOPE-WEST",
+    "code": "Ethiope East/Ethiope West",
+    "name": "Ethiope East/Ethiope West Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-C",
+    "lgas": [
+      "Ethiope East",
+      "Ethiope West"
+    ]
+  },
+  {
+    "id": "DT-IKA-NORTH-EAST-IKA-SOUTH",
+    "code": "Ika North East/Ika South",
+    "name": "Ika North East/Ika South Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-N",
+    "lgas": [
+      "Ika North East",
+      "Ika South"
+    ]
+  },
+  {
+    "id": "DT-ISOKO-NORTH-ISOKO-SOUTH",
+    "code": "Isoko North/Isoko South",
+    "name": "Isoko North/Isoko South Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-S",
+    "lgas": [
+      "Isoko North",
+      "Isoko South"
+    ]
+  },
+  {
+    "id": "DT-NDOKWA-EAST-NDOKWA-WEST-UKWUANI",
+    "code": "Ndokwa East/Ndokwa West/Ukwuani",
+    "name": "Ndokwa East/Ndokwa West/Ukwuani Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-C",
+    "lgas": [
+      "Ndokwa East",
+      "Ndokwa West",
+      "Ukwuani"
+    ]
+  },
+  {
+    "id": "DT-OKPE-SAPELE-UVWIE",
+    "code": "Okpe/Sapele/Uvwie",
+    "name": "Okpe/Sapele/Uvwie Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-N",
+    "lgas": [
+      "Okpe",
+      "Sapele",
+      "Uvwie"
+    ]
+  },
+  {
+    "id": "DT-UGHELLI-NORTH-UGHELLI-SOUTH-UDU",
+    "code": "Ughelli North, Ughelli South/Udu",
+    "name": "Ughelli North, Ughelli South/Udu Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-S",
+    "lgas": [
+      "Ughelli North, Ughelli South",
+      "Udu"
+    ]
+  },
+  {
+    "id": "DT-WARRI-NORTH-WARRI-SOUTH-WARRI-SOUTH-WEST",
+    "code": "Warri North/Warri South/Warri South West",
+    "name": "Warri North/Warri South/Warri South West Federal Constituency",
+    "stateCode": "DT",
+    "senatorialDistrictId": "DT-C",
+    "lgas": [
+      "Warri North",
+      "Warri South",
+      "Warri South West"
+    ]
+  },
+  {
+    "id": "EB-ABAKALIKI-IZZI",
+    "code": "Abakaliki/Izzi",
+    "name": "Abakaliki/Izzi Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-N",
+    "lgas": [
+      "Abakaliki",
+      "Izzi"
+    ]
+  },
+  {
+    "id": "EB-AFIKPO-NORTH-AFIKPO-SOUTH",
+    "code": "Afikpo North/Afikpo South",
+    "name": "Afikpo North/Afikpo South Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-C",
+    "lgas": [
+      "Afikpo North",
+      "Afikpo South"
+    ]
+  },
+  {
+    "id": "EB-EBONYI-OHAUKWU",
+    "code": "Ebonyi/Ohaukwu",
+    "name": "Ebonyi/Ohaukwu Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-S",
+    "lgas": [
+      "Ebonyi",
+      "Ohaukwu"
+    ]
+  },
+  {
+    "id": "EB-EZZA-NORTH-ISHIELU",
+    "code": "Ezza North/Ishielu",
+    "name": "Ezza North/Ishielu Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-N",
+    "lgas": [
+      "Ezza North",
+      "Ishielu"
+    ]
+  },
+  {
+    "id": "EB-EZZA-SOUTH-IKWO",
+    "code": "Ezza South/Ikwo",
+    "name": "Ezza South/Ikwo Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-C",
+    "lgas": [
+      "Ezza South",
+      "Ikwo"
+    ]
+  },
+  {
+    "id": "EB-IVO-OHAOZARA-ONICHA",
+    "code": "Ivo-Ohaozara/Onicha",
+    "name": "Ivo-Ohaozara/Onicha Federal Constituency",
+    "stateCode": "EB",
+    "senatorialDistrictId": "EB-S",
+    "lgas": [
+      "Ivo-Ohaozara",
+      "Onicha"
+    ]
+  },
+  {
+    "id": "ED-AKOKO-EDO",
+    "code": "Akoko-Edo",
+    "name": "Akoko-Edo Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-S",
+    "lgas": [
+      "Akoko-Edo"
+    ]
+  },
+  {
+    "id": "ED-EGOR-IKPOBA-OKHA",
+    "code": "Egor/Ikpoba-Okha",
+    "name": "Egor/Ikpoba-Okha Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-C",
+    "lgas": [
+      "Egor",
+      "Ikpoba-Okha"
+    ]
+  },
+  {
+    "id": "ED-ESAN-CENTRAL-ESAN-SOUTH-IGUEBEN",
+    "code": "Esan Central/Esan South/Igueben",
+    "name": "Esan Central/Esan South/Igueben Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-N",
+    "lgas": [
+      "Esan Central",
+      "Esan South",
+      "Igueben"
+    ]
+  },
+  {
+    "id": "ED-ESAN-NORTH-EAST-ESAN-SOUTH-EAST",
+    "code": "Esan North East/Esan South East",
+    "name": "Esan North East/Esan South East Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-S",
+    "lgas": [
+      "Esan North East",
+      "Esan South East"
+    ]
+  },
+  {
+    "id": "ED-ETSAKO-EAST-ETSAKO-WEST-ETSAKO-CENTRAL",
+    "code": "Etsako East/Etsako West/Etsako Central",
+    "name": "Etsako East/Etsako West/Etsako Central Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-C",
+    "lgas": [
+      "Etsako East",
+      "Etsako West",
+      "Etsako Central"
+    ]
+  },
+  {
+    "id": "ED-OREDO",
+    "code": "Oredo",
+    "name": "Oredo Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-N",
+    "lgas": [
+      "Oredo"
+    ]
+  },
+  {
+    "id": "ED-ORHIONMWON-UHUNMWONDE",
+    "code": "Orhionmwon/Uhunmwonde",
+    "name": "Orhionmwon/Uhunmwonde Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-S",
+    "lgas": [
+      "Orhionmwon",
+      "Uhunmwonde"
+    ]
+  },
+  {
+    "id": "ED-OVIA-NORTH-EAST-OVIA-SOUTH-WEST",
+    "code": "Ovia North East/Ovia South West",
+    "name": "Ovia North East/Ovia South West Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-C",
+    "lgas": [
+      "Ovia North East",
+      "Ovia South West"
+    ]
+  },
+  {
+    "id": "ED-OWAN-EAST-OWAN-WEST",
+    "code": "Owan East/Owan West",
+    "name": "Owan East/Owan West Federal Constituency",
+    "stateCode": "ED",
+    "senatorialDistrictId": "ED-N",
+    "lgas": [
+      "Owan East",
+      "Owan West"
+    ]
+  },
+  {
+    "id": "EK-ADO-EKITI-IREPODUN-IFELODUN",
+    "code": "Ado Ekiti/Irepodun/Ifelodun",
+    "name": "Ado Ekiti/Irepodun/Ifelodun Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-C",
+    "lgas": [
+      "Ado Ekiti",
+      "Irepodun",
+      "Ifelodun"
+    ]
+  },
+  {
+    "id": "EK-EKITI-SOUTH-WEST-IKERE-ORUN-ISE",
+    "code": "Ekiti South West/Ikere/Orun/Ise",
+    "name": "Ekiti South West/Ikere/Orun/Ise Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-N",
+    "lgas": [
+      "Ekiti South West",
+      "Ikere",
+      "Orun",
+      "Ise"
+    ]
+  },
+  {
+    "id": "EK-EMURE-GBONYIN-EKITI-EAST",
+    "code": "Emure/Gbonyin/Ekiti East",
+    "name": "Emure/Gbonyin/Ekiti East Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-S",
+    "lgas": [
+      "Emure",
+      "Gbonyin",
+      "Ekiti East"
+    ]
+  },
+  {
+    "id": "EK-IDO-OSI-MOBA-ILEJEME",
+    "code": "Ido/Osi, Moba/Ilejeme",
+    "name": "Ido/Osi, Moba/Ilejeme Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-C",
+    "lgas": [
+      "Ido",
+      "Osi, Moba",
+      "Ilejeme"
+    ]
+  },
+  {
+    "id": "EK-IJERO-EKITI-WEST-EFON",
+    "code": "Ijero/Ekiti West/Efon",
+    "name": "Ijero/Ekiti West/Efon Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-N",
+    "lgas": [
+      "Ijero",
+      "Ekiti West",
+      "Efon"
+    ]
+  },
+  {
+    "id": "EK-IKOLE-OYE",
+    "code": "Ikole/Oye",
+    "name": "Ikole/Oye Federal Constituency",
+    "stateCode": "EK",
+    "senatorialDistrictId": "EK-S",
+    "lgas": [
+      "Ikole",
+      "Oye"
+    ]
+  },
+  {
+    "id": "EN-ANINRI-AWGU-OJI-RIVER",
+    "code": "Aninri/Awgu/Oji River",
+    "name": "Aninri/Awgu/Oji River Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-E",
+    "lgas": [
+      "Aninri",
+      "Awgu",
+      "Oji River"
+    ]
+  },
+  {
+    "id": "EN-ENUGU-EAST-ISI-UZO",
+    "code": "Enugu East/Isi Uzo",
+    "name": "Enugu East/Isi Uzo Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-N",
+    "lgas": [
+      "Enugu East",
+      "Isi Uzo"
+    ]
+  },
+  {
+    "id": "EN-ENUGU-NORTH-ENUGU-SOUTH",
+    "code": "Enugu North/Enugu South",
+    "name": "Enugu North/Enugu South Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-W",
+    "lgas": [
+      "Enugu North",
+      "Enugu South"
+    ]
+  },
+  {
+    "id": "EN-EZEAGU-UDI",
+    "code": "Ezeagu/Udi",
+    "name": "Ezeagu/Udi Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-E",
+    "lgas": [
+      "Ezeagu",
+      "Udi"
+    ]
+  },
+  {
+    "id": "EN-IGBO-ETITI-UZO-UWANI",
+    "code": "Igbo-Etiti/Uzo-Uwani",
+    "name": "Igbo-Etiti/Uzo-Uwani Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-N",
+    "lgas": [
+      "Igbo-Etiti",
+      "Uzo-Uwani"
+    ]
+  },
+  {
+    "id": "EN-IGBO-EZE-NORTH-UDENU",
+    "code": "Igbo-Eze North/Udenu",
+    "name": "Igbo-Eze North/Udenu Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-W",
+    "lgas": [
+      "Igbo-Eze North",
+      "Udenu"
+    ]
+  },
+  {
+    "id": "EN-NKANU-EAST-NKANU-WEST",
+    "code": "Nkanu East/Nkanu West",
+    "name": "Nkanu East/Nkanu West Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-E",
+    "lgas": [
+      "Nkanu East",
+      "Nkanu West"
+    ]
+  },
+  {
+    "id": "EN-NSUKKA-IGBO-EZE-SOUTH",
+    "code": "Nsukka/Igbo-Eze South",
+    "name": "Nsukka/Igbo-Eze South Federal Constituency",
+    "stateCode": "EN",
+    "senatorialDistrictId": "EN-N",
+    "lgas": [
+      "Nsukka",
+      "Igbo-Eze South"
+    ]
+  },
+  {
+    "id": "FC-ABAJI-GWAGWALADA-KWALI-KUJE",
+    "code": "Abaji/Gwagwalada/Kwali/Kuje",
+    "name": "Abaji/Gwagwalada/Kwali/Kuje Federal Constituency",
+    "stateCode": "FC",
+    "senatorialDistrictId": "FC-C",
+    "lgas": [
+      "Abaji",
+      "Gwagwalada",
+      "Kwali",
+      "Kuje"
+    ]
+  },
+  {
+    "id": "FC-MUNICIPAL-BWARI",
+    "code": "Municipal/Bwari",
+    "name": "Municipal/Bwari Federal Constituency",
+    "stateCode": "FC",
+    "senatorialDistrictId": "FC-C",
+    "lgas": [
+      "Municipal",
+      "Bwari"
+    ]
+  },
+  {
+    "id": "GO-AKKO",
+    "code": "Akko",
+    "name": "Akko Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-N",
+    "lgas": [
+      "Akko"
+    ]
+  },
+  {
+    "id": "GO-BALANGA-BILLIRI",
+    "code": "Balanga/Billiri",
+    "name": "Balanga/Billiri Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-C",
+    "lgas": [
+      "Balanga",
+      "Billiri"
+    ]
+  },
+  {
+    "id": "GO-DUKKU-NAFADA",
+    "code": "Dukku/Nafada",
+    "name": "Dukku/Nafada Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-S",
+    "lgas": [
+      "Dukku",
+      "Nafada"
+    ]
+  },
+  {
+    "id": "GO-GOMBE-KWAMI-FUNAKAYE",
+    "code": "Gombe/Kwami/Funakaye",
+    "name": "Gombe/Kwami/Funakaye Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-N",
+    "lgas": [
+      "Gombe",
+      "Kwami",
+      "Funakaye"
+    ]
+  },
+  {
+    "id": "GO-KALTUNGO-SHONGOM",
+    "code": "Kaltungo/Shongom",
+    "name": "Kaltungo/Shongom Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-C",
+    "lgas": [
+      "Kaltungo",
+      "Shongom"
+    ]
+  },
+  {
+    "id": "GO-YAMALTU-DEBA",
+    "code": "Yamaltu/Deba",
+    "name": "Yamaltu/Deba Federal Constituency",
+    "stateCode": "GO",
+    "senatorialDistrictId": "GO-S",
+    "lgas": [
+      "Yamaltu",
+      "Deba"
+    ]
+  },
+  {
+    "id": "IM-ABOH-MBAISE-NGOR-OKPALA",
+    "code": "Aboh Mbaise/Ngor Okpala",
+    "name": "Aboh Mbaise/Ngor Okpala Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-E",
+    "lgas": [
+      "Aboh Mbaise",
+      "Ngor Okpala"
+    ]
+  },
+  {
+    "id": "IM-AHIAZU-MBAISE-EZINIHITTE",
+    "code": "Ahiazu Mbaise/Ezinihitte",
+    "name": "Ahiazu Mbaise/Ezinihitte Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-N",
+    "lgas": [
+      "Ahiazu Mbaise",
+      "Ezinihitte"
+    ]
+  },
+  {
+    "id": "IM-EHIME-MBANO-IHITE-UBOMA-OBOWO",
+    "code": "Ehime Mbano/Ihite-Uboma/Obowo",
+    "name": "Ehime Mbano/Ihite-Uboma/Obowo Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-W",
+    "lgas": [
+      "Ehime Mbano",
+      "Ihite-Uboma",
+      "Obowo"
+    ]
+  },
+  {
+    "id": "IM-IDEATO-NORTH-IDEATO-SOUTH",
+    "code": "Ideato North/Ideato South",
+    "name": "Ideato North/Ideato South Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-E",
+    "lgas": [
+      "Ideato North",
+      "Ideato South"
+    ]
+  },
+  {
+    "id": "IM-IKEDURU-MBAITOLI",
+    "code": "Ikeduru/Mbaitoli",
+    "name": "Ikeduru/Mbaitoli Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-N",
+    "lgas": [
+      "Ikeduru",
+      "Mbaitoli"
+    ]
+  },
+  {
+    "id": "IM-ISIALA-MBANO-OKIGWE-ONUIMO",
+    "code": "Isiala Mbano/Okigwe/Onuimo",
+    "name": "Isiala Mbano/Okigwe/Onuimo Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-W",
+    "lgas": [
+      "Isiala Mbano",
+      "Okigwe",
+      "Onuimo"
+    ]
+  },
+  {
+    "id": "IM-ISU-NJABA-NKWERRE-NWANGELE",
+    "code": "Isu/Njaba/Nkwerre/Nwangele",
+    "name": "Isu/Njaba/Nkwerre/Nwangele Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-E",
+    "lgas": [
+      "Isu",
+      "Njaba",
+      "Nkwerre",
+      "Nwangele"
+    ]
+  },
+  {
+    "id": "IM-OGUTA-OHAJI-EGBEMA-ORU-WEST",
+    "code": "Oguta/Ohaji-Egbema/Oru West",
+    "name": "Oguta/Ohaji-Egbema/Oru West Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-N",
+    "lgas": [
+      "Oguta",
+      "Ohaji-Egbema",
+      "Oru West"
+    ]
+  },
+  {
+    "id": "IM-ORU-EAST-ORSU-ORLU",
+    "code": "Oru East/Orsu/Orlu",
+    "name": "Oru East/Orsu/Orlu Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-W",
+    "lgas": [
+      "Oru East",
+      "Orsu",
+      "Orlu"
+    ]
+  },
+  {
+    "id": "IM-OWERRI-MUNICIPAL-OWERRI-NORTH-OWERRI-WEST",
+    "code": "Owerri Municipal/Owerri North/Owerri West",
+    "name": "Owerri Municipal/Owerri North/Owerri West Federal Constituency",
+    "stateCode": "IM",
+    "senatorialDistrictId": "IM-E",
+    "lgas": [
+      "Owerri Municipal",
+      "Owerri North",
+      "Owerri West"
+    ]
+  },
+  {
+    "id": "JI-BABURA-GARKI",
+    "code": "Babura/Garki",
+    "name": "Babura/Garki Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NW",
+    "lgas": [
+      "Babura",
+      "Garki"
+    ]
+  },
+  {
+    "id": "JI-BIRNIN-KUDU-BUJI",
+    "code": "Birnin Kudu/Buji",
+    "name": "Birnin Kudu/Buji Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NE",
+    "lgas": [
+      "Birnin Kudu",
+      "Buji"
+    ]
+  },
+  {
+    "id": "JI-BIRNIWA-GURI-KIRIKASAMMA",
+    "code": "Birniwa Guri/Kirikasamma",
+    "name": "Birniwa Guri/Kirikasamma Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-SW",
+    "lgas": [
+      "Birniwa Guri",
+      "Kirikasamma"
+    ]
+  },
+  {
+    "id": "JI-DUTSE-KIYAWA",
+    "code": "Dutse/Kiyawa",
+    "name": "Dutse/Kiyawa Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NW",
+    "lgas": [
+      "Dutse",
+      "Kiyawa"
+    ]
+  },
+  {
+    "id": "JI-GUMEL-MAIGATARI-SULE-TANKARKAR-GAGARAWA",
+    "code": "Gumel/Maigatari/Sule Tankarkar/Gagarawa",
+    "name": "Gumel/Maigatari/Sule Tankarkar/Gagarawa Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NE",
+    "lgas": [
+      "Gumel",
+      "Maigatari",
+      "Sule Tankarkar",
+      "Gagarawa"
+    ]
+  },
+  {
+    "id": "JI-GWARAM",
+    "code": "Gwaram",
+    "name": "Gwaram Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-SW",
+    "lgas": [
+      "Gwaram"
+    ]
+  },
+  {
+    "id": "JI-HADEJIA-KAFIN-HAUSA-AUYO",
+    "code": "Hadejia/Kafin Hausa/Auyo",
+    "name": "Hadejia/Kafin Hausa/Auyo Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NW",
+    "lgas": [
+      "Hadejia",
+      "Kafin Hausa",
+      "Auyo"
+    ]
+  },
+  {
+    "id": "JI-JAHUN-MIGA",
+    "code": "Jahun/Miga",
+    "name": "Jahun/Miga Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NE",
+    "lgas": [
+      "Jahun",
+      "Miga"
+    ]
+  },
+  {
+    "id": "JI-KAZAURE-RONI-GWIWA-YANKWASHI",
+    "code": "Kazaure/Roni/Gwiwa/Yankwashi",
+    "name": "Kazaure/Roni/Gwiwa/Yankwashi Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-SW",
+    "lgas": [
+      "Kazaure",
+      "Roni",
+      "Gwiwa",
+      "Yankwashi"
+    ]
+  },
+  {
+    "id": "JI-MALLAM-MADORI-KAUGAMA",
+    "code": "Mallam Madori/Kaugama",
+    "name": "Mallam Madori/Kaugama Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NW",
+    "lgas": [
+      "Mallam Madori",
+      "Kaugama"
+    ]
+  },
+  {
+    "id": "JI-RINGIM-TAURA",
+    "code": "Ringim/Taura",
+    "name": "Ringim/Taura Federal Constituency",
+    "stateCode": "JI",
+    "senatorialDistrictId": "JI-NE",
+    "lgas": [
+      "Ringim",
+      "Taura"
+    ]
+  },
+  {
+    "id": "KD-BIRNIN-GWARI-GIWA",
+    "code": "Birnin Gwari/Giwa",
+    "name": "Birnin Gwari/Giwa Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Birnin Gwari",
+      "Giwa"
+    ]
+  },
+  {
+    "id": "KD-CHIKUN-KAJURU",
+    "code": "Chikun/Kajuru",
+    "name": "Chikun/Kajuru Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-N",
+    "lgas": [
+      "Chikun",
+      "Kajuru"
+    ]
+  },
+  {
+    "id": "KD-IGABI",
+    "code": "Igabi",
+    "name": "Igabi Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-S",
+    "lgas": [
+      "Igabi"
+    ]
+  },
+  {
+    "id": "KD-IKARA-KUBAU",
+    "code": "Ikara/Kubau",
+    "name": "Ikara/Kubau Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Ikara",
+      "Kubau"
+    ]
+  },
+  {
+    "id": "KD-JEMA-A-SANGA",
+    "code": "Jema'a/Sanga",
+    "name": "Jema'a/Sanga Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-N",
+    "lgas": [
+      "Jema'a",
+      "Sanga"
+    ]
+  },
+  {
+    "id": "KD-KACHIA-KAGARKO",
+    "code": "Kachia/Kagarko",
+    "name": "Kachia/Kagarko Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-S",
+    "lgas": [
+      "Kachia",
+      "Kagarko"
+    ]
+  },
+  {
+    "id": "KD-KADUNA-NORTH",
+    "code": "Kaduna North",
+    "name": "Kaduna North Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Kaduna North"
+    ]
+  },
+  {
+    "id": "KD-KADUNA-SOUTH",
+    "code": "Kaduna South",
+    "name": "Kaduna South Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-N",
+    "lgas": [
+      "Kaduna South"
+    ]
+  },
+  {
+    "id": "KD-KAURA",
+    "code": "Kaura",
+    "name": "Kaura Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-S",
+    "lgas": [
+      "Kaura"
+    ]
+  },
+  {
+    "id": "KD-KAURU",
+    "code": "Kauru",
+    "name": "Kauru Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Kauru"
+    ]
+  },
+  {
+    "id": "KD-LERE",
+    "code": "Lere",
+    "name": "Lere Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-N",
+    "lgas": [
+      "Lere"
+    ]
+  },
+  {
+    "id": "KD-MAKARFI-KUDAN",
+    "code": "Makarfi/Kudan",
+    "name": "Makarfi/Kudan Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-S",
+    "lgas": [
+      "Makarfi",
+      "Kudan"
+    ]
+  },
+  {
+    "id": "KD-SABON-GARI",
+    "code": "Sabon Gari",
+    "name": "Sabon Gari Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Sabon Gari"
+    ]
+  },
+  {
+    "id": "KD-SOBA",
+    "code": "Soba",
+    "name": "Soba Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-N",
+    "lgas": [
+      "Soba"
+    ]
+  },
+  {
+    "id": "KD-ZANGON-KATAF-JABA",
+    "code": "Zangon Kataf/Jaba",
+    "name": "Zangon Kataf/Jaba Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-S",
+    "lgas": [
+      "Zangon Kataf",
+      "Jaba"
+    ]
+  },
+  {
+    "id": "KD-ZARIA",
+    "code": "Zaria",
+    "name": "Zaria Federal Constituency",
+    "stateCode": "KD",
+    "senatorialDistrictId": "KD-C",
+    "lgas": [
+      "Zaria"
+    ]
+  },
+  {
+    "id": "KN-ALBASU-GAYA-AJINGI",
+    "code": "Albasu/Gaya/Ajingi",
+    "name": "Albasu/Gaya/Ajingi Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Albasu",
+      "Gaya",
+      "Ajingi"
+    ]
+  },
+  {
+    "id": "KN-BEBEJI-KIRU",
+    "code": "Bebeji/Kiru",
+    "name": "Bebeji/Kiru Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Bebeji",
+      "Kiru"
+    ]
+  },
+  {
+    "id": "KN-BICHI",
+    "code": "Bichi",
+    "name": "Bichi Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Bichi"
+    ]
+  },
+  {
+    "id": "KN-DALA",
+    "code": "Dala",
+    "name": "Dala Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Dala"
+    ]
+  },
+  {
+    "id": "KN-DAMBATTA-MAKODA",
+    "code": "Dambatta/Makoda",
+    "name": "Dambatta/Makoda Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Dambatta",
+      "Makoda"
+    ]
+  },
+  {
+    "id": "KN-DAWAKIN-KUDU-WARAWA",
+    "code": "Dawakin Kudu/Warawa",
+    "name": "Dawakin Kudu/Warawa Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Dawakin Kudu",
+      "Warawa"
+    ]
+  },
+  {
+    "id": "KN-DAWAKIN-TOFA-TOFA-RIMIN-GADO",
+    "code": "Dawakin Tofa/Tofa/Rimin Gado",
+    "name": "Dawakin Tofa/Tofa/Rimin Gado Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Dawakin Tofa",
+      "Tofa",
+      "Rimin Gado"
+    ]
+  },
+  {
+    "id": "KN-DOGUWA-TUDUN-WADA",
+    "code": "Doguwa/Tudun Wada",
+    "name": "Doguwa/Tudun Wada Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Doguwa",
+      "Tudun Wada"
+    ]
+  },
+  {
+    "id": "KN-FAGGE",
+    "code": "Fagge",
+    "name": "Fagge Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Fagge"
+    ]
+  },
+  {
+    "id": "KN-GWARZO-KABO",
+    "code": "GWARZO/KABO",
+    "name": "GWARZO/KABO Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "GWARZO",
+      "KABO"
+    ]
+  },
+  {
+    "id": "KN-GEZAWA-GABASAWA",
+    "code": "Gezawa/Gabasawa",
+    "name": "Gezawa/Gabasawa Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Gezawa",
+      "Gabasawa"
+    ]
+  },
+  {
+    "id": "KN-GWALE",
+    "code": "Gwale",
+    "name": "Gwale Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Gwale"
+    ]
+  },
+  {
+    "id": "KN-KARAYE-ROGO",
+    "code": "Karaye/Rogo",
+    "name": "Karaye/Rogo Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Karaye",
+      "Rogo"
+    ]
+  },
+  {
+    "id": "KN-KUMBOTSO",
+    "code": "Kumbotso",
+    "name": "Kumbotso Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Kumbotso"
+    ]
+  },
+  {
+    "id": "KN-KURA-MADOBI-GARUN-MALLAM",
+    "code": "Kura/Madobi/Garun Mallam",
+    "name": "Kura/Madobi/Garun Mallam Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Kura",
+      "Madobi",
+      "Garun Mallam"
+    ]
+  },
+  {
+    "id": "KN-MINJIBIR-UNGOGO",
+    "code": "Minjibir/Ungogo",
+    "name": "Minjibir/Ungogo Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Minjibir",
+      "Ungogo"
+    ]
+  },
+  {
+    "id": "KN-MUNICIPAL",
+    "code": "Municipal",
+    "name": "Municipal Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Municipal"
+    ]
+  },
+  {
+    "id": "KN-NASSARAWA",
+    "code": "Nassarawa",
+    "name": "Nassarawa Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Nassarawa"
+    ]
+  },
+  {
+    "id": "KN-RANO-BUNKURE-KIBIYA",
+    "code": "Rano/Bunkure/Kibiya",
+    "name": "Rano/Bunkure/Kibiya Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Rano",
+      "Bunkure",
+      "Kibiya"
+    ]
+  },
+  {
+    "id": "KN-SHANONO-BAGWAI",
+    "code": "Shanono/Bagwai",
+    "name": "Shanono/Bagwai Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Shanono",
+      "Bagwai"
+    ]
+  },
+  {
+    "id": "KN-SUMAILA-TAKAI",
+    "code": "Sumaila/Takai",
+    "name": "Sumaila/Takai Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Sumaila",
+      "Takai"
+    ]
+  },
+  {
+    "id": "KN-TARAUNI",
+    "code": "Tarauni",
+    "name": "Tarauni Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-C",
+    "lgas": [
+      "Tarauni"
+    ]
+  },
+  {
+    "id": "KN-TSANYAWA-KUNCHI",
+    "code": "Tsanyawa/Kunchi",
+    "name": "Tsanyawa/Kunchi Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-N",
+    "lgas": [
+      "Tsanyawa",
+      "Kunchi"
+    ]
+  },
+  {
+    "id": "KN-WUDIL-GARKO",
+    "code": "Wudil/Garko",
+    "name": "Wudil/Garko Federal Constituency",
+    "stateCode": "KN",
+    "senatorialDistrictId": "KN-S",
+    "lgas": [
+      "Wudil",
+      "Garko"
+    ]
+  },
+  {
+    "id": "KT-BAKORI-DANJA",
+    "code": "Bakori/Danja",
+    "name": "Bakori/Danja Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-C",
+    "lgas": [
+      "Bakori",
+      "Danja"
+    ]
+  },
+  {
+    "id": "KT-BATAGARAWA-CHARANCHI-RIMI",
+    "code": "Batagarawa/Charanchi/Rimi",
+    "name": "Batagarawa/Charanchi/Rimi Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-N",
+    "lgas": [
+      "Batagarawa",
+      "Charanchi",
+      "Rimi"
+    ]
+  },
+  {
+    "id": "KT-BATSARI-SAFANA-DANMUSA",
+    "code": "Batsari/Safana/Danmusa",
+    "name": "Batsari/Safana/Danmusa Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-S",
+    "lgas": [
+      "Batsari",
+      "Safana",
+      "Danmusa"
+    ]
+  },
+  {
+    "id": "KT-BINDAWA-MANI",
+    "code": "Bindawa/Mani",
+    "name": "Bindawa/Mani Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-C",
+    "lgas": [
+      "Bindawa",
+      "Mani"
+    ]
+  },
+  {
+    "id": "KT-DAURA-SANDAMU-MAI-ADUA",
+    "code": "Daura/Sandamu/Mai'adua",
+    "name": "Daura/Sandamu/Mai'adua Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-N",
+    "lgas": [
+      "Daura",
+      "Sandamu",
+      "Mai'adua"
+    ]
+  },
+  {
+    "id": "KT-DUTSIN-MA-KURFI",
+    "code": "Dutsin-ma/Kurfi",
+    "name": "Dutsin-ma/Kurfi Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-S",
+    "lgas": [
+      "Dutsin-ma",
+      "Kurfi"
+    ]
+  },
+  {
+    "id": "KT-FASKARI-KANKARA-SABUWA",
+    "code": "Faskari/Kankara/Sabuwa",
+    "name": "Faskari/Kankara/Sabuwa Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-C",
+    "lgas": [
+      "Faskari",
+      "Kankara",
+      "Sabuwa"
+    ]
+  },
+  {
+    "id": "KT-FUNTUA-DANDUME",
+    "code": "Funtua/Dandume",
+    "name": "Funtua/Dandume Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-N",
+    "lgas": [
+      "Funtua",
+      "Dandume"
+    ]
+  },
+  {
+    "id": "KT-INGAWA-KANKIA-KUSADA",
+    "code": "Ingawa/Kankia/Kusada",
+    "name": "Ingawa/Kankia/Kusada Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-S",
+    "lgas": [
+      "Ingawa",
+      "Kankia",
+      "Kusada"
+    ]
+  },
+  {
+    "id": "KT-JIBIA-KAITA",
+    "code": "Jibia/Kaita",
+    "name": "Jibia/Kaita Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-C",
+    "lgas": [
+      "Jibia",
+      "Kaita"
+    ]
+  },
+  {
+    "id": "KT-KATSINA",
+    "code": "Katsina",
+    "name": "Katsina Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-N",
+    "lgas": [
+      "Katsina"
+    ]
+  },
+  {
+    "id": "KT-MALUMFASHI-KAFUR",
+    "code": "Malumfashi/Kafur",
+    "name": "Malumfashi/Kafur Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-S",
+    "lgas": [
+      "Malumfashi",
+      "Kafur"
+    ]
+  },
+  {
+    "id": "KT-MASHI-DUTSI",
+    "code": "Mashi/Dutsi",
+    "name": "Mashi/Dutsi Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-C",
+    "lgas": [
+      "Mashi",
+      "Dutsi"
+    ]
+  },
+  {
+    "id": "KT-MATAZU-MUSAWA",
+    "code": "Matazu/Musawa",
+    "name": "Matazu/Musawa Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-N",
+    "lgas": [
+      "Matazu",
+      "Musawa"
+    ]
+  },
+  {
+    "id": "KT-ZANGO-BAURE",
+    "code": "Zango/Baure",
+    "name": "Zango/Baure Federal Constituency",
+    "stateCode": "KT",
+    "senatorialDistrictId": "KT-S",
+    "lgas": [
+      "Zango",
+      "Baure"
+    ]
+  },
+  {
+    "id": "KE-ALEIRO-GWANDU-JEGA",
+    "code": "Aleiro/Gwandu/Jega",
+    "name": "Aleiro/Gwandu/Jega Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-C",
+    "lgas": [
+      "Aleiro",
+      "Gwandu",
+      "Jega"
+    ]
+  },
+  {
+    "id": "KE-AREWA-DANDI",
+    "code": "Arewa/Dandi",
+    "name": "Arewa/Dandi Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-N",
+    "lgas": [
+      "Arewa",
+      "Dandi"
+    ]
+  },
+  {
+    "id": "KE-ARGUNGU-AUGIE",
+    "code": "Argungu/Augie",
+    "name": "Argungu/Augie Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-S",
+    "lgas": [
+      "Argungu",
+      "Augie"
+    ]
+  },
+  {
+    "id": "KE-BAGUDO-SURU",
+    "code": "Bagudo/Suru",
+    "name": "Bagudo/Suru Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-C",
+    "lgas": [
+      "Bagudo",
+      "Suru"
+    ]
+  },
+  {
+    "id": "KE-BUNZA-BIRNIN-KEBBI-KALGO",
+    "code": "Bunza/Birnin Kebbi/Kalgo",
+    "name": "Bunza/Birnin Kebbi/Kalgo Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-N",
+    "lgas": [
+      "Bunza",
+      "Birnin Kebbi",
+      "Kalgo"
+    ]
+  },
+  {
+    "id": "KE-FAKAI-SAKABA-WASAGU-DANKO-ZURU",
+    "code": "Fakai/Sakaba/Wasagu/Danko/Zuru",
+    "name": "Fakai/Sakaba/Wasagu/Danko/Zuru Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-S",
+    "lgas": [
+      "Fakai",
+      "Sakaba",
+      "Wasagu",
+      "Danko",
+      "Zuru"
+    ]
+  },
+  {
+    "id": "KE-KOKO-BESSE-MAIYAMA",
+    "code": "Koko-Besse/Maiyama",
+    "name": "Koko-Besse/Maiyama Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-C",
+    "lgas": [
+      "Koko-Besse",
+      "Maiyama"
+    ]
+  },
+  {
+    "id": "KE-NGASKI-SHANGA-YAURI",
+    "code": "Ngaski/Shanga/Yauri",
+    "name": "Ngaski/Shanga/Yauri Federal Constituency",
+    "stateCode": "KE",
+    "senatorialDistrictId": "KE-N",
+    "lgas": [
+      "Ngaski",
+      "Shanga",
+      "Yauri"
+    ]
+  },
+  {
+    "id": "KG-ADAVI-OKEHI",
+    "code": "Adavi/Okehi",
+    "name": "Adavi/Okehi Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-C",
+    "lgas": [
+      "Adavi",
+      "Okehi"
+    ]
+  },
+  {
+    "id": "KG-AJAOKUTA",
+    "code": "Ajaokuta",
+    "name": "Ajaokuta Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-E",
+    "lgas": [
+      "Ajaokuta"
+    ]
+  },
+  {
+    "id": "KG-ANKPA-OMALA-OLAMABORO",
+    "code": "Ankpa/Omala/Olamaboro",
+    "name": "Ankpa/Omala/Olamaboro Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-W",
+    "lgas": [
+      "Ankpa",
+      "Omala",
+      "Olamaboro"
+    ]
+  },
+  {
+    "id": "KG-BASSA-DEKINA",
+    "code": "Bassa/Dekina",
+    "name": "Bassa/Dekina Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-C",
+    "lgas": [
+      "Bassa",
+      "Dekina"
+    ]
+  },
+  {
+    "id": "KG-IDAH-IGALAMELA-ODOLU-IBAJI-OFU",
+    "code": "Idah/Igalamela Odolu/Ibaji/Ofu",
+    "name": "Idah/Igalamela Odolu/Ibaji/Ofu Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-E",
+    "lgas": [
+      "Idah",
+      "Igalamela Odolu",
+      "Ibaji",
+      "Ofu"
+    ]
+  },
+  {
+    "id": "KG-IJUMU-KABBA-BUNU",
+    "code": "Ijumu/Kabba-Bunu",
+    "name": "Ijumu/Kabba-Bunu Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-W",
+    "lgas": [
+      "Ijumu",
+      "Kabba-Bunu"
+    ]
+  },
+  {
+    "id": "KG-KOGI-LOKOJA-KOGI-K-K",
+    "code": "Kogi (Lokoja)/Kogi (K.K.)",
+    "name": "Kogi (Lokoja)/Kogi (K.K.) Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-C",
+    "lgas": [
+      "Kogi (Lokoja)",
+      "Kogi (K.K.)"
+    ]
+  },
+  {
+    "id": "KG-OKENE-OGORI-MAGOGO",
+    "code": "Okene/Ogori-Magogo",
+    "name": "Okene/Ogori-Magogo Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-E",
+    "lgas": [
+      "Okene",
+      "Ogori-Magogo"
+    ]
+  },
+  {
+    "id": "KG-YAGBA-EAST-YAGBA-WEST-MOPAMURO",
+    "code": "Yagba East/Yagba West/Mopamuro",
+    "name": "Yagba East/Yagba West/Mopamuro Federal Constituency",
+    "stateCode": "KG",
+    "senatorialDistrictId": "KG-W",
+    "lgas": [
+      "Yagba East",
+      "Yagba West",
+      "Mopamuro"
+    ]
+  },
+  {
+    "id": "KW-BARUTEN-KAIAMA",
+    "code": "Baruten/Kaiama",
+    "name": "Baruten/Kaiama Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-C",
+    "lgas": [
+      "Baruten",
+      "Kaiama"
+    ]
+  },
+  {
+    "id": "KW-EDU-MORO-PATEGI",
+    "code": "Edu/Moro/Pategi",
+    "name": "Edu/Moro/Pategi Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-N",
+    "lgas": [
+      "Edu",
+      "Moro",
+      "Pategi"
+    ]
+  },
+  {
+    "id": "KW-EKITI-ISIN-IREPODUN-OKE-ERO",
+    "code": "Ekiti/Isin/Irepodun/Oke-Ero",
+    "name": "Ekiti/Isin/Irepodun/Oke-Ero Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-S",
+    "lgas": [
+      "Ekiti",
+      "Isin",
+      "Irepodun",
+      "Oke-Ero"
+    ]
+  },
+  {
+    "id": "KW-IFELODUN-OFFA-OYUN",
+    "code": "Ifelodun/Offa/Oyun",
+    "name": "Ifelodun/Offa/Oyun Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-C",
+    "lgas": [
+      "Ifelodun",
+      "Offa",
+      "Oyun"
+    ]
+  },
+  {
+    "id": "KW-ILORIN-EAST-ILORIN-SOUTH",
+    "code": "Ilorin East/Ilorin South",
+    "name": "Ilorin East/Ilorin South Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-N",
+    "lgas": [
+      "Ilorin East",
+      "Ilorin South"
+    ]
+  },
+  {
+    "id": "KW-ILORIN-WEST-ASA",
+    "code": "Ilorin West/Asa",
+    "name": "Ilorin West/Asa Federal Constituency",
+    "stateCode": "KW",
+    "senatorialDistrictId": "KW-S",
+    "lgas": [
+      "Ilorin West",
+      "Asa"
+    ]
+  },
+  {
+    "id": "LA-AGEGE",
+    "code": "Agege",
+    "name": "Agege Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Agege"
+    ]
+  },
+  {
+    "id": "LA-AJEROMI-IFELODUN",
+    "code": "Ajeromi/Ifelodun",
+    "name": "Ajeromi/Ifelodun Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Ajeromi",
+      "Ifelodun"
+    ]
+  },
+  {
+    "id": "LA-ALIMOSHO",
+    "code": "Alimosho",
+    "name": "Alimosho Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Alimosho"
+    ]
+  },
+  {
+    "id": "LA-AMUWO-ODOFIN",
+    "code": "Amuwo-Odofin",
+    "name": "Amuwo-Odofin Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Amuwo-Odofin"
+    ]
+  },
+  {
+    "id": "LA-APAPA",
+    "code": "Apapa",
+    "name": "Apapa Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Apapa"
+    ]
+  },
+  {
+    "id": "LA-BADAGRY",
+    "code": "Badagry",
+    "name": "Badagry Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Badagry"
+    ]
+  },
+  {
+    "id": "LA-EPE",
+    "code": "Epe",
+    "name": "Epe Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Epe"
+    ]
+  },
+  {
+    "id": "LA-ETI-OSA",
+    "code": "Eti-Osa",
+    "name": "Eti-Osa Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Eti-Osa"
+    ]
+  },
+  {
+    "id": "LA-IBEJU-LEKKI",
+    "code": "Ibeju Lekki",
+    "name": "Ibeju Lekki Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Ibeju Lekki"
+    ]
+  },
+  {
+    "id": "LA-IFAKO-IJAIYE",
+    "code": "Ifako/Ijaiye",
+    "name": "Ifako/Ijaiye Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Ifako",
+      "Ijaiye"
+    ]
+  },
+  {
+    "id": "LA-IKEJA",
+    "code": "Ikeja",
+    "name": "Ikeja Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Ikeja"
+    ]
+  },
+  {
+    "id": "LA-IKORODU",
+    "code": "Ikorodu",
+    "name": "Ikorodu Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Ikorodu"
+    ]
+  },
+  {
+    "id": "LA-KOSOFE",
+    "code": "Kosofe",
+    "name": "Kosofe Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Kosofe"
+    ]
+  },
+  {
+    "id": "LA-LAGOS-ISLAND-I",
+    "code": "Lagos Island I",
+    "name": "Lagos Island I Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Lagos Island I"
+    ]
+  },
+  {
+    "id": "LA-LAGOS-ISLAND-II",
+    "code": "Lagos Island II",
+    "name": "Lagos Island II Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Lagos Island II"
+    ]
+  },
+  {
+    "id": "LA-LAGOS-MAINLAND",
+    "code": "Lagos Mainland",
+    "name": "Lagos Mainland Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Lagos Mainland"
+    ]
+  },
+  {
+    "id": "LA-MUSHIN-I",
+    "code": "Mushin I",
+    "name": "Mushin I Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Mushin I"
+    ]
+  },
+  {
+    "id": "LA-MUSHIN-II",
+    "code": "Mushin II",
+    "name": "Mushin II Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Mushin II"
+    ]
+  },
+  {
+    "id": "LA-OJO",
+    "code": "Ojo",
+    "name": "Ojo Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Ojo"
+    ]
+  },
+  {
+    "id": "LA-OSHODI-ISOLO-I",
+    "code": "Oshodi/Isolo I",
+    "name": "Oshodi/Isolo I Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Oshodi",
+      "Isolo I"
+    ]
+  },
+  {
+    "id": "LA-OSHODI-ISOLO-II",
+    "code": "Oshodi/Isolo II",
+    "name": "Oshodi/Isolo II Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Oshodi",
+      "Isolo II"
+    ]
+  },
+  {
+    "id": "LA-SHOMOLU",
+    "code": "Shomolu",
+    "name": "Shomolu Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-C",
+    "lgas": [
+      "Shomolu"
+    ]
+  },
+  {
+    "id": "LA-SURULERE-I",
+    "code": "Surulere I",
+    "name": "Surulere I Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-E",
+    "lgas": [
+      "Surulere I"
+    ]
+  },
+  {
+    "id": "LA-SURULERE-II",
+    "code": "Surulere II",
+    "name": "Surulere II Federal Constituency",
+    "stateCode": "LA",
+    "senatorialDistrictId": "LA-W",
+    "lgas": [
+      "Surulere II"
+    ]
+  },
+  {
+    "id": "NA-AKWANGA-NASSARAWA-EGGON-WAMBA",
+    "code": "Akwanga/Nassarawa Eggon/Wamba",
+    "name": "Akwanga/Nassarawa Eggon/Wamba Federal Constituency",
+    "stateCode": "NA",
+    "senatorialDistrictId": "NA-S",
+    "lgas": [
+      "Akwanga",
+      "Nassarawa Eggon",
+      "Wamba"
+    ]
+  },
+  {
+    "id": "NA-AWE-DOMA-KEANA",
+    "code": "Awe/Doma/Keana",
+    "name": "Awe/Doma/Keana Federal Constituency",
+    "stateCode": "NA",
+    "senatorialDistrictId": "NA-N",
+    "lgas": [
+      "Awe",
+      "Doma",
+      "Keana"
+    ]
+  },
+  {
+    "id": "NA-KEFFI-KARU-KOKONA",
+    "code": "Keffi/Karu/Kokona",
+    "name": "Keffi/Karu/Kokona Federal Constituency",
+    "stateCode": "NA",
+    "senatorialDistrictId": "NA-W",
+    "lgas": [
+      "Keffi",
+      "Karu",
+      "Kokona"
+    ]
+  },
+  {
+    "id": "NA-LAFIA-OBI",
+    "code": "Lafia/Obi",
+    "name": "Lafia/Obi Federal Constituency",
+    "stateCode": "NA",
+    "senatorialDistrictId": "NA-S",
+    "lgas": [
+      "Lafia",
+      "Obi"
+    ]
+  },
+  {
+    "id": "NA-NASSARAWA-TOTO",
+    "code": "Nassarawa/Toto",
+    "name": "Nassarawa/Toto Federal Constituency",
+    "stateCode": "NA",
+    "senatorialDistrictId": "NA-N",
+    "lgas": [
+      "Nassarawa",
+      "Toto"
+    ]
+  },
+  {
+    "id": "NG-AGAIE-LAPAI",
+    "code": "Agaie/Lapai",
+    "name": "Agaie/Lapai Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-E",
+    "lgas": [
+      "Agaie",
+      "Lapai"
+    ]
+  },
+  {
+    "id": "NG-AGWARA-BORGU",
+    "code": "Agwara/Borgu",
+    "name": "Agwara/Borgu Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-N",
+    "lgas": [
+      "Agwara",
+      "Borgu"
+    ]
+  },
+  {
+    "id": "NG-BIDA-GBAKO-KATCHA",
+    "code": "Bida/Gbako/Katcha",
+    "name": "Bida/Gbako/Katcha Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-S",
+    "lgas": [
+      "Bida",
+      "Gbako",
+      "Katcha"
+    ]
+  },
+  {
+    "id": "NG-BOOSO-PAIKORO",
+    "code": "Booso/Paikoro",
+    "name": "Booso/Paikoro Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-E",
+    "lgas": [
+      "Booso",
+      "Paikoro"
+    ]
+  },
+  {
+    "id": "NG-CHANCHAGA",
+    "code": "Chanchaga",
+    "name": "Chanchaga Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-N",
+    "lgas": [
+      "Chanchaga"
+    ]
+  },
+  {
+    "id": "NG-GURARA-SULEJA-TAPA",
+    "code": "Gurara/Suleja/Tapa",
+    "name": "Gurara/Suleja/Tapa Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-S",
+    "lgas": [
+      "Gurara",
+      "Suleja",
+      "Tapa"
+    ]
+  },
+  {
+    "id": "NG-KONTAGORA-WUSHISHI-MARIGA-MASHEGU",
+    "code": "Kontagora/Wushishi/Mariga/Mashegu",
+    "name": "Kontagora/Wushishi/Mariga/Mashegu Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-E",
+    "lgas": [
+      "Kontagora",
+      "Wushishi",
+      "Mariga",
+      "Mashegu"
+    ]
+  },
+  {
+    "id": "NG-LAVUN-MOKWA-EDATI",
+    "code": "Lavun/Mokwa/Edati",
+    "name": "Lavun/Mokwa/Edati Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-N",
+    "lgas": [
+      "Lavun",
+      "Mokwa",
+      "Edati"
+    ]
+  },
+  {
+    "id": "NG-MAGAMA-RIJAU",
+    "code": "Magama/Rijau",
+    "name": "Magama/Rijau Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-S",
+    "lgas": [
+      "Magama",
+      "Rijau"
+    ]
+  },
+  {
+    "id": "NG-SHIRORO-RAFI-MUNYA",
+    "code": "Shiroro/Rafi/Munya",
+    "name": "Shiroro/Rafi/Munya Federal Constituency",
+    "stateCode": "NG",
+    "senatorialDistrictId": "NG-E",
+    "lgas": [
+      "Shiroro",
+      "Rafi",
+      "Munya"
+    ]
+  },
+  {
+    "id": "OG-ABEOKUTA-NORTH-OBAFEMI-OWODE-ODEDA",
+    "code": "Abeokuta North/Obafemi-Owode/Odeda",
+    "name": "Abeokuta North/Obafemi-Owode/Odeda Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-C",
+    "lgas": [
+      "Abeokuta North",
+      "Obafemi-Owode",
+      "Odeda"
+    ]
+  },
+  {
+    "id": "OG-ABEOKUTA-SOUTH",
+    "code": "Abeokuta South",
+    "name": "Abeokuta South Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-E",
+    "lgas": [
+      "Abeokuta South"
+    ]
+  },
+  {
+    "id": "OG-ADO-ODO-OTA",
+    "code": "Ado-Odo/Ota",
+    "name": "Ado-Odo/Ota Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-W",
+    "lgas": [
+      "Ado-Odo",
+      "Ota"
+    ]
+  },
+  {
+    "id": "OG-EGBADO-NORTH-IMEKO-AFON",
+    "code": "Egbado North/Imeko-Afon",
+    "name": "Egbado North/Imeko-Afon Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-C",
+    "lgas": [
+      "Egbado North",
+      "Imeko-Afon"
+    ]
+  },
+  {
+    "id": "OG-EGBADO-SOUTH-IPOKIA",
+    "code": "Egbado South/Ipokia",
+    "name": "Egbado South/Ipokia Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-E",
+    "lgas": [
+      "Egbado South",
+      "Ipokia"
+    ]
+  },
+  {
+    "id": "OG-IFO-EWEKORO",
+    "code": "Ifo/Ewekoro",
+    "name": "Ifo/Ewekoro Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-W",
+    "lgas": [
+      "Ifo",
+      "Ewekoro"
+    ]
+  },
+  {
+    "id": "OG-IJEBU-NORTH-IJEBU-EAST-OGUN-WATERSIDE",
+    "code": "Ijebu North/Ijebu East/Ogun Waterside",
+    "name": "Ijebu North/Ijebu East/Ogun Waterside Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-C",
+    "lgas": [
+      "Ijebu North",
+      "Ijebu East",
+      "Ogun Waterside"
+    ]
+  },
+  {
+    "id": "OG-IJEBU-ODE-ODOGBOLU-IJEBU-NORTH-EAST",
+    "code": "Ijebu Ode/Odogbolu/Ijebu North East",
+    "name": "Ijebu Ode/Odogbolu/Ijebu North East Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-E",
+    "lgas": [
+      "Ijebu Ode",
+      "Odogbolu",
+      "Ijebu North East"
+    ]
+  },
+  {
+    "id": "OG-IKENNE-SHAGAMU-REMO-NORTH",
+    "code": "Ikenne/Shagamu/Remo North",
+    "name": "Ikenne/Shagamu/Remo North Federal Constituency",
+    "stateCode": "OG",
+    "senatorialDistrictId": "OG-W",
+    "lgas": [
+      "Ikenne",
+      "Shagamu",
+      "Remo North"
+    ]
+  },
+  {
+    "id": "ON-AKOKO-NORTH-EAST-AKOKO-NORTH-WEST",
+    "code": "Akoko North East/Akoko North West",
+    "name": "Akoko North East/Akoko North West Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-C",
+    "lgas": [
+      "Akoko North East",
+      "Akoko North West"
+    ]
+  },
+  {
+    "id": "ON-AKOKO-SOUTH-EAST-AKOKO-SOUTH-WEST",
+    "code": "Akoko South East/Akoko South West",
+    "name": "Akoko South East/Akoko South West Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-N",
+    "lgas": [
+      "Akoko South East",
+      "Akoko South West"
+    ]
+  },
+  {
+    "id": "ON-AKURE-NORTH-AKURE-SOUTH",
+    "code": "Akure North/Akure South",
+    "name": "Akure North/Akure South Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-S",
+    "lgas": [
+      "Akure North",
+      "Akure South"
+    ]
+  },
+  {
+    "id": "ON-ESEODO-ILAJE",
+    "code": "Eseodo/Ilaje",
+    "name": "Eseodo/Ilaje Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-C",
+    "lgas": [
+      "Eseodo",
+      "Ilaje"
+    ]
+  },
+  {
+    "id": "ON-IDANRE-IFEDORE",
+    "code": "Idanre/Ifedore",
+    "name": "Idanre/Ifedore Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-N",
+    "lgas": [
+      "Idanre",
+      "Ifedore"
+    ]
+  },
+  {
+    "id": "ON-ILEOLUJI-OKEIGBO-ODIGBO",
+    "code": "Ileoluji/Okeigbo/Odigbo",
+    "name": "Ileoluji/Okeigbo/Odigbo Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-S",
+    "lgas": [
+      "Ileoluji",
+      "Okeigbo",
+      "Odigbo"
+    ]
+  },
+  {
+    "id": "ON-OKITIPUPA-IRELE",
+    "code": "Okitipupa/Irele",
+    "name": "Okitipupa/Irele Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-C",
+    "lgas": [
+      "Okitipupa",
+      "Irele"
+    ]
+  },
+  {
+    "id": "ON-ONDO-EAST-ONDO-WEST",
+    "code": "Ondo East/Ondo West",
+    "name": "Ondo East/Ondo West Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-N",
+    "lgas": [
+      "Ondo East",
+      "Ondo West"
+    ]
+  },
+  {
+    "id": "ON-OWO-OSE",
+    "code": "Owo/Ose",
+    "name": "Owo/Ose Federal Constituency",
+    "stateCode": "ON",
+    "senatorialDistrictId": "ON-S",
+    "lgas": [
+      "Owo",
+      "Ose"
+    ]
+  },
+  {
+    "id": "OS-ATAKUNMOSA-EAST-ATAKUNMOSA-WEST-ILESHA-EAST-ILESHA-WEST",
+    "code": "Atakunmosa East/Atakunmosa West/Ilesha East/Ilesha West",
+    "name": "Atakunmosa East/Atakunmosa West/Ilesha East/Ilesha West Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-C",
+    "lgas": [
+      "Atakunmosa East",
+      "Atakunmosa West",
+      "Ilesha East",
+      "Ilesha West"
+    ]
+  },
+  {
+    "id": "OS-AYEDAADE-IREWOLE-ISOKAN",
+    "code": "Ayedaade/Irewole/Isokan",
+    "name": "Ayedaade/Irewole/Isokan Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-E",
+    "lgas": [
+      "Ayedaade",
+      "Irewole",
+      "Isokan"
+    ]
+  },
+  {
+    "id": "OS-AYEDIRE-IWO-OLA-OLUWA",
+    "code": "Ayedire/Iwo/Ola-Oluwa",
+    "name": "Ayedire/Iwo/Ola-Oluwa Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-W",
+    "lgas": [
+      "Ayedire",
+      "Iwo",
+      "Ola-Oluwa"
+    ]
+  },
+  {
+    "id": "OS-BOLUWADURO-IFEDAYO-ILA",
+    "code": "Boluwaduro/Ifedayo/Ila",
+    "name": "Boluwaduro/Ifedayo/Ila Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-C",
+    "lgas": [
+      "Boluwaduro",
+      "Ifedayo",
+      "Ila"
+    ]
+  },
+  {
+    "id": "OS-EDE-NORTH-EDE-SOUTH-EGBEDORE-EJIGBO",
+    "code": "Ede North/Ede South/Egbedore/Ejigbo",
+    "name": "Ede North/Ede South/Egbedore/Ejigbo Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-E",
+    "lgas": [
+      "Ede North",
+      "Ede South",
+      "Egbedore",
+      "Ejigbo"
+    ]
+  },
+  {
+    "id": "OS-IFE-CENTRAL-IFE-NORTH-IFE-SOUTH-IFE-EAST",
+    "code": "Ife Central/Ife North/Ife South/Ife East",
+    "name": "Ife Central/Ife North/Ife South/Ife East Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-W",
+    "lgas": [
+      "Ife Central",
+      "Ife North",
+      "Ife South",
+      "Ife East"
+    ]
+  },
+  {
+    "id": "OS-IREPODUN-OLORUNDA-OSOGBO-OROLU",
+    "code": "Irepodun/Olorunda/Osogbo/Orolu",
+    "name": "Irepodun/Olorunda/Osogbo/Orolu Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-C",
+    "lgas": [
+      "Irepodun",
+      "Olorunda",
+      "Osogbo",
+      "Orolu"
+    ]
+  },
+  {
+    "id": "OS-OBOKUN-ORIADE",
+    "code": "Obokun/Oriade",
+    "name": "Obokun/Oriade Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-E",
+    "lgas": [
+      "Obokun",
+      "Oriade"
+    ]
+  },
+  {
+    "id": "OS-ODO-OTIN-IFELODUN-BORIPE",
+    "code": "Odo-Otin/Ifelodun/Boripe",
+    "name": "Odo-Otin/Ifelodun/Boripe Federal Constituency",
+    "stateCode": "OS",
+    "senatorialDistrictId": "OS-W",
+    "lgas": [
+      "Odo-Otin",
+      "Ifelodun",
+      "Boripe"
+    ]
+  },
+  {
+    "id": "OY-AFIJIO-OYO-EAST-OYO-WEST-ATIBA",
+    "code": "Afijio/Oyo East/Oyo West/Atiba",
+    "name": "Afijio/Oyo East/Oyo West/Atiba Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-S",
+    "lgas": [
+      "Afijio",
+      "Oyo East",
+      "Oyo West",
+      "Atiba"
+    ]
+  },
+  {
+    "id": "OY-AKINYELE-LAGELU",
+    "code": "Akinyele/Lagelu",
+    "name": "Akinyele/Lagelu Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-C",
+    "lgas": [
+      "Akinyele",
+      "Lagelu"
+    ]
+  },
+  {
+    "id": "OY-EGBEDA-ONA-ARA",
+    "code": "Egbeda/Ona-Ara",
+    "name": "Egbeda/Ona-Ara Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-N",
+    "lgas": [
+      "Egbeda",
+      "Ona-Ara"
+    ]
+  },
+  {
+    "id": "OY-IBADAN-NORTH",
+    "code": "Ibadan North",
+    "name": "Ibadan North Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-S",
+    "lgas": [
+      "Ibadan North"
+    ]
+  },
+  {
+    "id": "OY-IBADAN-NORTH-EAST-IBADAN-SOUTH-EAST",
+    "code": "Ibadan North East/Ibadan South East",
+    "name": "Ibadan North East/Ibadan South East Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-C",
+    "lgas": [
+      "Ibadan North East",
+      "Ibadan South East"
+    ]
+  },
+  {
+    "id": "OY-IBADAN-SOUTH-WEST-IBADAN-NORTH-WEST",
+    "code": "Ibadan South West/Ibadan North West",
+    "name": "Ibadan South West/Ibadan North West Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-N",
+    "lgas": [
+      "Ibadan South West",
+      "Ibadan North West"
+    ]
+  },
+  {
+    "id": "OY-IBARAPA-CENTRAL-IBARAPA-NORTH",
+    "code": "Ibarapa Central/Ibarapa North",
+    "name": "Ibarapa Central/Ibarapa North Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-S",
+    "lgas": [
+      "Ibarapa Central",
+      "Ibarapa North"
+    ]
+  },
+  {
+    "id": "OY-IBARAPA-EAST-IDO",
+    "code": "Ibarapa East/Ido",
+    "name": "Ibarapa East/Ido Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-C",
+    "lgas": [
+      "Ibarapa East",
+      "Ido"
+    ]
+  },
+  {
+    "id": "OY-IREPO-ORELOPE-OLORUNSOGO",
+    "code": "Irepo/Orelope/Olorunsogo",
+    "name": "Irepo/Orelope/Olorunsogo Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-N",
+    "lgas": [
+      "Irepo",
+      "Orelope",
+      "Olorunsogo"
+    ]
+  },
+  {
+    "id": "OY-ISEYIN-ITESIWAJU-KAJOLA-IWAJOWA",
+    "code": "Iseyin/Itesiwaju/Kajola/Iwajowa",
+    "name": "Iseyin/Itesiwaju/Kajola/Iwajowa Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-S",
+    "lgas": [
+      "Iseyin",
+      "Itesiwaju",
+      "Kajola",
+      "Iwajowa"
+    ]
+  },
+  {
+    "id": "OY-OGBOMOSO-NORTH-OGBOMOSO-SOUTH-ORIRE",
+    "code": "Ogbomoso North/Ogbomoso South/Orire",
+    "name": "Ogbomoso North/Ogbomoso South/Orire Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-C",
+    "lgas": [
+      "Ogbomoso North",
+      "Ogbomoso South",
+      "Orire"
+    ]
+  },
+  {
+    "id": "OY-OGO-OLUWA-SURULERE",
+    "code": "Ogo-Oluwa/Surulere",
+    "name": "Ogo-Oluwa/Surulere Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-N",
+    "lgas": [
+      "Ogo-Oluwa",
+      "Surulere"
+    ]
+  },
+  {
+    "id": "OY-OLUYOLE",
+    "code": "Oluyole",
+    "name": "Oluyole Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-S",
+    "lgas": [
+      "Oluyole"
+    ]
+  },
+  {
+    "id": "OY-SAKI-EAST-SAKI-WEST-ATISBO",
+    "code": "Saki East/Saki West/Atisbo",
+    "name": "Saki East/Saki West/Atisbo Federal Constituency",
+    "stateCode": "OY",
+    "senatorialDistrictId": "OY-C",
+    "lgas": [
+      "Saki East",
+      "Saki West",
+      "Atisbo"
+    ]
+  },
+  {
+    "id": "PL-BARKIN-LADI-RIYOM",
+    "code": "Barkin Ladi/Riyom",
+    "name": "Barkin Ladi/Riyom Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-N",
+    "lgas": [
+      "Barkin Ladi",
+      "Riyom"
+    ]
+  },
+  {
+    "id": "PL-BOKKOS-MANGU",
+    "code": "Bokkos/Mangu",
+    "name": "Bokkos/Mangu Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-C",
+    "lgas": [
+      "Bokkos",
+      "Mangu"
+    ]
+  },
+  {
+    "id": "PL-JOS-NORTH-BASSA",
+    "code": "Jos North/Bassa",
+    "name": "Jos North/Bassa Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-S",
+    "lgas": [
+      "Jos North",
+      "Bassa"
+    ]
+  },
+  {
+    "id": "PL-JOS-SOUTH-JOS-EAST",
+    "code": "Jos South/Jos East",
+    "name": "Jos South/Jos East Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-N",
+    "lgas": [
+      "Jos South",
+      "Jos East"
+    ]
+  },
+  {
+    "id": "PL-KANKE-PANKSHIN-KANAM",
+    "code": "Kanke/Pankshin/Kanam",
+    "name": "Kanke/Pankshin/Kanam Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-C",
+    "lgas": [
+      "Kanke",
+      "Pankshin",
+      "Kanam"
+    ]
+  },
+  {
+    "id": "PL-LANGTANG-NORTH-LANGTANG-SOUTH",
+    "code": "Langtang North/Langtang South",
+    "name": "Langtang North/Langtang South Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-S",
+    "lgas": [
+      "Langtang North",
+      "Langtang South"
+    ]
+  },
+  {
+    "id": "PL-MIKANG-QUA-AN-PAN-SHEDAM",
+    "code": "Mikang/Qua'an/Pan/Shedam",
+    "name": "Mikang/Qua'an/Pan/Shedam Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-N",
+    "lgas": [
+      "Mikang",
+      "Qua'an",
+      "Pan",
+      "Shedam"
+    ]
+  },
+  {
+    "id": "PL-WASE",
+    "code": "Wase",
+    "name": "Wase Federal Constituency",
+    "stateCode": "PL",
+    "senatorialDistrictId": "PL-C",
+    "lgas": [
+      "Wase"
+    ]
+  },
+  {
+    "id": "RV-ANDONI-OPOBO-NKORO",
+    "code": "ANDONI-OPOBO/NKORO",
+    "name": "ANDONI-OPOBO/NKORO Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-E",
+    "lgas": [
+      "ANDONI-OPOBO",
+      "NKORO"
+    ]
+  },
+  {
+    "id": "RV-ABUA-ODUAL-AHAODA-EAST",
+    "code": "Abua-Odual/Ahaoda East",
+    "name": "Abua-Odual/Ahaoda East Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-SE",
+    "lgas": [
+      "Abua-Odual",
+      "Ahaoda East"
+    ]
+  },
+  {
+    "id": "RV-AHOADA-WEST-OGBA-EGBEMA",
+    "code": "Ahoada West/Ogba Egbema",
+    "name": "Ahoada West/Ogba Egbema Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-W",
+    "lgas": [
+      "Ahoada West",
+      "Ogba Egbema"
+    ]
+  },
+  {
+    "id": "RV-AKUKU-TORU-ASARI-TORU",
+    "code": "Akuku-Toru/Asari-Toru",
+    "name": "Akuku-Toru/Asari-Toru Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-E",
+    "lgas": [
+      "Akuku-Toru",
+      "Asari-Toru"
+    ]
+  },
+  {
+    "id": "RV-DEGEMA-BONNY",
+    "code": "Degema/Bonny",
+    "name": "Degema/Bonny Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-SE",
+    "lgas": [
+      "Degema",
+      "Bonny"
+    ]
+  },
+  {
+    "id": "RV-ELEME-TAI-OYIGBO",
+    "code": "Eleme/Tai/Oyigbo",
+    "name": "Eleme/Tai/Oyigbo Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-W",
+    "lgas": [
+      "Eleme",
+      "Tai",
+      "Oyigbo"
+    ]
+  },
+  {
+    "id": "RV-ETCHE-OMUMA",
+    "code": "Etche/Omuma",
+    "name": "Etche/Omuma Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-E",
+    "lgas": [
+      "Etche",
+      "Omuma"
+    ]
+  },
+  {
+    "id": "RV-IKWERRE-UMOHUA",
+    "code": "Ikwerre/Umohua",
+    "name": "Ikwerre/Umohua Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-SE",
+    "lgas": [
+      "Ikwerre",
+      "Umohua"
+    ]
+  },
+  {
+    "id": "RV-KHANA-GOKANA",
+    "code": "Khana/Gokana",
+    "name": "Khana/Gokana Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-W",
+    "lgas": [
+      "Khana",
+      "Gokana"
+    ]
+  },
+  {
+    "id": "RV-OBIO-AKPOR",
+    "code": "Obio Akpor",
+    "name": "Obio Akpor Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-E",
+    "lgas": [
+      "Obio Akpor"
+    ]
+  },
+  {
+    "id": "RV-OKRIKA-OGU-BOLO",
+    "code": "Okrika/Ogu-Bolo",
+    "name": "Okrika/Ogu-Bolo Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-SE",
+    "lgas": [
+      "Okrika",
+      "Ogu-Bolo"
+    ]
+  },
+  {
+    "id": "RV-PORT-HARCOURT-I",
+    "code": "Port Harcourt I",
+    "name": "Port Harcourt I Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-W",
+    "lgas": [
+      "Port Harcourt I"
+    ]
+  },
+  {
+    "id": "RV-PORT-HARCOURT-II",
+    "code": "Port Harcourt II",
+    "name": "Port Harcourt II Federal Constituency",
+    "stateCode": "RV",
+    "senatorialDistrictId": "RV-E",
+    "lgas": [
+      "Port Harcourt II"
+    ]
+  },
+  {
+    "id": "SO-BINJI-SILAME",
+    "code": "Binji/Silame",
+    "name": "Binji/Silame Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-N",
+    "lgas": [
+      "Binji",
+      "Silame"
+    ]
+  },
+  {
+    "id": "SO-DANGE-SHUNI-BODINGA-TURETA",
+    "code": "Dange-Shuni/Bodinga/Tureta",
+    "name": "Dange-Shuni/Bodinga/Tureta Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-E",
+    "lgas": [
+      "Dange-Shuni",
+      "Bodinga",
+      "Tureta"
+    ]
+  },
+  {
+    "id": "SO-GORONYO-GADA",
+    "code": "Goronyo/Gada",
+    "name": "Goronyo/Gada Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-S",
+    "lgas": [
+      "Goronyo",
+      "Gada"
+    ]
+  },
+  {
+    "id": "SO-ILLELA-GWADABAWA",
+    "code": "Illela/Gwadabawa",
+    "name": "Illela/Gwadabawa Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-N",
+    "lgas": [
+      "Illela",
+      "Gwadabawa"
+    ]
+  },
+  {
+    "id": "SO-ISA-SABON-BIRNI",
+    "code": "Isa/Sabon Birni",
+    "name": "Isa/Sabon Birni Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-E",
+    "lgas": [
+      "Isa",
+      "Sabon Birni"
+    ]
+  },
+  {
+    "id": "SO-KEBBE-TAMBUWAL",
+    "code": "Kebbe/Tambuwal",
+    "name": "Kebbe/Tambuwal Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-S",
+    "lgas": [
+      "Kebbe",
+      "Tambuwal"
+    ]
+  },
+  {
+    "id": "SO-KWARE-WAMAKKO",
+    "code": "Kware/Wamakko",
+    "name": "Kware/Wamakko Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-N",
+    "lgas": [
+      "Kware",
+      "Wamakko"
+    ]
+  },
+  {
+    "id": "SO-SOKOTO-NORTH-SOKOTO-SOUTH",
+    "code": "Sokoto North/Sokoto South",
+    "name": "Sokoto North/Sokoto South Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-E",
+    "lgas": [
+      "Sokoto North",
+      "Sokoto South"
+    ]
+  },
+  {
+    "id": "SO-TANGAZA-GUDU",
+    "code": "Tangaza/Gudu",
+    "name": "Tangaza/Gudu Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-S",
+    "lgas": [
+      "Tangaza",
+      "Gudu"
+    ]
+  },
+  {
+    "id": "SO-WURNO-RABAH",
+    "code": "Wurno/Rabah",
+    "name": "Wurno/Rabah Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-N",
+    "lgas": [
+      "Wurno",
+      "Rabah"
+    ]
+  },
+  {
+    "id": "SO-YABO-SHAGARI",
+    "code": "Yabo/Shagari",
+    "name": "Yabo/Shagari Federal Constituency",
+    "stateCode": "SO",
+    "senatorialDistrictId": "SO-E",
+    "lgas": [
+      "Yabo",
+      "Shagari"
+    ]
+  },
+  {
+    "id": "TA-BALI-GASSOL",
+    "code": "Bali/Gassol",
+    "name": "Bali/Gassol Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-N",
+    "lgas": [
+      "Bali",
+      "Gassol"
+    ]
+  },
+  {
+    "id": "TA-IBI-WUKARI",
+    "code": "Ibi/Wukari",
+    "name": "Ibi/Wukari Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-C",
+    "lgas": [
+      "Ibi",
+      "Wukari"
+    ]
+  },
+  {
+    "id": "TA-JALINGO-YORRO-ZING",
+    "code": "Jalingo/Yorro/Zing",
+    "name": "Jalingo/Yorro/Zing Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-S",
+    "lgas": [
+      "Jalingo",
+      "Yorro",
+      "Zing"
+    ]
+  },
+  {
+    "id": "TA-KARIM-LAMIDO-LAU-ARDO-KOLA",
+    "code": "Karim Lamido/Lau/Ardo-Kola",
+    "name": "Karim Lamido/Lau/Ardo-Kola Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-N",
+    "lgas": [
+      "Karim Lamido",
+      "Lau",
+      "Ardo-Kola"
+    ]
+  },
+  {
+    "id": "TA-SARDAUNA-KURMI-GASHAKA",
+    "code": "Sardauna/Kurmi/Gashaka",
+    "name": "Sardauna/Kurmi/Gashaka Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-C",
+    "lgas": [
+      "Sardauna",
+      "Kurmi",
+      "Gashaka"
+    ]
+  },
+  {
+    "id": "TA-TAKUM-DONGA-USSA",
+    "code": "Takum/Donga/Ussa",
+    "name": "Takum/Donga/Ussa Federal Constituency",
+    "stateCode": "TA",
+    "senatorialDistrictId": "TA-S",
+    "lgas": [
+      "Takum",
+      "Donga",
+      "Ussa"
+    ]
+  },
+  {
+    "id": "YO-BADE-JAKUSKO",
+    "code": "Bade/Jakusko",
+    "name": "Bade/Jakusko Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-E",
+    "lgas": [
+      "Bade",
+      "Jakusko"
+    ]
+  },
+  {
+    "id": "YO-BURSARI-GEIDAM-YUNUSARI",
+    "code": "Bursari/Geidam/Yunusari",
+    "name": "Bursari/Geidam/Yunusari Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-N",
+    "lgas": [
+      "Bursari",
+      "Geidam",
+      "Yunusari"
+    ]
+  },
+  {
+    "id": "YO-DAMATURU-GUJBA-GULANI-TARMUWA",
+    "code": "Damaturu/Gujba/Gulani/Tarmuwa",
+    "name": "Damaturu/Gujba/Gulani/Tarmuwa Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-S",
+    "lgas": [
+      "Damaturu",
+      "Gujba",
+      "Gulani",
+      "Tarmuwa"
+    ]
+  },
+  {
+    "id": "YO-FIKA-FUNE",
+    "code": "Fika/Fune",
+    "name": "Fika/Fune Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-E",
+    "lgas": [
+      "Fika",
+      "Fune"
+    ]
+  },
+  {
+    "id": "YO-MACHINA-NGURU-YUSUFARI-KARASUWA",
+    "code": "Machina/Nguru/Yusufari/Karasuwa",
+    "name": "Machina/Nguru/Yusufari/Karasuwa Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-N",
+    "lgas": [
+      "Machina",
+      "Nguru",
+      "Yusufari",
+      "Karasuwa"
+    ]
+  },
+  {
+    "id": "YO-NANGERE-POTISKM",
+    "code": "Nangere/Potiskm",
+    "name": "Nangere/Potiskm Federal Constituency",
+    "stateCode": "YO",
+    "senatorialDistrictId": "YO-S",
+    "lgas": [
+      "Nangere",
+      "Potiskm"
+    ]
+  },
+  {
+    "id": "ZA-ANKA-TALATA-MAFARA",
+    "code": "Anka/Talata Mafara",
+    "name": "Anka/Talata Mafara Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-C",
+    "lgas": [
+      "Anka",
+      "Talata Mafara"
+    ]
+  },
+  {
+    "id": "ZA-BAKURA-MARADUN",
+    "code": "Bakura/Maradun",
+    "name": "Bakura/Maradun Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-N",
+    "lgas": [
+      "Bakura",
+      "Maradun"
+    ]
+  },
+  {
+    "id": "ZA-BUNGUDU-MARU",
+    "code": "Bungudu/Maru",
+    "name": "Bungudu/Maru Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-W",
+    "lgas": [
+      "Bungudu",
+      "Maru"
+    ]
+  },
+  {
+    "id": "ZA-GUMMI-BUKKUYUM",
+    "code": "Gummi/Bukkuyum",
+    "name": "Gummi/Bukkuyum Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-C",
+    "lgas": [
+      "Gummi",
+      "Bukkuyum"
+    ]
+  },
+  {
+    "id": "ZA-GUSAU-TSAFE",
+    "code": "Gusau/Tsafe",
+    "name": "Gusau/Tsafe Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-N",
+    "lgas": [
+      "Gusau",
+      "Tsafe"
+    ]
+  },
+  {
+    "id": "ZA-KAURA-NAMODA-BIRNIN-MAGAJI",
+    "code": "Kaura-Namoda/Birnin Magaji",
+    "name": "Kaura-Namoda/Birnin Magaji Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-W",
+    "lgas": [
+      "Kaura-Namoda",
+      "Birnin Magaji"
+    ]
+  },
+  {
+    "id": "ZA-SHINKAFI-ZURMI",
+    "code": "Shinkafi/Zurmi",
+    "name": "Shinkafi/Zurmi Federal Constituency",
+    "stateCode": "ZA",
+    "senatorialDistrictId": "ZA-C",
+    "lgas": [
+      "Shinkafi",
+      "Zurmi"
+    ]
+  }
+]
