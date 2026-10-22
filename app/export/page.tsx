@@ -93,17 +93,17 @@ export default function ExportPage() {
   // Platform sharing intents
   const handleShareOnX = () => {
     const shareText = encodeURIComponent(customCaptionText);
-    const url = encodeURIComponent('https://my2027lineup.ng');
+    const url = encodeURIComponent('https://www.2027lineup.com');
     window.open(`https://twitter.com/intent/tweet?text=${shareText}&url=${url}`, '_blank');
   };
 
   const handleShareOnWhatsApp = () => {
-    const shareText = encodeURIComponent(customCaptionText + '\nhttps://my2027lineup.ng');
+    const shareText = encodeURIComponent(customCaptionText + '\nhttps://www.2027lineup.com');
     window.open(`https://api.whatsapp.com/send?text=${shareText}`, '_blank');
   };
 
   const handleShareOnFacebook = () => {
-    const url = encodeURIComponent('https://my2027lineup.ng');
+    const url = encodeURIComponent('https://www.2027lineup.com');
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
   };
 

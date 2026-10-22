@@ -241,15 +241,15 @@ export const BallotCard = forwardRef<HTMLDivElement, BallotCardProps>(({
       </div>
 
       {/* CARD FOOTER */}
-      <div className={`relative z-10 px-4 sm:px-5 py-2.5 ${isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} border-t flex flex-wrap items-center justify-between gap-2 text-[10px]`}>
-        <span className="font-mono font-bold" style={{ color: accentColor }}>
-          www.2027lineup.com
+      <div className={`relative z-10 px-3.5 sm:px-5 py-2.5 ${isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} border-t flex flex-wrap items-center justify-between gap-2 text-[10px]`}>
+        <span className="font-mono font-bold tracking-tight" style={{ color: accentColor }}>
+          GENERATE Yours at Www. 2027lineup.com.
         </span>
         <span className="font-mono font-bold uppercase tracking-wider text-amber-500 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-          Not official ballot
+          NOT official Ballot.
         </span>
-        <span className="font-mono text-gray-400 font-semibold">
-          #My2027Lineup
+        <span className="font-mono text-gray-400 dark:text-gray-300 font-semibold tracking-wide">
+          #my2027lineup
         </span>
       </div>
     </div>

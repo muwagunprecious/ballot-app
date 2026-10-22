@@ -209,7 +209,7 @@ export default function HomePage() {
         : `${currentState.name} State`
       : '';
     const locLine = locText ? `📍 ${locText}\n\n` : '';
-    const text = `Here is my 2027 ballot line-up Nigeria!\n\n${locLine}🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
+    const text = `Here is my 2027 ballot line-up Nigeria!\n\n${locLine}🗳 GENERATE Yours at Www. 2027lineup.com\nNOT official Ballot.\n#my2027lineup`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -220,7 +220,7 @@ export default function HomePage() {
         : `${currentState.name} State`
       : '';
     const locLine = locText ? `\n📍 ${locText}` : '';
-    const text = `Here is my 2027 ballot line-up Nigeria! 🇳🇬${locLine}\n🗳 Make yours: https://www.2027lineup.com\n#My2027Lineup`;
+    const text = `Here is my 2027 ballot line-up Nigeria! 🇳🇬${locLine}\n🗳 GENERATE Yours at Www. 2027lineup.com\nNOT official Ballot.\n#my2027lineup`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   };
 

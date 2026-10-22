@@ -37,12 +37,12 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <span className="text-gray-400">Website: </span>
-                <span className="text-[#20C878] font-mono">www.2027lineup.com</span>
+                <span className="text-gray-400">Generate: </span>
+                <span className="text-[#20C878] font-mono">GENERATE Yours at Www. 2027lineup.com</span>
               </li>
               <li>
                 <span className="text-gray-400">Hashtag: </span>
-                <span className="text-[#20C878] font-mono font-bold">#My2027Lineup</span>
+                <span className="text-[#20C878] font-mono font-bold">#my2027lineup</span>
               </li>
             </ul>
           </div>
@@ -67,9 +67,10 @@ export const Footer: React.FC = () => {
           <div>
             © 2026–2027 My 2027 Lineup Nigeria. All rights reserved.
           </div>
-          <div className="flex items-center space-x-3">
-            <span className="text-amber-500 font-semibold">• Not official ballot •</span>
-            <span className="text-[#20C878] font-mono font-bold">#My2027Lineup</span>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 font-mono">
+            <span className="text-gray-300 font-semibold">GENERATE Yours at Www. 2027lineup.com.</span>
+            <span className="text-amber-500 font-semibold">• NOT official Ballot. •</span>
+            <span className="text-[#20C878] font-bold">#my2027lineup</span>
           </div>
         </div>
       </div>
