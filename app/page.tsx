@@ -273,29 +273,18 @@ export default function HomePage() {
                   <h3 className="text-base font-bold text-white">Select President</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Choose your 2027 presidential candidate.</p>
                 </div>
-                {currentLineup.presidentId && (
-                  <button
-                    onClick={() => updateCurrentLineup({ presidentId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
-                  >
-                    Clear
-                  </button>
-                )}
               </div>
 
               {/* CARD SELECTOR */}
               {selectedPresident ? (
-                <div
-                  onClick={() => {
-                    setActiveModal('PRESIDENT');
-                    setSearchQuery('');
-                  }}
-                  className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                >
+                <div className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] flex items-center justify-between shadow-lg">
                   <div className="flex items-center space-x-3.5 min-w-0">
                     <PartyLogo acronym={selectedPresident.partyAcronym} size={36} className="shrink-0" />
                     <div className="min-w-0">
-                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Presidential Choice</div>
+                      <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider flex items-center space-x-1.5">
+                        <span>Presidential Choice</span>
+                        <span className="text-[#20C878] text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#20C878]/15 border border-[#20C878]/30">✓ Selected</span>
+                      </div>
                       <div className="text-sm sm:text-base font-bold text-white break-words">{selectedPresident.name}</div>
                     </div>
                   </div>
@@ -306,7 +295,6 @@ export default function HomePage() {
                     >
                       {selectedPresident.partyAcronym}
                     </span>
-                    <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
                   </div>
                 </div>
               ) : (
@@ -367,14 +355,6 @@ export default function HomePage() {
                   <h3 className="text-base font-bold text-white">Select Governor</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Select State&apos;s Governorship candidate.</p>
                 </div>
-                {currentLineup.governorId && (
-                  <button
-                    onClick={() => updateCurrentLineup({ governorId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
-                  >
-                    Clear
-                  </button>
-                )}
               </div>
 
               {/* STATE SELECTION */}
@@ -444,17 +424,14 @@ export default function HomePage() {
                       </div>
                     </div>
                   ) : selectedGovernor ? (
-                    <div
-                      onClick={() => {
-                        setActiveModal('GOVERNOR');
-                        setSearchQuery('');
-                      }}
-                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                    >
+                    <div className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] flex items-center justify-between shadow-lg">
                       <div className="flex items-center space-x-3.5 min-w-0">
                         <PartyLogo acronym={selectedGovernor.partyAcronym} size={36} className="shrink-0" />
                         <div className="min-w-0">
-                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Governorship Choice</div>
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>Governorship Choice</span>
+                            <span className="text-[#20C878] text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#20C878]/15 border border-[#20C878]/30">✓ Selected</span>
+                          </div>
                           <div className="text-sm sm:text-base font-bold text-white break-words">{selectedGovernor.name}</div>
                         </div>
                       </div>
@@ -465,7 +442,6 @@ export default function HomePage() {
                         >
                           {selectedGovernor.partyAcronym}
                         </span>
-                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
                       </div>
                     </div>
                   ) : (
@@ -543,14 +519,6 @@ export default function HomePage() {
                       : 'Select your state to view senatorial districts.'}
                   </p>
                 </div>
-                {currentLineup.senatorId && (
-                  <button
-                    onClick={() => updateCurrentLineup({ senatorId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
-                  >
-                    Clear
-                  </button>
-                )}
               </div>
 
               {!currentState ? (
@@ -601,17 +569,14 @@ export default function HomePage() {
                   </div>
 
                   {selectedSenator ? (
-                    <div
-                      onClick={() => {
-                        setActiveModal('SENATOR');
-                        setSearchQuery('');
-                      }}
-                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                    >
+                    <div className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] flex items-center justify-between shadow-lg">
                       <div className="flex items-center space-x-3.5 min-w-0">
                         <PartyLogo acronym={selectedSenator.partyAcronym} size={36} className="shrink-0" />
                         <div className="min-w-0">
-                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Senatorial Choice</div>
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>Senatorial Choice</span>
+                            <span className="text-[#20C878] text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#20C878]/15 border border-[#20C878]/30">✓ Selected</span>
+                          </div>
                           <div className="text-sm sm:text-base font-bold text-white break-words">{selectedSenator.name}</div>
                         </div>
                       </div>
@@ -622,7 +587,6 @@ export default function HomePage() {
                         >
                           {selectedSenator.partyAcronym}
                         </span>
-                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
                       </div>
                     </div>
                   ) : activeDistrict ? (
@@ -702,14 +666,6 @@ export default function HomePage() {
                       : 'Select senatorial district first.'}
                   </p>
                 </div>
-                {currentLineup.representativeId && (
-                  <button
-                    onClick={() => updateCurrentLineup({ representativeId: undefined })}
-                    className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded bg-[#131B15] border border-[#212E25]"
-                  >
-                    Clear
-                  </button>
-                )}
               </div>
 
               {!currentState ? (
@@ -768,17 +724,14 @@ export default function HomePage() {
                   </div>
 
                   {selectedRep ? (
-                    <div
-                      onClick={() => {
-                        setActiveModal('REPRESENTATIVE');
-                        setSearchQuery('');
-                      }}
-                      className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] cursor-pointer hover:bg-[#182C20] transition-all flex items-center justify-between group shadow-lg"
-                    >
+                    <div className="p-4 rounded-xl bg-[#14231A] border-2 border-[#20C878] flex items-center justify-between shadow-lg">
                       <div className="flex items-center space-x-3.5 min-w-0">
                         <PartyLogo acronym={selectedRep.partyAcronym} size={36} className="shrink-0" />
                         <div className="min-w-0">
-                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider">Representative Choice</div>
+                          <div className="text-[11px] text-[#20C878] font-bold uppercase tracking-wider flex items-center space-x-1.5">
+                            <span>Representative Choice</span>
+                            <span className="text-[#20C878] text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#20C878]/15 border border-[#20C878]/30">✓ Selected</span>
+                          </div>
                           <div className="text-sm sm:text-base font-bold text-white break-words">{selectedRep.name}</div>
                         </div>
                       </div>
@@ -789,7 +742,6 @@ export default function HomePage() {
                         >
                           {selectedRep.partyAcronym}
                         </span>
-                        <span className="text-xs text-[#20C878] group-hover:underline font-bold ml-1">Change →</span>
                       </div>
                     </div>
                   ) : activeConstituency ? (
