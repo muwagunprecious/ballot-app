@@ -412,15 +412,33 @@ export default function HomePage() {
               {currentState && (
                 <>
                   {isOffCycleGov ? (
-                    <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400 space-y-1">
-                      <p className="font-semibold text-amber-400">
-                        No governorship election in {currentState.name} {currentState.code === 'FC' ? '' : 'State'} in 2027.
-                      </p>
-                      <p className="text-[11px] text-gray-500">
-                        {currentLineup.stateCode === 'FC'
-                          ? 'The Federal Capital Territory does not have a Governor.'
-                          : `${currentState.name} is one of 8 off-cycle states with a separate election timetable.`}
-                      </p>
+                    <div className="p-5 rounded-2xl bg-[#141F17] border border-amber-500/30 text-center space-y-3.5 shadow-lg">
+                      <div className="w-11 h-11 mx-auto rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl">
+                        ⚠️
+                      </div>
+                      <div className="space-y-1.5">
+                        <h4 className="text-sm sm:text-base font-bold text-amber-400">
+                          {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'} is not participating in the 2027 Governorship election
+                        </h4>
+                        <p className="text-xs text-gray-300 max-w-md mx-auto leading-relaxed">
+                          {currentState.code === 'FC'
+                            ? 'The Federal Capital Territory does not conduct governorship elections.'
+                            : `${currentState.name} is an off-cycle state and will not participate in the 2027 governorship race.`}
+                        </p>
+                        <p className="text-[11px] text-gray-400 pt-1">
+                          States not participating in the 2027 governorship election: <span className="text-gray-200 font-medium">Anambra, Bayelsa, Edo, Ekiti, Imo, Kogi, Ondo, and Osun State</span> (plus FCT).
+                        </p>
+                      </div>
+                      <div className="pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setCurrentStep(3)}
+                          className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold inline-flex items-center justify-center space-x-2 transition-all shadow-md group cursor-pointer"
+                        >
+                          <span>Proceed to Next Section (Senate)</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
                     </div>
                   ) : selectedGovernor ? (
                     <div
@@ -487,12 +505,14 @@ export default function HomePage() {
                 </button>
 
                 <div className="flex items-center space-x-3">
-                  <button
-                    onClick={() => setCurrentStep(3)}
-                    className="text-xs text-gray-400 hover:text-white"
-                  >
-                    (Undecided) Skip
-                  </button>
+                  {!isOffCycleGov && (
+                    <button
+                      onClick={() => setCurrentStep(3)}
+                      className="text-xs text-gray-400 hover:text-white"
+                    >
+                      (Undecided) Skip
+                    </button>
+                  )}
                   <button
                     onClick={() => setCurrentStep(3)}
                     className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
