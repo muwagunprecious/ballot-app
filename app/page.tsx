@@ -374,55 +374,40 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* STATE SELECTION: ONCE SELECTED, IT IS LOCKED */}
-              {!currentState ? (
-                <div className="space-y-2">
-                  <label className="block text-[11px] text-gray-400 font-medium">Select Your State</label>
-                  <select
-                    value={currentLineup.stateCode || ''}
-                    onChange={(e) => {
-                      if (e.target.value) handleStateChange(e.target.value);
-                    }}
-                    className="w-full px-3 py-2.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
-                  >
-                    <option value="" className="bg-[#131B15] text-gray-400">
-                      -- Select State --
-                    </option>
-                    <optgroup label="2027 Governorship Elections (28 States)">
-                      {GOVERNORSHIP_STATES.map((s) => (
-                        <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                          {s.name} State
-                        </option>
-                      ))}
-                    </optgroup>
-                    <optgroup label="Off-Cycle States (No 2027 Gov Election)">
-                      {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
-                        <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
-                          {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
-                        </option>
-                      ))}
-                    </optgroup>
-                  </select>
+              {/* STATE SELECTION */}
+              <div className="space-y-2">
+                <label className="block text-[11px] text-gray-400 font-medium">Select Your State</label>
+                <select
+                  value={currentLineup.stateCode || ''}
+                  onChange={(e) => {
+                    handleStateChange(e.target.value);
+                  }}
+                  className="w-full px-3 py-2.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs focus:outline-hidden focus:border-[#20C878]"
+                >
+                  <option value="" className="bg-[#131B15] text-gray-400">
+                    -- Select State --
+                  </option>
+                  <optgroup label="2027 Governorship Elections (28 States)">
+                    {GOVERNORSHIP_STATES.map((s) => (
+                      <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
+                        {s.name} State
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Off-Cycle States (No 2027 Gov Election)">
+                    {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
+                      <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
+                        {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
+                      </option>
+                    ))}
+                  </optgroup>
+                </select>
+                {!currentState && (
                   <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
                     Select your State. Your Senatorial District and House of Representatives will be derived from this state.
                   </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#14231A] border border-[#20C878]/30">
-                  <div className="flex items-center space-x-2.5">
-                    <span className="text-base">📍</span>
-                    <div>
-                      <div className="text-[10px] text-gray-400 font-mono uppercase tracking-wider">Your State (Locked)</div>
-                      <div className="text-sm font-bold text-white">
-                        {currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
-                      </div>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full bg-[#1B2820] text-gray-400 text-[11px] font-mono border border-[#2A3F32]">
-                    Locked
-                  </span>
-                </div>
-              )}
+                )}
+              </div>
 
               {currentState && (
                 <>
