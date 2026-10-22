@@ -338,20 +338,23 @@ export default function HomePage() {
 
               {/* CONTROLS */}
               <div className="pt-2 flex items-center justify-between border-t border-[#1A251E]">
-                <button
-                  onClick={() => setCurrentStep(2)}
-                  className="text-xs text-gray-400 hover:text-white"
-                >
-                  (Undecided) Skip
-                </button>
+                <div className="flex items-center space-x-2.5 ml-auto">
+                  <button
+                    onClick={() => setCurrentStep(2)}
+                    className="px-3.5 py-2 rounded-lg bg-[#18221B] border border-amber-500/35 hover:border-amber-400 text-amber-300 hover:text-amber-100 hover:bg-amber-500/20 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+                    title="Skip as Undecided for President"
+                  >
+                    <span>(Undecided) Skip</span>
+                  </button>
 
-                <button
-                  onClick={() => setCurrentStep(2)}
-                  className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs ml-auto"
-                >
-                  <span>Next</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                  <button
+                    onClick={() => setCurrentStep(2)}
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -504,18 +507,19 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2.5">
                   {!isOffCycleGov && (
                     <button
                       onClick={() => setCurrentStep(3)}
-                      className="text-xs text-gray-400 hover:text-white"
+                      className="px-3.5 py-2 rounded-lg bg-[#18221B] border border-amber-500/35 hover:border-amber-400 text-amber-300 hover:text-amber-100 hover:bg-amber-500/20 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+                      title="Skip as Undecided for Governor"
                     >
-                      (Undecided) Skip
+                      <span>(Undecided) Skip</span>
                     </button>
                   )}
                   <button
                     onClick={() => setCurrentStep(3)}
-                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
                   >
                     <span>Next</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -664,16 +668,17 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2.5">
                   <button
                     onClick={() => setCurrentStep(4)}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="px-3.5 py-2 rounded-lg bg-[#18221B] border border-amber-500/35 hover:border-amber-400 text-amber-300 hover:text-amber-100 hover:bg-amber-500/20 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+                    title="Skip as Undecided for Senate"
                   >
-                    (Undecided) Skip
+                    <span>(Undecided) Skip</span>
                   </button>
                   <button
                     onClick={() => setCurrentStep(4)}
-                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
                   >
                     <span>Next</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -830,16 +835,17 @@ export default function HomePage() {
                   <span>Back</span>
                 </button>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2.5">
                   <button
                     onClick={() => setCurrentStep(5)}
-                    className="text-xs text-gray-400 hover:text-white"
+                    className="px-3.5 py-2 rounded-lg bg-[#18221B] border border-amber-500/35 hover:border-amber-400 text-amber-300 hover:text-amber-100 hover:bg-amber-500/20 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+                    title="Skip as Undecided for House of Representatives"
                   >
-                    (Undecided) Skip
+                    <span>(Undecided) Skip</span>
                   </button>
                   <button
                     onClick={() => setCurrentStep(5)}
-                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs"
+                    className="px-4 py-2 rounded-lg bg-[#20C878] hover:bg-[#1AB36B] text-[#08120B] text-xs font-bold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
                   >
                     <span>Finish Card</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -1105,9 +1111,10 @@ export default function HomePage() {
                   else if (activeModal === 'SENATOR') setCurrentStep(4);
                   else if (activeModal === 'REPRESENTATIVE') setCurrentStep(5);
                 }}
-                className="text-xs text-gray-400 hover:text-white"
+                className="px-3.5 py-1.5 rounded-lg bg-[#18221B] border border-amber-500/35 hover:border-amber-400 text-amber-300 hover:text-amber-100 hover:bg-amber-500/20 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
               >
-                (Undecided) Skip →
+                <span>(Undecided) Skip</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
