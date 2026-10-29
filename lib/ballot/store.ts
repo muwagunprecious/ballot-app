@@ -86,14 +86,13 @@ export function useBallotStore() {
   const [candidates, setCandidates] = useState<Candidate[]>(INITIAL_CANDIDATES);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load from localStorage safely on client mount
+  // Load from localStorage safely on client mount (currentLineup is session-only; starts afresh on refresh/leave)
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const storedLineup = localStorage.getItem('my2027_ballot_v4');
-      if (storedLineup) {
-        setCurrentLineup(JSON.parse(storedLineup));
-      }
+      // Clear out any old stored lineup so every visit or browser refresh starts completely afresh
+      localStorage.removeItem('my2027_ballot_v4');
+      localStorage.removeItem('my2027_current_lineup');
       
       const storedSaved = localStorage.getItem('my2027_saved_lineups');
       if (storedSaved) {
@@ -114,13 +113,6 @@ export function useBallotStore() {
   const updateCurrentLineup = (updater: Partial<LineupSelection> | ((prev: LineupSelection) => LineupSelection)) => {
     setCurrentLineup(prev => {
       const next = typeof updater === 'function' ? updater(prev) : { ...prev, ...updater, updatedAt: new Date().toISOString() };
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem('my2027_ballot_v4', JSON.stringify(next));
-        } catch (e) {
-          console.error(e);
-        }
-      }
       return next;
     });
   };

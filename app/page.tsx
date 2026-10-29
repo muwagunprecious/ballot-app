@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { BallotCard } from '@/components/ballot/BallotCard';
 import { PartyLogo } from '@/components/ballot/PartyLogo';
-import { useBallotStore } from '@/lib/ballot/store';
+import { useBallotStore, DEFAULT_LINEUP } from '@/lib/ballot/store';
 import {
   NIGERIAN_STATES,
   getStateByCode,
@@ -45,6 +45,22 @@ export default function HomePage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [activeModal, setActiveModal] = useState<OfficeType | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const hasStarted = Boolean(
+    currentLineup.presidentId ||
+    currentLineup.stateCode ||
+    currentLineup.governorId ||
+    currentLineup.senatorId ||
+    currentLineup.representativeId ||
+    currentStep > 1
+  );
+
+  const handleStartAfresh = () => {
+    updateCurrentLineup(() => DEFAULT_LINEUP);
+    setCurrentStep(1);
+    setActiveModal(null);
+    setSearchQuery('');
+  };
 
   const currentState = currentLineup.stateCode ? getStateByCode(currentLineup.stateCode) : undefined;
   const isOffCycleGov = currentLineup.stateCode ? OFF_CYCLE_GOV_STATE_CODES.includes(currentLineup.stateCode) : false;
@@ -931,14 +947,23 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* BACK */}
-              <div className="pt-1">
+              {/* BACK & START AFRESH */}
+              <div className="pt-1 flex items-center justify-between">
                 <button
                   onClick={() => setCurrentStep(4)}
-                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1"
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-white text-xs flex items-center space-x-1 hover:bg-[#1A251E] cursor-pointer"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                   <span>Back</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleStartAfresh}
+                  className="px-3 py-1.5 rounded-lg bg-[#131B15] border border-[#212E25] text-gray-300 hover:text-white text-xs flex items-center space-x-1.5 hover:border-[#304235] cursor-pointer transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-[#20C878]" />
+                  <span>Start Afresh</span>
                 </button>
               </div>
             </div>
@@ -948,7 +973,20 @@ export default function HomePage() {
         {/* RIGHT COLUMN: REALTIME BALLOT CARD PREVIEW */}
         <div className="lg:col-span-6 lg:sticky lg:top-16 space-y-3">
           <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="font-bold text-white">Live Lineup Card</span>
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-white">Live Lineup Card</span>
+              {hasStarted && (
+                <button
+                  type="button"
+                  onClick={handleStartAfresh}
+                  className="px-2 py-0.5 rounded text-[11px] font-semibold text-gray-400 hover:text-white bg-[#131B15] border border-[#212E25] hover:border-[#304235] flex items-center space-x-1 cursor-pointer transition-colors"
+                  title="Reset and start from afresh"
+                >
+                  <RotateCcw className="w-3 h-3 text-[#20C878]" />
+                  <span>Start Afresh</span>
+                </button>
+              )}
+            </div>
             {currentState && (
               <span>
                 {activeDistrict ? `${activeDistrict.name}, ` : ''}{currentState.name} {currentState.code === 'FC' ? '(FCT)' : 'State'}
