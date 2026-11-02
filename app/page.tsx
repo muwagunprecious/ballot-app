@@ -7,7 +7,6 @@ import { useBallotStore, DEFAULT_LINEUP } from '@/lib/ballot/store';
 import {
   NIGERIAN_STATES,
   getStateByCode,
-  GOVERNORSHIP_STATES,
   OFF_CYCLE_GOV_STATE_CODES,
 } from '@/lib/data/states';
 import { getCandidatesForRace } from '@/lib/data/candidates';
@@ -386,20 +385,14 @@ export default function HomePage() {
                   <option value="" className="bg-[#131B15] text-gray-400">
                     -- Select State --
                   </option>
-                  <optgroup label="2027 Governorship Elections (28 States)">
-                    {GOVERNORSHIP_STATES.map((s) => (
+                  {NIGERIAN_STATES.map((s) => {
+                    const isOffCycle = OFF_CYCLE_GOV_STATE_CODES.includes(s.code);
+                    return (
                       <option key={s.code} value={s.code} className="bg-[#131B15] text-white">
-                        {s.name} State
+                        {s.name} {s.code === 'FC' ? '(FCT)' : 'State'}{isOffCycle ? ' (Off-cycle)' : ''}
                       </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Off-Cycle States (No 2027 Gov Election)">
-                    {NIGERIAN_STATES.filter((s) => OFF_CYCLE_GOV_STATE_CODES.includes(s.code)).map((s) => (
-                      <option key={s.code} value={s.code} className="bg-[#131B15] text-gray-400">
-                        {s.name} {s.code === 'FC' ? '(FCT)' : 'State'} (Off-cycle)
-                      </option>
-                    ))}
-                  </optgroup>
+                    );
+                  })}
                 </select>
                 {!currentState && (
                   <div className="p-4 rounded-xl bg-[#121A15] border border-[#1F2C23] text-center text-xs text-gray-400">
