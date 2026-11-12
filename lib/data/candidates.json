@@ -922,6 +922,26 @@
     "status": "VERIFIED_DEMO"
   },
   {
+    "id": "gov-go-pdp",
+    "name": "Ibrahim Isa Ali",
+    "office": "GOVERNOR",
+    "partyId": "pdp",
+    "partyAcronym": "PDP",
+    "partyColor": "#D8232A",
+    "stateCode": "GO",
+    "gender": "M",
+    "age": 54,
+    "education": "Doctorate / PhD",
+    "runningMate": null,
+    "bio": "Official Peoples Democratic Party candidate for Governor of Gombe State in 2027.",
+    "keyPledges": [
+      "Grassroots Development",
+      "Economic Modernization",
+      "Security & Infrastructure"
+    ],
+    "status": "VERIFIED_DEMO"
+  },
+  {
     "id": "gov-kd-aa",
     "name": "Adamu Alhaji",
     "office": "GOVERNOR",
@@ -8403,7 +8423,7 @@
   },
   {
     "id": "gov-ta-ypp",
-    "name": "Sa\u2019Ad Hassan",
+    "name": "Sa’Ad Hassan",
     "office": "GOVERNOR",
     "partyId": "ypp",
     "partyAcronym": "YPP",
@@ -19623,7 +19643,7 @@
   },
   {
     "id": "sen-im-w-apc-22",
-    "name": "Uzodinma Goodhope",
+    "name": "Rochas Okorocha",
     "office": "SENATOR",
     "partyId": "apc",
     "partyAcronym": "APC",
@@ -19631,7 +19651,7 @@
     "stateCode": "IM",
     "senatorialDistrictId": "IM-W",
     "gender": "M",
-    "age": 67,
+    "age": 64,
     "education": "Tertiary Degree",
     "bio": "Official All Progressives Congress candidate for Senate in Imo (IM-W).",
     "keyPledges": [
@@ -20443,7 +20463,7 @@
   },
   {
     "id": "sen-ji-nw-apm-18",
-    "name": "- Lawan Ma\u2019Aruf",
+    "name": "- Lawan Ma’Aruf",
     "office": "SENATOR",
     "partyId": "apm",
     "partyAcronym": "APM",
@@ -21283,7 +21303,7 @@
   },
   {
     "id": "sen-kd-s-apm-29",
-    "name": "Sa\u2019Ad Abubakar",
+    "name": "Sa’Ad Abubakar",
     "office": "SENATOR",
     "partyId": "apm",
     "partyAcronym": "APM",
