@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Heart } from 'lucide-react';
+import { ShieldCheck, Heart, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -43,6 +43,12 @@ export const Footer: React.FC = () => {
                 <span className="text-gray-400">Hashtag: </span>
                 <span className="text-[#20C878] font-mono font-bold">#my2027lineup</span>
               </li>
+              <li>
+                <span className="text-gray-400">Email: </span>
+                <a href="mailto:Hi@lineup2027.com" className="text-[#20C878] font-mono hover:underline">
+                  Hi@lineup2027.com
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -63,8 +69,13 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-[#1A251E] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6D7B71]">
-          <div>
-            © 2026–2027 My 2027 Lineup Nigeria. All rights reserved.
+          <div className="flex flex-wrap items-center gap-2">
+            <span>© 2026–2027 My 2027 Lineup Nigeria. All rights reserved.</span>
+            <span>•</span>
+            <a href="mailto:Hi@lineup2027.com" className="text-gray-400 hover:text-[#20C878] transition-colors flex items-center space-x-1">
+              <Mail className="w-3 h-3 text-[#20C878]" />
+              <span>Hi@lineup2027.com</span>
+            </a>
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-4 font-mono">
             <span className="text-gray-300 font-semibold">make yours at www.lineup2027.com.</span>
