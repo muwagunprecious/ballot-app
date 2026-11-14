@@ -249,6 +249,14 @@ export default function HomePage() {
 
   return (
     <div className="pb-16 pt-2 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-4">
+      {/* ACCESSIBLE SEO HEADING & CONTEXT FOR SEARCH ENGINES */}
+      <header className="sr-only">
+        <h1>My 2027 Ballot Lineup Nigeria — Create Your Election Slate</h1>
+        <p>
+          A civic technology platform empowering Nigerian citizens to formulate, style, and share personalized electoral lineups for the 2027 General Elections. Choose candidates for President, Governor, Senator, and House of Representatives across all 36 States and the Federal Capital Territory.
+        </p>
+      </header>
+
       {/* MINIMAL PROGRESS STEP TABS */}
       <div className="flex items-center gap-1.5 overflow-x-auto py-1">
         {steps.map((st) => {
